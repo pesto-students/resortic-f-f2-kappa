@@ -1,0 +1,42 @@
+.cardGridStyle {
+  width: 30%;
+  text-align: center;
+  color: red;
+}
+.main {
+  padding-right: 4rem;
+  padding-left: 4rem;
+}
+
+.section_4 {
+  margin-top: 2rem;
+  position: sticky;
+  top: 64px;
+  background-color: white;
+  z-index: 2;
+}
+.section_5 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+#location {
+  height: 600px;
+  background-color: green;
+}
+
+@media screen and (max-width: 600px) {
+  .mobileview {
+    display: block;
+  }
+  .laptopview {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .main {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

@@ -1,1 +1,3 @@
-# NINJA-TEMPLATE
+# reSorTic - Resort Booking App
+
+In progress

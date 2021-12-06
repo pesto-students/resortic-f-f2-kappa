@@ -1,0 +1,28 @@
+.SingleDetailCard {
+  margin: 10px 0;
+}
+
+.SingleDetailCard .backgroud {
+  border-radius: 50px;
+  background-color: #f7f7f7;
+}
+.img {
+  object-fit: cover;
+  border-radius: 15px;
+}
+.location {
+  color: #0fcd22;
+}
+.price_container h4 {
+  /* margin-bottom: -6%; */
+}
+.price_container {
+  /* margin-bottom: 5%; */
+  font-size: 13px;
+  display: flex;
+}
+
+.ant-card-body {
+  padding: 10px !important;
+  background-color: #e5e5e5;
+}

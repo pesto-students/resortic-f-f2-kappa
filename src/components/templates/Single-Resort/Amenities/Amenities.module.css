@@ -1,0 +1,39 @@
+.amenities {
+  background: white;
+  padding: 10px;
+}
+
+.service {
+  display: flex;
+}
+
+.service > div {
+  margin: 10px;
+  padding: 5px;
+}
+
+.viewMore {
+  color: blue;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.viewMore:hover {
+  color: #0fcd22;
+}
+
+.amenities_ul {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 5px;
+}
+
+@media screen and (max-width: 900px) {
+  .service {
+    flex-direction: column;
+  }
+  .service > div {
+    margin: 5px;
+    padding: 5px;
+  }
+}

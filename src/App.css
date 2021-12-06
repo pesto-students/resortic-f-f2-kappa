@@ -1,0 +1,33 @@
+.App {
+  background-color: #f3f2f1;
+}
+
+.ant-card-body {
+  background-color: #f6f6f6;
+  padding: 10px !important;
+  border-radius: 15px;
+}
+
+.ant-layout-footer {
+  background: #c4c4c4 !important;
+}
+main.ant-layout-content {
+  background-color: #f3f2f1 !important;
+}
+
+.ant-rate {
+  font-size: 13px !important;
+}
+
+.ant-card-cover img {
+  border-radius: 15px 15px 0 0 !important;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+a,
+a:hover {
+  color: black !important;
+}
