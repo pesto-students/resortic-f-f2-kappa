@@ -1,7 +1,13 @@
 import React from "react";
 import classes from "./CustomInput.module.css";
 import { Input } from "antd";
-export function CustomInput({ icon, placeholder, onChange, style }) {
+export function CustomInput({
+  icon,
+  placeholder,
+  onChange,
+  style,
+  defaultValue,
+}) {
   return (
     <Input
       className={classes.CustomInput}
@@ -10,6 +16,7 @@ export function CustomInput({ icon, placeholder, onChange, style }) {
       suffix={icon}
       onChange={onChange}
       style={style}
+      defaultValue={defaultValue}
     />
   );
 }

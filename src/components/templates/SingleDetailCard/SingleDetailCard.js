@@ -12,8 +12,6 @@ export default function singleDetailCard({
   return (
     <div className={`${styles.SingleDetailCard} cursor`}>
       <Card
-        // hoverable
-        style={{ width: 280, margin: "0 18px 0 18px" }}
         cover={
           <img
             alt="sample"

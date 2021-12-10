@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LoginModal1 from "../../../modules/Login-Modal/LoginModal-1";
 import LoginModal2 from "../../../modules/Login-Modal/LoginModal-2";
 import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import firebase from "../../../config/firebase";
 function HeaderPage() {
   const [isMobileMenuToggle, setMobileMenuToggle] = useState(false);
   const dispatch = useDispatch();
@@ -64,7 +65,11 @@ function HeaderPage() {
           />
         )}
         {isMobileMenuToggle && (
-          <div className={classes.menuContainer}>
+          <div
+            className={`${classes.menuContainer} ${
+              isMobileMenuToggle ? "widthFull" : "width0"
+            }`}
+          >
             <ul>
               <Link
                 to="/"

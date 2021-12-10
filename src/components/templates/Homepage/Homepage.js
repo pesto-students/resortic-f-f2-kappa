@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Tabs } from "antd";
 
 import HeroBanner1 from "../../../assets/hero-banner1.jpg";
@@ -6,13 +6,21 @@ import HeroBanner2 from "../../../assets/hero-banner2.jpg";
 import classes from "./Homepage.module.css";
 import { Link } from "react-router-dom";
 
-// import Autocomplete from "../../Autocomplete";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
+
+import SwiperCore, { Pagination, Navigation } from "swiper";
 
 import SingleDetailCard from "../SingleDetailCard/SingleDetailCard";
-import SearchBar from "../../molecules/SearchBar";
+import SearchBar from "../../molecules/SearchBar/SearchBar";
 import PopularDestination from "../../molecules/PopularDestination";
-const { TabPane } = Tabs;
 
+import axios from "../../../axios";
+import * as APIS from "../../../constant/Apis";
+
+const { TabPane } = Tabs;
+SwiperCore.use([Pagination, Navigation]);
 const tabsData = [
   "Beach Vacation",
   "Weekend Getaways",
@@ -92,12 +100,6 @@ function callback(key) {
 }
 
 function Homepage() {
-  const [isLoading, setLoading] = useState(true);
-
-  setTimeout(() => {
-    setLoading(false);
-  }, 3000);
-
   return (
     <div className={classes.Homepage}>
       <div className={classes.heroWrapper} style={{ position: "relative" }}>
@@ -106,36 +108,61 @@ function Homepage() {
           src={HeroBanner2}
           alt="hero banner"
         />
-        <div className={classes.searchBar}>
-          <SearchBar />
-        </div>
+        <SearchBar />
       </div>
       <div className={classes.resortWrapper}>
         <h2 className={classes.popularResortTitle}>Our Most Popular Resorts</h2>
         <div className={classes.popularResort}>
-          {/* <Scroller> */}
-          {resortData.length &&
-            resortData.map((resort, index) => {
-              return (
-                <Link
-                  itemId={index}
-                  key={index}
-                  to={{
-                    pathname: "resort",
-                    state: index,
-                  }}
-                >
-                  <SingleDetailCard
-                    resortimg={resort.resortimg}
-                    location={resort.location}
-                    title={resort.title}
-                    price={resort.price}
-                    ratingValue={resort.ratingValue}
-                  />
-                </Link>
-              );
-            })}
-          {/* </Scroller> */}
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={10}
+            loop={false}
+            loopFillGroupWithBlank={true}
+            navigation={true}
+            pagination={false}
+            breakpoints={{
+              550: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+              },
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 10,
+              },
+            }}
+            className="mySwiper"
+          >
+            {resortData.length &&
+              resortData.map((resort, index) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <Link
+                      key={index}
+                      to={{
+                        pathname: "resort",
+                        state: index,
+                      }}
+                    >
+                      <SingleDetailCard
+                        resortimg={resort.resortimg}
+                        location={resort.location}
+                        title={resort.title}
+                        price={resort.price}
+                        ratingValue={resort.ratingValue}
+                      />
+                    </Link>
+                  </SwiperSlide>
+                );
+              })}
+          </Swiper>
         </div>
       </div>
       <div className={classes.resortWrapper}>
@@ -154,33 +181,63 @@ function Homepage() {
           </Tabs>
         </div>
         <div className={classes.popularResort}>
-          {resortData.length &&
-            resortData.map((resort, index) => {
-              return (
-                <Link
-                  key={index}
-                  to={{
-                    pathname: "resort",
-                    state: index,
-                  }}
-                >
-                  <SingleDetailCard
-                    key={index}
-                    resortimg={resort.resortimg}
-                    location={resort.location}
-                    title={resort.title}
-                    price={resort.price}
-                    ratingValue={resort.ratingValue}
-                  />
-                </Link>
-              );
-            })}
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={10}
+            loop={false}
+            loopFillGroupWithBlank={true}
+            navigation={true}
+            pagination={false}
+            breakpoints={{
+              550: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+              },
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 10,
+              },
+            }}
+            className="mySwiper"
+          >
+            {resortData.length &&
+              resortData.map((resort, index) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <Link
+                      key={index}
+                      to={{
+                        pathname: "resort",
+                        state: index,
+                      }}
+                    >
+                      <SingleDetailCard
+                        key={index}
+                        resortimg={resort.resortimg}
+                        location={resort.location}
+                        title={resort.title}
+                        price={resort.price}
+                        ratingValue={resort.ratingValue}
+                      />
+                    </Link>
+                  </SwiperSlide>
+                );
+              })}
+          </Swiper>
         </div>
       </div>
       <div className={classes.popularDestinationWrapper}>
         <h2 className={classes.popularResortTitle}>Most Popular Destination</h2>
         <div className={classes.popularDestination}>
-          <PopularDestination isLoading={isLoading} />
+          <PopularDestination />
         </div>
       </div>
     </div>
