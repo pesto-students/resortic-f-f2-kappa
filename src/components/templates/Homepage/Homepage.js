@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Tabs } from "antd";
 
 import HeroBanner1 from "../../../assets/hero-banner1.jpg";
@@ -15,9 +15,6 @@ import SwiperCore, { Pagination, Navigation } from "swiper";
 import SingleDetailCard from "../SingleDetailCard/SingleDetailCard";
 import SearchBar from "../../molecules/SearchBar/SearchBar";
 import PopularDestination from "../../molecules/PopularDestination";
-
-import axios from "../../../axios";
-import * as APIS from "../../../constant/Apis";
 
 const { TabPane } = Tabs;
 SwiperCore.use([Pagination, Navigation]);
