@@ -63,6 +63,7 @@ const minAdult = 1;
 const maxAdult = 3;
 const minChild = 0;
 const maxChild = 5;
+let roomType = "";
 
 function SearchBar() {
   const [room, setRoom] = useState(1);
@@ -70,15 +71,15 @@ function SearchBar() {
   const [child, setchild] = useState(0);
   const [visible, setVisible] = useState(false);
   const [visibleMob, setVisibleMob] = useState(false);
-  let [roomsStr, setRoomsStr] = useState("");
+  const [roomsStr, setRoomsStr] = useState("");
 
   useEffect(() => {
-    roomsStr = room + " Room," + adult + " Adult";
-    roomsStr += child ? "&" + child + " Child" : "";
-    setRoomsStr(roomsStr);
+    roomType = room + " Room," + adult + " Adult";
+    roomType += child ? "&" + child + " Child" : "";
+    setRoomsStr(roomType);
     console.log("Room type", roomsStr);
     return () => {};
-  }, [room, adult, child]);
+  }, [room, adult, child, roomsStr]);
 
   const menu = (
     <Menu className={classes.menu}>
