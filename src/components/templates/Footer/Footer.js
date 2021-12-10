@@ -34,8 +34,6 @@ function Footer() {
           <li>Our Partner</li>
           <li>Contact Us</li>
         </ul>
-      </div>
-      <div className={classes.menu}>
         <ul>
           <li>Help</li>
           <li>Help Center</li>

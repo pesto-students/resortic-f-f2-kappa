@@ -37,3 +37,22 @@
   margin-right: 10px;
   font-size: 2rem;
 }
+
+@media screen and (max-width: 576px) {
+  .Footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .Footer .info {
+    width: 100%;
+  }
+
+  .Footer .menu {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .Footer ul {
+    padding: 0;
+  }
+}

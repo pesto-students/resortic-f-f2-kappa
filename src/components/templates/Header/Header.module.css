@@ -5,6 +5,7 @@
   top: 0;
   justify-content: space-between;
   z-index: 2;
+  /* overflow: hidden; */
 }
 
 .Header .logo {
@@ -27,13 +28,15 @@
 }
 
 .Header .menuContainer {
-  width: 100%;
+  /* width: 100%; */
   height: 100vh;
   position: fixed;
   color: white;
   /* background: #001529; */
   background-color: #001529f0;
-  left: 0;
+  /* left: 0; */
+  right: 0;
+  transition: width 0.3s linear;
 }
 
 .Header .menuContainer ul {
@@ -54,6 +57,7 @@
 @media screen and (max-width: 767px) {
   .Header .desktopView {
     display: none;
+    /* visibility: hidden; */
   }
 
   .Header .mobileView {
