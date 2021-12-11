@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Tabs } from "antd";
 
 import HeroBanner1 from "../../../assets/hero-banner1.jpg";
@@ -15,6 +15,9 @@ import SwiperCore, { Pagination, Navigation } from "swiper";
 import SingleDetailCard from "../SingleDetailCard/SingleDetailCard";
 import SearchBar from "../../molecules/SearchBar/SearchBar";
 import PopularDestination from "../../molecules/PopularDestination";
+
+import axios from "../../../axios";
+import * as APIS from "../../../constant/Apis";
 
 const { TabPane } = Tabs;
 SwiperCore.use([Pagination, Navigation]);
@@ -92,11 +95,43 @@ const resortData = [
   },
 ];
 
-function callback(key) {
-  console.log(key);
-}
+const getGuestToken = () => {
+  axios
+    .get(APIS.guestToken + "guestSystemId=212wsdfsdfsdfdfgdfgdfg")
+    .then(function (response) {
+      localStorage.setItem(
+        "resortic_localstorage",
+        JSON.stringify({ token: response.data.data.token })
+      );
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
 
 function Homepage() {
+  const [isDestinationLoading, setDestinationLoading] = useState(true);
+  const [categoryResort, setCategoryResort] = useState([]);
+  setTimeout(() => {
+    setDestinationLoading(false);
+  }, 3000);
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    if (localData == null) getGuestToken();
+  }, []);
+
+  const getResortByCategoryHandler = (catid) => {
+    axios
+      .get(APIS.getCategoryResort)
+      .then(function (response) {
+        console.log("response of caateogry", response);
+        setCategoryResort(response.data.value);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <div className={classes.Homepage}>
       <div className={classes.heroWrapper} style={{ position: "relative" }}>
@@ -164,7 +199,7 @@ function Homepage() {
       </div>
       <div className={classes.resortWrapper}>
         <div className={classes.tabsWrapper}>
-          <Tabs defaultActiveKey="0" onChange={callback}>
+          <Tabs defaultActiveKey="0" onChange={getResortByCategoryHandler}>
             {tabsData.length &&
               tabsData.map((item, index) => {
                 return (
@@ -234,7 +269,7 @@ function Homepage() {
       <div className={classes.popularDestinationWrapper}>
         <h2 className={classes.popularResortTitle}>Most Popular Destination</h2>
         <div className={classes.popularDestination}>
-          <PopularDestination />
+          <PopularDestination isLoading={isDestinationLoading} />
         </div>
       </div>
     </div>

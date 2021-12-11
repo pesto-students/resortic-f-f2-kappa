@@ -21,14 +21,17 @@ export const logoutApi = API_SERVER + "api/login/logout/";
 export const registerUserApi = API_SERVER + "api/user/register/";
 export const updateUserApi = API_SERVER + "api/user/update/";
 export const deleteUserApi = API_SERVER + "api/user/delete/";
-export const getUserApi = API_SERVER + "api/user/get/";
+export const getUserApi = API_SERVER + "api/user/get";
 
 // Review Apis
 export const addReviewApi = API_SERVER + "api/review/add/";
 export const updateReviewApi = API_SERVER + "api/review/update/";
 export const deleteReviewApi = API_SERVER + "api/review/delete/";
-export const getReviewApi = API_SERVER + "api/review/get/";
+export const getReviewApi = API_SERVER + "api/review/get";
 
 // Payment Apis
 export const addPaymentApi = API_SERVER + "api/payment/add/";
 export const deletePaymentApi = API_SERVER + "api/payment/delete/";
+
+// Homepage Apis
+export const getCategoryResort = API_SERVER + "api/resort/fetchCityByCategory";

@@ -60,12 +60,14 @@ const defaultCity = "Pune";
 const minRoom = 1;
 const maxRoom = 5;
 const minAdult = 1;
-const maxAdult = 3;
+const defaultAdult = 3;
 const minChild = 0;
-const maxChild = 5;
+const defaultChild = 5;
 let roomType = "";
 
 function SearchBar() {
+  const [maxAdult, setMaxAdult] = useState(3);
+  const [maxChild, setMaxChild] = useState(5);
   const [room, setRoom] = useState(1);
   const [adult, setAdult] = useState(1);
   const [child, setchild] = useState(0);
@@ -77,6 +79,8 @@ function SearchBar() {
     roomType = room + " Room," + adult + " Adult";
     roomType += child ? "&" + child + " Child" : "";
     setRoomsStr(roomType);
+    setMaxAdult(defaultAdult * room);
+    setMaxChild(defaultChild * room);
     console.log("Room type", roomsStr);
     return () => {};
   }, [room, adult, child, roomsStr]);
@@ -96,6 +100,10 @@ function SearchBar() {
                 setRoom(room + 1);
               }}
               onDecrease={() => {
+                if (adult >= room) {
+                  console.log("max 8 people allowed in one room");
+                  return;
+                }
                 setRoom(room - 1);
               }}
               style={{ flex: ".2" }}
