@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import HeaderPage from "../components/templates/Header/Header";
 import Homepage from "../components/templates/Homepage/Homepage";
 import SingleResort from "../components/templates/Single-Resort/singleResortPage";
@@ -8,11 +8,11 @@ import ResortList from "../components/templates/Resort-List/ResortList";
 import BookingSummary from "../components/templates/BookingSummary";
 import ManageBooking from "../components/templates/ManageBooking";
 import NotFoundPage from "../components/templates/Error";
-import { Layout} from "antd";
+import { Layout } from "antd";
 const { Header, Content, Footer } = Layout;
 function Router() {
   return (
-    <BrowserRouter>
+    <>
       <Header
         style={{
           position: "sticky",
@@ -40,7 +40,7 @@ function Router() {
       <Footer>
         <FooterPage />
       </Footer>
-    </BrowserRouter>
+    </>
   );
 }
 

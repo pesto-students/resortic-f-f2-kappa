@@ -5,7 +5,7 @@ import Icon from "@ant-design/icons";
 
 const { Text, Title } = Typography;
 
-const BodyComponent = () => {
+const BodyComponent = (props) => {
   const mapMarker = () => {
     return (
       // Credit goes to fontAwesome
@@ -17,37 +17,57 @@ const BodyComponent = () => {
       </svg>
     );
   };
+  const aminitiesData = [];
+  for (var i = 0; i < 3; i++) {
+    aminitiesData.push(
+      <Col key={i + 1} xs={24} md={8}>
+        <div className={styles.aminities_box}>
+          {props.ResortData?.major_aminities?.split(",")[i]}
+        </div>
+      </Col>
+    );
+  }
 
   return (
     <Row style={{ paddingLeft: "24px" }}>
+      {console.log("props:", props.ResortData)}
       <Col xs={24}>
         <Row>
           <Col xs={24} md={16}>
             <Title style={{ marginBottom: 0 }} level={3}>
-              Resort Name
+              {props.ResortData.resort_name}
             </Title>
           </Col>
           <Col className={styles.rating} xs={24} md={8}>
-            <Rate disabled defaultValue={2} />
+            <Rate disabled defaultValue={props.ResortData.rating} />{" "}
+            {props.ResortData.rating}
           </Col>
           <Col xd={24} md={3}>
             <Text>
-              <Icon component={mapMarker} /> City
+              <Icon component={mapMarker} /> {props.ResortData.city}
             </Text>
           </Col>
         </Row>
       </Col>
       <Col className={styles.aminities} xs={12} md={16}>
         <Row className={styles.aminities_item}>
-          <Col xs={24} md={8}>
-            <div className={styles.aminities_box}>Aminities 1</div>
-          </Col>
-          <Col xs={24} md={8}>
-            <div className={styles.aminities_box}>Aminities 2</div>
-          </Col>
-          <Col xs={24} md={8}>
-            <div className={styles.aminities_box}>Aminities 3</div>
-          </Col>
+          {aminitiesData}
+          {/* {props.ResortData.major_aminities.split(",").map((el, key) => {
+            return (
+              <Col key={key} xs={24} md={8}>
+                <div className={styles.aminities_box}>{el}</div>
+              </Col>
+            );
+          })} */}
+          {/* {props.ResortData.resort_name.major_aminities
+            .split(",")
+            .map((aminitity) => {
+              return (
+                <Col xs={24} md={8}>
+                  <div className={styles.aminities_box}>Aminities 1</div>
+                </Col>
+              );
+            })} */}
         </Row>
       </Col>
       <Col
@@ -61,7 +81,7 @@ const BodyComponent = () => {
         <Title level={4}>Starting at:</Title>
         <div>
           <Text style={{ fontSize: "20px" }} strong>
-            2000/-
+            {Number(props.ResortData?.starting_price) + 1}
           </Text>
         </div>
       </Col>

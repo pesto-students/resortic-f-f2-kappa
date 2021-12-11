@@ -1,10 +1,11 @@
+import classes from "./Homepage.module.css";
+
 import React, { useState } from "react";
 import { Tabs } from "antd";
+import { Link } from "react-router-dom";
 
 import HeroBanner1 from "../../../assets/hero-banner1.jpg";
 import HeroBanner2 from "../../../assets/hero-banner2.jpg";
-import classes from "./Homepage.module.css";
-import { Link } from "react-router-dom";
 
 // import Autocomplete from "../../Autocomplete";
 
