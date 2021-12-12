@@ -4,7 +4,11 @@ import { Input } from "antd";
 export function CustomInput({
   icon,
   placeholder,
+<<<<<<< HEAD
   onInputChange,
+=======
+  onChange,
+>>>>>>> 50ded5626d6cf102d63422dfcb590ec1164ec117
   style,
   defaultValue,
 }) {
@@ -16,7 +20,11 @@ export function CustomInput({
       suffix={icon}
       onChange={onInputChange}
       style={style}
+<<<<<<< HEAD
       value={defaultValue}
+=======
+      defaultValue={defaultValue}
+>>>>>>> 50ded5626d6cf102d63422dfcb590ec1164ec117
     />
   );
 }

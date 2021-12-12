@@ -6,7 +6,7 @@ import { Integrations } from "@sentry/tracing";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "antd/dist/antd.css";
-
+// import "swiper/css/bundle";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
