@@ -131,11 +131,6 @@ const SingleResort = () => {
     <Layout>
       {console.log(isMobileView)}
       <Content className={styles.main}>
-        <Row>
-          <Col span={24}>
-            <h1>Search</h1>
-          </Col>
-        </Row>
         <ResortHeader title={resort1.resortName} rating={resort1.rating} />
         <SingleResortDetail
           images={resort1.images}

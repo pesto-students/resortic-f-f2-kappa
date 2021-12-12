@@ -32,6 +32,16 @@ export const getReviewApi = API_SERVER + "api/review/get";
 // Payment Apis
 export const addPaymentApi = API_SERVER + "api/payment/add/";
 export const deletePaymentApi = API_SERVER + "api/payment/delete/";
+export const getRazorOrderId = API_SERVER + "api/payment/razorpayOrder";
 
 // Homepage Apis
 export const getCategoryResort = API_SERVER + "api/resort/fetchCityByCategory";
+
+// Booking Apis
+export const addBooking = API_SERVER + "api/booking/book";
+export const getBooking = API_SERVER + "api/booking/book";
+export const updateBooking = API_SERVER + "api/booking/book";
+
+//Resort Apis
+
+export const getFullResortDetails = API_SERVER + "api/resort/singleResort";
