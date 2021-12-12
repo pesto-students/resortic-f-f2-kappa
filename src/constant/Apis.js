@@ -35,3 +35,4 @@ export const deletePaymentApi = API_SERVER + "api/payment/delete/";
 
 // Homepage Apis
 export const getCategoryResort = API_SERVER + "api/resort/fetchCityByCategory";
+export const getPopularResort = API_SERVER + "api/resort/fetchToTenResort";
