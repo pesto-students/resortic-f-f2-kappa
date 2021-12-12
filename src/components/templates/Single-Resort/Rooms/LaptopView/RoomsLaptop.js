@@ -9,7 +9,12 @@ import { CustomButton } from "../../../../atoms/CustomButton/CustomButton";
 const { Title, Text } = Typography;
 
 const RoomsLaptop = (props) => {
-  console.log(props.rooms);
+  console.log(props);
+
+  // const selectRoomBtn = (id) => {
+  //   console.log("Room ID: ", id);
+  // };
+
   return (
     <section
       className={styles.section_rooms}
@@ -108,7 +113,7 @@ const RoomsLaptop = (props) => {
                             <Col span={10}>
                               <Link
                                 to={{
-                                  pathname: "booking",
+                                  pathname: `booking?resortID=${props.resortID}&roomID=${value.id}&searchQuery=${props.searchQuery}`,
                                 }}
                               >
                                 <div className={styles.room__type_price_button}>

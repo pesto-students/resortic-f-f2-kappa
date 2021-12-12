@@ -31,3 +31,5 @@ export const getCategoryResort = API_SERVER + "api/resort/fetchCityByCategory";
 export const getResortList = API_SERVER + "api/resort/fetchByCity";
 // Single Resort List Apis
 export const getSingleResort = API_SERVER + "api/resort/singleResort/";
+// Fetch Top 10 products
+export const fetchTopTenResort = API_SERVER + "api/resort/fetchToTenResort";

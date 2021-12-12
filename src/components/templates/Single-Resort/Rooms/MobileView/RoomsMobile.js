@@ -2,6 +2,7 @@ import styles from "./RoomsMobile.module.css";
 
 import { Typography, Card, Row, Col } from "antd";
 import { CustomButton } from "../../../../atoms/CustomButton/CustomButton";
+import { Link } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
@@ -62,11 +63,17 @@ const RoomMobile = (props) => {
                     </div>
                   </Col>
                   <Col span={24}>
-                    <div style={{ textAlign: "right" }}>
-                      <CustomButton style={{ width: "100%" }}>
-                        Select
-                      </CustomButton>
-                    </div>
+                    <Link
+                      to={{
+                        pathname: `booking?resortID=${props.resortID}&roomID=${room.id}&searchQuery=${props.searchQuery}`,
+                      }}
+                    >
+                      <div style={{ textAlign: "right" }}>
+                        <CustomButton style={{ width: "100%" }}>
+                          Select
+                        </CustomButton>
+                      </div>
+                    </Link>
                   </Col>
                 </Row>
               </Card>

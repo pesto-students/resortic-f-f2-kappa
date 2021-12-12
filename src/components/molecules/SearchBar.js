@@ -17,10 +17,6 @@ function handleChange(value) {
   console.log(`selected ${value}`);
 }
 
-function onChange(date, dateString) {
-  console.log(date, dateString);
-}
-
 // function locationHandler(e) {
 //   console.log("clicked afer 1 wsec");
 // }
@@ -43,6 +39,9 @@ function SearchBar() {
   const [city, setCity] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
+  const [adult, setAdult] = useState(2);
+  const [child, setChild] = useState(0);
+  const [room, setroom] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -51,8 +50,24 @@ function SearchBar() {
   };
 
   const searchHandle = () => {
-    navigate(`./resortList?city=${city}`);
+    navigate(
+      `./resortList?city=${city}&searchQuery=${JSON.stringify({
+        checkIn: checkIn,
+        checkOut: checkOut,
+        room: room,
+        child: child,
+        adult: adult,
+      })}`
+    );
   };
+
+  function getCheckIn(date, dateString) {
+    setCheckIn(dateString);
+  }
+
+  function getCheckOut(date, dateString) {
+    setCheckOut(dateString);
+  }
 
   return (
     <>
@@ -69,13 +84,13 @@ function SearchBar() {
         {/* <Autocomplete /> */}
       </CustomInput>
       <CustomDatepicker
-        onChange={onChange}
+        onChange={getCheckIn}
         placeholder={"Check In"}
         bordered={false}
       ></CustomDatepicker>
 
       <CustomDatepicker
-        onChange={onChange}
+        onChange={getCheckOut}
         placeholder={"Check Out"}
         bordered={false}
       ></CustomDatepicker>

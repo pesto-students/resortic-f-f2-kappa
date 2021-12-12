@@ -1,7 +1,7 @@
 import styles from "./singleResortPage.module.css";
 
 import { useEffect, useState } from "react";
-import { Col, Layout, Row } from "antd";
+import { Col, Layout, Row, Skeleton } from "antd";
 import { Element } from "react-scroll";
 import { useSearchParams } from "react-router-dom";
 
@@ -34,7 +34,9 @@ const SingleResort = () => {
   const [resort, setResort] = useState();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const id = searchParams.get("resortID");
+  const resortId = searchParams.get("resortID");
+  const squery = searchParams.get("searchQuery");
+  console.log(resortId, squery);
 
   useEffect(() => {
     console.log("inside mobile view");
@@ -50,7 +52,7 @@ const SingleResort = () => {
   useEffect(() => {
     console.log("inside single resort");
     axios
-      .get(`${getSingleResort}${id}`)
+      .get(`${getSingleResort}${resortId}`)
       .then((response) => {
         console.log("responsoe", response);
         setResort(response.data.value);
@@ -58,7 +60,7 @@ const SingleResort = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [id]);
+  }, [resortId]);
 
   return (
     <Layout>
@@ -93,11 +95,15 @@ const SingleResort = () => {
                 <RoomsLaptop
                   rooms={resort.roomtables}
                   className={styles.laptopview}
+                  searchQuery={squery}
+                  resortID={resortId}
                 />
               ) : (
                 <RoomMobile
                   rooms={resort.roomtables}
                   className={styles.mobileview}
+                  searchQuery={squery}
+                  resortID={resortId}
                 />
               )}
             </Element>
@@ -129,7 +135,7 @@ const SingleResort = () => {
           </section>
         </Content>
       ) : (
-        <p>Loading</p>
+        <Skeleton active />
       )}
     </Layout>
   );
