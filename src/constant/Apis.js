@@ -10,7 +10,7 @@ if (!PRODUCTION) {
 // APIS
 
 // Guest Token Api
-export const guestToken = "api/guest/token";
+export const guestToken = "api/guest/token/";
 
 // Login Apis
 export const loginApi = API_SERVER + "api/login/add/";

@@ -196,7 +196,7 @@ function SearchBar() {
           bordered={false}
           icon={<EnvironmentOutlined />}
           onInputChange={cityInputHandle}
-          defaultValue={defaultCity}
+          value={city}
         ></CustomInput>
         <CustomDatepicker
           onChange={getCheckIn}
