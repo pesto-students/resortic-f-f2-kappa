@@ -6,7 +6,12 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginModal1 from "../../../modules/Login-Modal/LoginModal-1";
 import LoginModal2 from "../../../modules/Login-Modal/LoginModal-2";
-import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import firebase from "../../../config/firebase";
+import {
+  MenuOutlined,
+  CloseCircleOutlined,
+  GoogleCircleFilled,
+} from "@ant-design/icons";
 function HeaderPage() {
   const [isMobileMenuToggle, setMobileMenuToggle] = useState(false);
   const dispatch = useDispatch();

@@ -7,21 +7,20 @@ import CommentComponent from "../../../atoms/Comments/CommentComponent";
 const { Title } = Typography;
 
 const Feedback = (props) => {
-  const { feedback } = props;
   return (
     <section className={styles.feedback}>
       <Title level={4}>Reviews</Title>
-      {feedback.map((value, key) => {
+      {props.feedback.map((value, key) => {
         return (
           <CommentComponent
             key={key}
             author={
               <span style={{ color: "black", fontWeight: "bold" }}>
-                {value.author}
+                {value.usertable.first_name}
               </span>
             }
-            content={<p style={{ textAlign: "justify" }}>{value.content}</p>}
-            datetime={new Date().toLocaleDateString()}
+            content={<p style={{ textAlign: "justify" }}>{value.feedback}</p>}
+            datetime={value.createdAt || new Date().toDateString()}
           />
         );
       })}

@@ -1,8 +1,9 @@
 import styles from "./singleResortPage.module.css";
 
-import { Col, Layout, Row } from "antd";
-
+import { useEffect, useState } from "react";
+import { Col, Layout, Row, Skeleton } from "antd";
 import { Element } from "react-scroll";
+import { useSearchParams } from "react-router-dom";
 
 import ResortHeader from "./Resort-Header/ResortHeader";
 import SingleResortDetail from "./SingleResort-Detail/SingleResortDetails";
@@ -13,111 +14,32 @@ import Location from "./Location/Location";
 import Feedback from "./Feedback/Feedback";
 import RoomMobile from "./Rooms/MobileView/RoomsMobile";
 import RoomsLaptop from "./Rooms/LaptopView/RoomsLaptop";
-import { useEffect, useState } from "react";
 import Address from "./Address/Address";
 import Image1 from "../../../assets/image1.jpg";
 import Image2 from "../../../assets/image2.jpg";
 import Image3 from "../../../assets/image3.jpg";
 import Image4 from "../../../assets/image4.jpg";
 import Image5 from "../../../assets/image5.jpg";
+import axios from "../../../axios";
+import { getSingleResort } from "../../../constant/Apis";
 
 const { Content } = Layout;
 
 const SingleResort = () => {
-  const [isMobileView, setIsMobileView] = useState(false);
-
   const resort1 = {
-    resortName: "The Welcome Resort",
-    rating: 4.5,
     images: [Image1, Image2, Image3, Image4, Image5],
-    majorAmenities: [
-      "Doctor on Call",
-      "First aid Services",
-      "Sanitizer installed",
-      "Bar",
-    ],
-    lowestPrice: 2000,
     tax: 681,
-    amenities: {
-      Dining: ["Restaurant", "Dining Area"],
-      Internet: ["Free Wi-Fi"],
-      Services: [
-        "Laundry Service",
-        "First-aid Services",
-        "Paid Pickup/Drop",
-        "Paid Airport Transfers",
-      ],
-      General: [
-        "Air Conditioning",
-        "Smoke alarms",
-        "Swimming Pool",
-        "Safety and Security",
-        "Free Parking",
-        "Lawn",
-        "CCTV",
-        "Reception",
-        "Fire",
-        "Extinguishers",
-        "Elevator/Lift",
-        "Seating Area",
-        "Public Restrooms",
-        "Power Backup",
-      ],
-      Room: [
-        "24-hour Room Service",
-        "Electrical Chargers",
-        "TV",
-        "Balcony/Terrace",
-        "Refrigerator",
-        "Wake-up Call",
-        "Newspaper",
-        "Smoke ",
-        "Detector",
-        "In-room Safe",
-        "Attached Bathroom",
-        "24-hour Security",
-      ],
-      "Safety & Hygiene": [
-        "Sanitizers Installed",
-        "Hair nets",
-        "Masks",
-        "Hospital in the vicinity",
-        "Gloves",
-        "Contactless check-in",
-      ],
-      Others: [
-        "Thermal Screening",
-        "Intercom",
-        "Bar",
-        "Housekeeping",
-        "Emergency Exit Map",
-      ],
-    },
-    feedback: [
-      {
-        author: "Sachi",
-        content:
-          "One of your most impactful moments was how you handled Project X. You showed the power of user testing in shaping a feature roadmap. Your efforts increased the likelihood that we satisfy and delight our users. I'd love to see you do more of this.",
-      },
-      {
-        author: "Sachi",
-        content:
-          "One of your most impactful moments was how you handled Project X. You showed the power of user testing in shaping a feature roadmap. Your efforts increased the likelihood that we satisfy and delight our users. I'd love to see you do more of this.",
-      },
-      {
-        author: "Sachi",
-        content:
-          "One of your most impactful moments was how you handled Project X. You showed the power of user testing in shaping a feature roadmap. Your efforts increased the likelihood that we satisfy and delight our users. I'd love to see you do more of this.",
-      },
-      {
-        author: "Sachi",
-        content:
-          "One of your most impactful moments was how you handled Project X. You showed the power of user testing in shaping a feature roadmap. Your efforts increased the likelihood that we satisfy and delight our users. I'd love to see you do more of this.",
-      },
-    ],
   };
+  const [isMobileView, setIsMobileView] = useState(false);
+  const [resort, setResort] = useState();
+
+  const [searchParams] = useSearchParams();
+  const resortId = searchParams.get("resortID");
+  const squery = searchParams.get("searchQuery");
+  console.log(resortId, squery);
 
   useEffect(() => {
+    console.log("inside mobile view");
     const updateScreenSize = () => {
       setIsMobileView(window.innerWidth <= 700);
     };
@@ -125,61 +47,96 @@ const SingleResort = () => {
     return function () {
       window.removeEventListener("scroll", updateScreenSize);
     };
-  }, []);
+  });
+
+  useEffect(() => {
+    console.log("inside single resort");
+    axios
+      .get(`${getSingleResort}${resortId}`)
+      .then((response) => {
+        console.log("responsoe", response);
+        setResort(response.data.value);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [resortId]);
 
   return (
     <Layout>
-      {console.log(isMobileView)}
-      <Content className={styles.main}>
-        <Row>
-          <Col span={24}>
-            <h1>Search</h1>
-          </Col>
-        </Row>
-        <ResortHeader title={resort1.resortName} rating={resort1.rating} />
-        <SingleResortDetail
-          images={resort1.images}
-          majorAmenities={resort1.majorAmenities}
-          lowestPrice={resort1.lowestPrice}
-          tax={resort1.tax}
-        />
-        <section className={styles.section_4}>
-          <MenuComponent>
-            {["Overview", "Rooms", "Aminities", "Location", "Reviews"]}
-          </MenuComponent>
-        </section>
-        <section className={styles.section_5}>
-          <Element name="overview">
-            <Overview />
-          </Element>
-          <Element name="rooms">
-            {!isMobileView ? (
-              <RoomsLaptop className={styles.laptopview} />
-            ) : (
-              <RoomMobile className={styles.mobileview} />
-            )}
-          </Element>
-          <Element name="aminities">
-            <Amenities
-              allAmenities={resort1.amenities}
-              majorAmenities={resort1.majorAmenities}
-            />
-          </Element>
-          <Element name="location">
-            <Row>
-              <Col sm={17}>
-                <Location />
-              </Col>
-              <Col sm={7}>
-                <Address />
-              </Col>
-            </Row>
-          </Element>
-          <Element name="reviews">
-            <Feedback feedback={resort1.feedback} />
-          </Element>
-        </section>
-      </Content>
+      {/* {if(resort)} */}
+      {resort ? (
+        <Content className={styles.main}>
+          <ResortHeader
+            title={resort.resort_name}
+            rating={
+              resort.reviewtables.reduce((sum, value) => {
+                return sum + value.rating;
+              }, 0) / resort?.reviewtables.length
+            }
+          />
+          <SingleResortDetail
+            images={resort1.images}
+            majorAmenities={resort.major_aminities.split(",")}
+            lowestPrice={resort.starting_price}
+            tax={resort1.tax}
+          />
+          <section className={styles.section_4}>
+            <MenuComponent>
+              {["Overview", "Rooms", "Aminities", "Location", "Reviews"]}
+            </MenuComponent>
+          </section>
+          <section className={styles.section_5}>
+            <Element name="overview">
+              <Overview overview={resort.extra_content} />
+            </Element>
+            <Element name="rooms">
+              {!isMobileView ? (
+                <RoomsLaptop
+                  rooms={resort.roomtables}
+                  className={styles.laptopview}
+                  searchQuery={squery}
+                  resortID={resortId}
+                />
+              ) : (
+                <RoomMobile
+                  rooms={resort.roomtables}
+                  className={styles.mobileview}
+                  searchQuery={squery}
+                  resortID={resortId}
+                />
+              )}
+            </Element>
+            <Element name="aminities">
+              <Amenities
+                allAmenities={resort.amenitiestables}
+                majorAmenities={resort.major_aminities}
+              />
+            </Element>
+            <Element name="location">
+              <Row>
+                <Col sm={17}>
+                  <Location lat={resort.latitude} lon={resort.longititude} />
+                </Col>
+                <Col sm={7}>
+                  <Address
+                    address={resort.address}
+                    city={resort.city}
+                    contactNumber={resort.contact_number}
+                    pin={resort.pin}
+                    mail={resort.resort_email}
+                  />
+                </Col>
+              </Row>
+            </Element>
+            <Element name="reviews">
+              <Feedback feedback={resort.reviewtables} />
+            </Element>
+          </section>
+        </Content>
+      ) : (
+        <Skeleton active />
+      )}
     </Layout>
   );
 };

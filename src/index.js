@@ -8,6 +8,7 @@ import reportWebVitals from "./reportWebVitals";
 import "antd/dist/antd.css";
 
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 
 import store from "./store/Store/Store";
 
@@ -15,7 +16,7 @@ Sentry.init({
   dsn: "https://8be0ad97e2514e608b9023330aea260d@o1078306.ingest.sentry.io/6086100",
   integrations: [new Integrations.BrowserTracing()],
   environment: "development",
-  debug: true,
+  debug: false,
   release: "resortic-app@0.1.01",
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
@@ -26,7 +27,9 @@ Sentry.init({
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

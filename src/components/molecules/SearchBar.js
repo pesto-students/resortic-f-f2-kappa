@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { CustomInput } from "../atoms/CustomInput/CustomInput";
 import { CustomButton } from "../atoms/CustomButton/CustomButton";
 import CustomDatepicker from "../atoms/CustomDatepicker/CustomDatepicker";
 import { Select } from "antd";
 import { debounce } from "../../utils/utils";
+import axios from "axios";
 import {
   TeamOutlined,
   EnvironmentOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 const { Option } = Select;
 function handleChange(value) {
   console.log(`selected ${value}`);
 }
 
-function onChange(date, dateString) {
-  console.log(date, dateString);
-}
-
-function locationHandler() {
-  console.log("clicked afer 1 wsec");
-}
+// function locationHandler(e) {
+//   console.log("clicked afer 1 wsec");
+// }
 
 const roomTypeArr = ["Adult", "Child"];
 
@@ -37,26 +36,61 @@ const SearchButton = {
 };
 
 function SearchBar() {
+  const [city, setCity] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [adult, setAdult] = useState(2);
+  const [child, setChild] = useState(0);
+  const [room, setroom] = useState(0);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const cityInputHandle = (e) => {
+    setCity(e.target.value);
+  };
+
+  const searchHandle = () => {
+    navigate(
+      `./resortList?city=${city}&searchQuery=${JSON.stringify({
+        checkIn: checkIn,
+        checkOut: checkOut,
+        room: room,
+        child: child,
+        adult: adult,
+      })}`
+    );
+  };
+
+  function getCheckIn(date, dateString) {
+    setCheckIn(dateString);
+  }
+
+  function getCheckOut(date, dateString) {
+    setCheckOut(dateString);
+  }
+
   return (
     <>
       <CustomInput
         placeholder="Location"
         bordered={false}
         icon={<EnvironmentOutlined />}
-        onChange={() => {
-          debounce(locationHandler, 1000);
-        }}
+        // onChange={() => {
+        //   debounce(locationHandler, 1000);
+        // }}
+        onInputChange={cityInputHandle}
+        defaultValue={city}
       >
         {/* <Autocomplete /> */}
       </CustomInput>
       <CustomDatepicker
-        onChange={onChange}
+        onChange={getCheckIn}
         placeholder={"Check In"}
         bordered={false}
       ></CustomDatepicker>
 
       <CustomDatepicker
-        onChange={onChange}
+        onChange={getCheckOut}
         placeholder={"Check Out"}
         bordered={false}
       ></CustomDatepicker>
@@ -76,7 +110,7 @@ function SearchBar() {
       </Select>
       <CustomButton
         style={SearchButton}
-        onClick={handleChange}
+        onClick={searchHandle}
         icon={<SearchOutlined />}
       >
         Search
