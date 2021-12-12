@@ -6,15 +6,12 @@ import ImageComponents from "./ImageComponent/ImageComponent";
 import BodyComponent from "./BodyComponent/BodyComponent";
 import { useEffect, useState } from "react";
 import axios from "../../../axios";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useSearchParams } from "react-router-dom";
 import { getResortList } from "../../../constant/Apis";
 
 const ResortListPage = () => {
   const [resortData, setResortData] = useState([]);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [searchPrama, setSearchPrama] = useSearchParams();
+  const [searchPrama] = useSearchParams();
   const city = searchPrama.get("city");
   const squery = searchPrama.get("searchQuery");
   console.log("city: ", city, "searchquery: ", JSON.parse(squery));
@@ -48,7 +45,7 @@ const ResortListPage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [city]);
 
   return (
     <section className={styles.resortList}>

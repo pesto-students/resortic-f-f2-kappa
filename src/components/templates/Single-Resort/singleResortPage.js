@@ -33,7 +33,7 @@ const SingleResort = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const [resort, setResort] = useState();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const resortId = searchParams.get("resortID");
   const squery = searchParams.get("searchQuery");
   console.log(resortId, squery);

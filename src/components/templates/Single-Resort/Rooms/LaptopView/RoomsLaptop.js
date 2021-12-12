@@ -1,6 +1,6 @@
 import styles from "./RoomsLaptop.module.css";
 
-import { Typography, List, Row, Col, Image, Button } from "antd";
+import { Typography, List, Row, Col, Image } from "antd";
 import Image7 from "../../../../../assets/image7.jpg";
 
 import { Link } from "react-router-dom";

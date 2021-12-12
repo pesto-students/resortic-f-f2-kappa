@@ -108,7 +108,7 @@ function Homepage() {
               return {
                 ...resort,
                 rating:
-                  resort.reviewtables.length != 0
+                  resort.reviewtables.length !== 0
                     ? (
                         resort.reviewtables.reduce(
                           (sum, val) => sum + val.rating,
@@ -151,14 +151,20 @@ function Homepage() {
           {resorts ? (
             resorts.map((resort, key) => {
               return (
-                <SingleDetailCard
-                  key={resort + key}
-                  resortimg={HeroBanner1}
-                  location={resort.city}
-                  title={resort.resort_name}
-                  price={resort.starting_price}
-                  ratingValue={resort.rating}
-                />
+                <Link
+                  to={{
+                    pathname: `/resort?resortID=${resort.id}&searchQuery=""`,
+                  }}
+                >
+                  <SingleDetailCard
+                    key={resort + key}
+                    resortimg={HeroBanner1}
+                    location={resort.city}
+                    title={resort.resort_name}
+                    price={resort.starting_price}
+                    ratingValue={resort.rating}
+                  />
+                </Link>
               );
             })
           ) : (
