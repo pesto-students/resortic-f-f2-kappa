@@ -2,7 +2,7 @@ const PRODUCTION = false;
 const VERSION = "v1";
 export let API_SERVER = "";
 if (!PRODUCTION) {
-  API_SERVER = `http://localhost:8000/${VERSION}/`;
+  API_SERVER = `http://localhost:8081/${VERSION}/`;
 } else {
   API_SERVER = `http://localhost:8000/${VERSION}/`;
 }
@@ -10,7 +10,7 @@ if (!PRODUCTION) {
 // APIS
 
 // Guest Token Api
-export const guestToken = "api/guest/token/";
+export const guestToken = "api/guest/token";
 
 // Login Apis
 export const loginApi = API_SERVER + "api/login/add/";

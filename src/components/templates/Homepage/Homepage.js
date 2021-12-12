@@ -19,7 +19,7 @@ const tabsData = ["Beach", "Mountain", "Royal", "Party"];
 
 const getGuestToken = () => {
   axios
-    .get(APIS.guestToken + "guestSystemId=212wsdfsdfsdfdfgdfgdfg")
+    .get(APIS.guestToken + "?guestSystemId=212wsdfsdfsdfdfgdfgdfgsachi")
     .then(function (response) {
       localStorage.setItem(
         "resortic_localstorage",

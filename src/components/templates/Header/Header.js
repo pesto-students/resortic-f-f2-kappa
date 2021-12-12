@@ -6,26 +6,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginModal1 from "../../../modules/Login-Modal/LoginModal-1";
 import LoginModal2 from "../../../modules/Login-Modal/LoginModal-2";
-<<<<<<< HEAD
+
 import firebase from "../../../config/firebase";
-import {
-  MenuOutlined,
-  CloseCircleOutlined,
-  GoogleCircleFilled,
-} from "@ant-design/icons";
-=======
-import {
-  MenuOutlined,
-  CloseCircleOutlined,
-  CaretRightOutlined,
-} from "@ant-design/icons";
+import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
+
 import loginUserIC from "../../../assets/man.png";
-import firebase from "../../../config/firebase";
+
 import axios from "../../../axios";
 import * as APIS from "../../../constant/Apis";
-const { Panel } = Collapse;
 
->>>>>>> 50ded5626d6cf102d63422dfcb590ec1164ec117
 function HeaderPage() {
   let navigate = useNavigate();
   const [isMobileMenuToggle, setMobileMenuToggle] = useState(false);
