@@ -1,8 +1,9 @@
 const PRODUCTION = false;
 const VERSION = "v1";
+
 export let API_SERVER = "";
 if (!PRODUCTION) {
-  API_SERVER = `http://localhost:8081/${VERSION}/`;
+  API_SERVER = `http://localhost:8000/${VERSION}/`;
 } else {
   API_SERVER = `http://localhost:8000/${VERSION}/`;
 }
@@ -11,7 +12,6 @@ if (!PRODUCTION) {
 
 // Guest Token Api
 export const guestToken = "api/guest/token/";
-
 // Login Apis
 export const loginApi = API_SERVER + "api/login/add/";
 export const logoutApi = API_SERVER + "api/login/logout/";
@@ -25,7 +25,6 @@ export const addReviewApi = API_SERVER + "api/review/add/";
 export const updateReviewApi = API_SERVER + "api/review/update/";
 export const deleteReviewApi = API_SERVER + "api/review/delete/";
 export const getReviewApi = API_SERVER + "api/review/get";
-
 // Payment Apis
 export const addPaymentApi = API_SERVER + "api/payment/add/";
 export const deletePaymentApi = API_SERVER + "api/payment/delete/";

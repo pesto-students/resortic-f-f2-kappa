@@ -6,12 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginModal1 from "../../../modules/Login-Modal/LoginModal-1";
 import LoginModal2 from "../../../modules/Login-Modal/LoginModal-2";
-
-import firebase from "../../../config/firebase";
 import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
-
 import loginUserIC from "../../../assets/man.png";
-
+import firebase from "../../../config/firebase";
 import axios from "../../../axios";
 import * as APIS from "../../../constant/Apis";
 

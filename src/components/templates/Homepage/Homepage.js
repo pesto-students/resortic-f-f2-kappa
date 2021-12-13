@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import HeroBanner1 from "../../../assets/hero-banner1.jpg";
 import HeroBanner2 from "../../../assets/hero-banner2.jpg";
-
 import classes from "./Homepage.module.css";
 
 import SearchBar from "../../molecules/SearchBar/SearchBar";
@@ -19,7 +18,7 @@ const tabsData = ["Beach", "Mountain", "Royal", "Party"];
 
 const getGuestToken = () => {
   axios
-    .get(APIS.guestToken + "guestSystemId=212wsdfsdfsdfdfgdfgdfgsachi")
+    .get(APIS.guestToken + "guestSystemId=212wsdfsdfsdfdfgdfgdfg")
     .then(function (response) {
       localStorage.setItem(
         "resortic_localstorage",

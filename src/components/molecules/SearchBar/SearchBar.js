@@ -3,29 +3,15 @@ import { CustomInput } from "../../atoms/CustomInput/CustomInput";
 import { CustomButton } from "../../atoms/CustomButton/CustomButton";
 import CustomDatepicker from "../../atoms/CustomDatepicker/CustomDatepicker";
 import { Menu, Dropdown, Button, Space } from "antd";
-import { debounce } from "../../../utils/utils";
 import {
   TeamOutlined,
   EnvironmentOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-
 import classes from "./SearchBar.module.css";
 import moment from "moment";
 import Counter from "../../atoms/Counter/Counter";
-
-function handleChange(value) {
-  console.log(`selected ${value}`);
-}
-
-function onChange(date, dateString) {
-  console.log(date, dateString, "here");
-}
-
-function locationHandler() {
-  console.log("clicked afer 1 wsec");
-}
 
 const SearchButton = {
   position: "relative",
@@ -75,7 +61,6 @@ function SearchBar() {
   const [visible, setVisible] = useState(false);
   const [visibleMob, setVisibleMob] = useState(false);
   const [roomsStr, setRoomsStr] = useState("");
-
   const [city, setCity] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
@@ -104,7 +89,6 @@ function SearchBar() {
   function getCheckOut(date, dateString) {
     setCheckOut(dateString);
   }
-
   useEffect(() => {
     roomType = room + " Room," + adult + " Adult";
     roomType += child ? "&" + child + " Child" : "";
@@ -208,7 +192,6 @@ function SearchBar() {
           )}
           format={dateFormat}
         ></CustomDatepicker>
-
         <CustomDatepicker
           onChange={getCheckOut}
           placeholder={"Check Out"}
