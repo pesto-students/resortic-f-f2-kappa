@@ -18,11 +18,11 @@ const tabsData = ["Beach", "Mountain", "Royal", "Party"];
 
 const getGuestToken = () => {
   axios
-    .get(APIS.guestToken + "?guestSystemId="+ new Date().toISOString())
+    .get(APIS.guestToken + "guestSystemId=" + new Date().toISOString())
     .then(function (response) {
       localStorage.setItem(
         "resortic_localstorage",
-        JSON.stringify({ token: response.data.data.data })
+        JSON.stringify({ token: response.data.data.token })
       );
     })
     .catch(function (error) {
