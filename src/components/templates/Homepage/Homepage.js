@@ -16,7 +16,7 @@ import PopularResort from "../../molecules/PopularResort";
 
 const tabsData = ["Beach", "Mountain", "Royal", "Party"];
 
-const getGuestToken = () => {
+export const getGuestToken = () => {
   axios
     .get(APIS.guestToken + "guestSystemId=" + new Date().toISOString())
     .then(function (response) {

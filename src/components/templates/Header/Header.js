@@ -11,6 +11,7 @@ import loginUserIC from "../../../assets/man.png";
 import firebase from "../../../config/firebase";
 import axios from "../../../axios";
 import * as APIS from "../../../constant/Apis";
+import { getGuestToken } from "../Homepage/Homepage";
 
 function HeaderPage() {
   let navigate = useNavigate();
@@ -29,6 +30,7 @@ function HeaderPage() {
         setLoggedIn(false);
         localStorage.clear();
         setMobileMenuToggle(!isMobileMenuToggle);
+        getGuestToken();
       })
       .catch((error) => {
         console.log("logout error", error);
