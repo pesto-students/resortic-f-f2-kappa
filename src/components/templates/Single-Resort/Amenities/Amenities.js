@@ -21,7 +21,7 @@ const Amenities = (props) => {
   const handleModalCancel = () => {
     setIsModalVisible(false);
   };
-
+  console.log(props);
   return (
     <section className={styles.amenities}>
       <Row>
@@ -30,7 +30,7 @@ const Amenities = (props) => {
         </Col>
         <Col span={24}>
           <div className={styles.service}>
-            {props.majorAmenities.map((item, key) => {
+            {props?.majorAmenities.split(",").map((item, key) => {
               return (
                 <div key={key}>
                   <RightCircleOutlined
@@ -50,23 +50,15 @@ const Amenities = (props) => {
               onCancel={handleModalCancel}
               top={10}
             >
-              {Object.entries(props.allAmenities).map((value, key) => {
-                return (
-                  <React.Fragment key={key}>
-                    <p style={{ fontWeight: "bold" }}>{value[0]}</p>
-                    <ul className={styles.amenities_ul}>
-                      {value[1].map((el, key) => {
-                        return (
-                          <li className={styles.amenities_li} key={key}>
-                            {/* <span>ICON</span> */}
-                            <span>{el}</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </React.Fragment>
-                );
-              })}
+              <ul className={styles.amenities_ul}>
+                {props.allAmenities.map((el, key) => {
+                  return (
+                    <li className={styles.amenities_li} key={key}>
+                      <span>{el.amininits_name}</span>
+                    </li>
+                  );
+                })}
+              </ul>
             </ModalComponent>
           </div>
         </Col>

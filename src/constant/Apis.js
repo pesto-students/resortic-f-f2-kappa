@@ -34,13 +34,18 @@ export const addPaymentApi = API_SERVER + "api/payment/add/";
 export const deletePaymentApi = API_SERVER + "api/payment/delete/";
 export const getRazorOrderId = API_SERVER + "api/payment/razorpayOrder";
 
-// Homepage Apis
-export const getCategoryResort = API_SERVER + "api/resort/fetchCityByCategory";
-
 // Booking Apis
 export const addBooking = API_SERVER + "api/booking/book";
 export const getBooking = API_SERVER + "api/booking/book";
 export const updateBooking = API_SERVER + "api/booking/book";
 
-// Resort Apis
+// Homepage Apis
+export const getCategoryResort = API_SERVER + "api/resort/fetchCityByCategory";
+export const getPopularResort = API_SERVER + "api/resort/fetchToTenResort";
+
+// ResortList Apis
+export const getResortList = API_SERVER + "api/resort/fetchByCity";
+
+// Single Resort List Apis
+export const getSingleResort = API_SERVER + "api/resort/singleResort/";
 export const getFullResortDetails = API_SERVER + "api/resort/singleResort";
