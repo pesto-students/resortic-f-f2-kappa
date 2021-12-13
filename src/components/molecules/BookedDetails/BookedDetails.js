@@ -24,6 +24,7 @@ export default function BookedDetails({
   nightsNum,
   type,
   amount,
+  roomName,
   bookingId
 }) {
   
@@ -98,7 +99,7 @@ export default function BookedDetails({
           <strong>Guests</strong>
         </h6>
         <h3>
-          {guestNum || 0} Guests | {roomsNum || 0} Rooms
+          {guestNum || 1} Guests | {roomsNum || 1} Rooms
         </h3>
         <h5>{nightsNum || 1} Nights</h5>
       </Col>
@@ -122,7 +123,8 @@ export default function BookedDetails({
         1 x Day Room Use calculated from 9am to 6pm (Check-In and Check-Out on
         same day)
       </p>
-      <p> {guestNum || 0} Adults</p>
+      <p> {guestNum || 1} Adults</p>
+      <p> {roomName} </p>
       <p> Rooms only</p>
       <a href="#top">View booking and Cancellation Policy</a>
     </div>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import BookedDetails from "../molecules/BookedDetails/BookedDetails";
 import AccordionComponent from "../atoms/Accordion/Accordion-Component";
 import resortimg2 from "../../assets/resort2.jpg";
 import axios from "../../axios";
 import * as APIS from "../../constant/Apis";
 import { Tabs, Row, Col, Result } from "antd";
-import { SmileOutlined, MehTwoTone } from "@ant-design/icons";
+import { MehTwoTone } from "@ant-design/icons";
 const { TabPane } = Tabs;
 
 function callback(key) {
@@ -14,14 +14,17 @@ function callback(key) {
 }
 
 export default function ManageBooking() {
+  const [searchParams] = useSearchParams();
+  const userIdURL = searchParams.get("userId");
+  console.log(userIdURL);
+
   const [upcomingData, setUpcomingData] = useState("");
   const [pastData, setPastData] = useState("");
   const [activeKey, setActiveKey] = useState("1");
 
   const getUpcomingBookings = () => {
     const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
-    const userId =
-      localData.userId || "USR-73c2aa6c6ed3278039b8497306896ab18241c33c";
+    const userId = userIdURL || localData.userId || "USR-73c2aa6c6ed3278039b8497306896ab18241c33c";
     axios
       .get(APIS.getBooking + "/" + userId + "/upcoming")
       .then(function (response) {

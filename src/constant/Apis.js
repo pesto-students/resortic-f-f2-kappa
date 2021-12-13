@@ -42,6 +42,5 @@ export const addBooking = API_SERVER + "api/booking/book";
 export const getBooking = API_SERVER + "api/booking/book";
 export const updateBooking = API_SERVER + "api/booking/book";
 
-//Resort Apis
-
+// Resort Apis
 export const getFullResortDetails = API_SERVER + "api/resort/singleResort";

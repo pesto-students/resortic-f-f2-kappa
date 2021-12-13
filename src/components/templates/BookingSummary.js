@@ -36,7 +36,7 @@ export default function BookingSummary() {
   const roomId = searchParams.get("roomID");
   const squery = JSON.parse(searchParams.get("searchQuery"));
 
-  // console.log(squery);
+  console.log(squery);
   // console.log(resortId);
   // console.log(roomId);
 
@@ -45,7 +45,12 @@ export default function BookingSummary() {
       .get(APIS.getFullResortDetails + "/" + resortId)
       .then(function (response) {
         console.log("response of resort", response.data.value);
-        setResortData( response.data.value );
+        setResortData(response.data.value);
+        setRoomData(
+          response.data.value.roomtables.filter(
+            (rooms) => rooms.id === roomId
+          )[0]
+        );
       })
       .catch(function (error) {
         console.log(error);
@@ -64,9 +69,22 @@ export default function BookingSummary() {
 
   useEffect(() => {
     resortFullData();
+    console.log(resortData);
+    console.log(roomData);
     if (formDetails === "") {
       return false;
     } else {
+      const totalNights = Math.ceil(
+        Math.abs(new Date(squery.checkOut) - new Date(squery.checkIn)) /
+          (1000 * 60 * 60 * 24)
+      );
+      const totalCharges =
+        (squery.room || 1) * roomData.room_price * totalNights;
+      const discountAmount = Math.ceil(totalCharges * (10 / 100));
+      const priceToPay = totalCharges - discountAmount;
+      const taxes = Math.ceil(priceToPay * 0.18);
+      const totalAmount = priceToPay + taxes;
+
       async function displayRazorpay() {
         const res = await loadScript(
           "https://checkout.razorpay.com/v1/checkout.js"
@@ -79,7 +97,7 @@ export default function BookingSummary() {
         }
 
         const orderPayload = {
-          amount: 600,
+          amount: totalAmount,
           currency: "INR",
         };
         const orderIdData = await axios
@@ -96,7 +114,7 @@ export default function BookingSummary() {
         const options = {
           key: process.env.REACT_APP_RAZORPAY_ID,
           currency: orderIdData.currency,
-          amount: orderIdData.amount,
+          amount: totalAmount,
           order_id: orderIdData.id,
           name: "Book your resort",
           description: "Thank you for booking with us. Have a pleasent stay",
@@ -119,11 +137,13 @@ export default function BookingSummary() {
                 " " +
                 formDetails.lastName,
             ];
+            var guestAdd = [];
             if (formDetails.users) {
-              for (var user in formDetails.users) {
-                guests.push(user.title + user.firstName + " " + user.lastName);
-              }
+              guestAdd = formDetails.users.map((user) => {
+                return user.title + user.first + " " + user.last;
+              });
             }
+            guests = [...guests, ...guestAdd];
             bookPayload.guests = guests.toString();
 
             const bookingData = await axios
@@ -135,13 +155,14 @@ export default function BookingSummary() {
               .catch(function (error) {
                 console.log(error);
               });
+
             const paymentPayload = {
               order_id: orderIdData.id,
               payment_id: response.razorpay_payment_id,
               payment_signature: response.razorpay_signature,
-              total: 223456,
+              total: totalCharges + taxes,
               discount: "10%",
-              paid_amount: 223000,
+              paid_amount: totalAmount,
               payment_status: "successfull",
               bookingtableId: bookingData.id,
               usertableId: "USR-73c2aa6c6ed3278039b8497306896ab18241c33c",
@@ -183,19 +204,34 @@ export default function BookingSummary() {
           <AccordionComponent title="Booking Details">
             <BookedDetails
               resortImage={resortimg2}
-              resortName="Oakwood Premier AMTD Singapore"
-              resortLoc="Near Ramji colony, JJ District, IGI Airport"
-              resortRating="4"
-              checkinDate={new Date()}
-              guestNum="2"
-              roomsNum="1"
+              resortName={resortData.resort_name}
+              resortLoc={resortData.address}
+              resortRating={
+                resortData ? resortData.reviewtables[0].rating : "1"
+              }
+              checkinDate={new Date(squery.checkIn)}
+              checkoutDate={new Date(squery.checkOut)}
+              nightsNum={Math.ceil(
+                Math.abs(new Date(squery.checkOut) - new Date(squery.checkIn)) /
+                  (1000 * 60 * 60 * 24)
+              )}
+              guestNum={squery.adult}
+              roomsNum={squery.room}
+              roomName={roomData.room_name}
               type="booking"
-              amount="290"
             />
           </AccordionComponent>
         </Col>
         <Col xs={23} sm={23} md={8} lg={6} xl={6}>
-          <PaymentSummary />
+          <PaymentSummary
+            roomsNum={squery.room || 1}
+            nightsNum={Math.ceil(
+              Math.abs(new Date(squery.checkOut) - new Date(squery.checkIn)) /
+                (1000 * 60 * 60 * 24)
+            )}
+            pricePerRoom={roomData.room_price}
+            discount="10"
+          />
         </Col>
       </Row>
       <Row justify="start">
