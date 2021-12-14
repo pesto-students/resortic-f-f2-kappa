@@ -20,7 +20,7 @@ export default function PaymentSummary({
       <AccordionComponent title="Price Summary">
         <Row gutter={32}>
           <Col span={18}>
-            <p>Room Charges({roomsNum || 1} room x {nightsNum || 1} night)</p>
+            <p>Room Charges({roomsNum || 1} room x {nightsNum || 1} Day)</p>
           </Col>
           <Col span={6}>
             <p>{"₹"+ totalCharges}</p>
