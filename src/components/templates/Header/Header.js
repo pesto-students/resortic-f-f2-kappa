@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Menu, Modal, Dropdown, Collapse } from "antd";
+import { Menu, Modal, Dropdown } from "antd";
 import classes from "./Header.module.css";
 import logo from "../../../assets/resortic-logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,7 +8,6 @@ import LoginModal1 from "../../../modules/Login-Modal/LoginModal-1";
 import LoginModal2 from "../../../modules/Login-Modal/LoginModal-2";
 import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import loginUserIC from "../../../assets/man.png";
-import firebase from "../../../config/firebase";
 import axios from "../../../axios";
 import * as APIS from "../../../constant/Apis";
 import { getGuestToken } from "../Homepage/Homepage";
@@ -18,7 +17,7 @@ function HeaderPage() {
   const [isMobileMenuToggle, setMobileMenuToggle] = useState(false);
   const dispatch = useDispatch();
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(0);
+  const [setUserId] = useState(0);
 
   const logoutUser = () => {
     const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
@@ -47,7 +46,7 @@ function HeaderPage() {
     <Menu>
       {/* <Link to="booking-history"> */}
       <Menu.Item key="0" onClick={manageBookingHandler}>
-        <a>Manage Bookings</a>
+        <a href="#top">Manage Bookings</a>
       </Menu.Item>
       {/* </Link> */}
       <Menu.Divider />
@@ -116,10 +115,11 @@ function HeaderPage() {
                 trigger={["click"]}
               >
                 <a
+                  href="#top"
                   className="ant-dropdown-link"
                   onClick={(e) => e.preventDefault()}
                 >
-                  <img src={loginUserIC} style={{ height: "40px" }} />
+                  <img src={loginUserIC} alt="loginpic" style={{ height: "40px" }} />
                 </a>
               </Dropdown>
             </Menu.Item>
