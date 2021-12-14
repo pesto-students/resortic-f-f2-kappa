@@ -210,7 +210,7 @@ export default function BookingSummary() {
       displayRazorpay();
       return true;
     }
-  });
+  }, [formDetails]);
 
   return (
     <div style={{ padding: "15px 0px" }}>
