@@ -1,9 +1,9 @@
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
-const Location = () => {
+const Location = (props) => {
   const center = {
-    lat: 21.466871,
-    lng: 83.981171,
+    lat: props.lat,
+    lng: props.lon,
   };
   const containerStyle = {
     width: "100%",
@@ -12,7 +12,7 @@ const Location = () => {
   return (
     <div style={{ marginTop: "20px", marginBottom: "20px" }}>
       <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
-        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
+        <GoogleMap mapContainerStyle={containerStyle} zoom={10}>
           {/* Child components, such as markers, info windows, etc. */}
           <Marker position={center} />
         </GoogleMap>

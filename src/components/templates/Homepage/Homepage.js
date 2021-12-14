@@ -1,102 +1,112 @@
-import React from "react";
-import { Tabs } from "antd";
+import React, { useState, useEffect } from "react";
 
 import HeroBanner1 from "../../../assets/hero-banner1.jpg";
 import HeroBanner2 from "../../../assets/hero-banner2.jpg";
 import classes from "./Homepage.module.css";
-import { Link } from "react-router-dom";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.min.css";
-import "swiper/swiper.min.css";
-
-import SwiperCore, { Pagination, Navigation } from "swiper";
-
-import SingleDetailCard from "../SingleDetailCard/SingleDetailCard";
 import SearchBar from "../../molecules/SearchBar/SearchBar";
 import PopularDestination from "../../molecules/PopularDestination";
 
-const { TabPane } = Tabs;
-SwiperCore.use([Pagination, Navigation]);
-const tabsData = [
-  "Beach Vacation",
-  "Weekend Getaways",
-  "Hill Stations",
-  "Stay Like Royals",
-  "Party Destinations",
-];
+import axios from "../../../axios";
+import * as APIS from "../../../constant/Apis";
+import CategoryTabs from "../../molecules/CategoryTabs";
+import CategoryCity from "../../molecules/CategoryCity";
 
-const resortData = [
-  {
-    resortimg: HeroBanner1,
-    location: "Goa",
-    title: "Karma Royal Palms",
-    price: "240",
-    ratingValue: "3.5",
-  },
-  {
-    resortimg: HeroBanner1,
-    location: "Goa",
-    title: "Karma Royal Palms",
-    price: "240",
-    ratingValue: "3.5",
-  },
-  {
-    resortimg: HeroBanner1,
-    location: "Goa",
-    title: "Karma Royal Palms",
-    price: "240",
-    ratingValue: "3.5",
-  },
-  {
-    resortimg: HeroBanner1,
-    location: "Goa",
-    title: "Karma Royal Palms",
-    price: "240",
-    ratingValue: "3.5",
-  },
-  {
-    resortimg: HeroBanner1,
-    location: "Goa",
-    title: "Karma Royal Palms",
-    price: "240",
-    ratingValue: "3.5",
-  },
-  {
-    resortimg: HeroBanner1,
-    location: "Goa",
-    title: "Karma Royal Palms",
-    price: "240",
-    ratingValue: "3.5",
-  },
-  {
-    resortimg: HeroBanner1,
-    location: "Goa",
-    title: "Karma Royal Palms",
-    price: "240",
-    ratingValue: "3.5",
-  },
-  {
-    resortimg: HeroBanner1,
-    location: "Goa",
-    title: "Karma Royal Palms",
-    price: "240",
-    ratingValue: "3.5",
-  },
-  {
-    resortimg: HeroBanner1,
-    location: "Goa",
-    title: "Karma Royal Palms",
-    price: "240",
-    ratingValue: "3.5",
-  },
-];
+import PopularResort from "../../molecules/PopularResort";
 
-function callback(key) {
-  console.log(key);
-}
+const tabsData = ["Beach", "Mountain", "Royal", "Party"];
+
+export const getGuestToken = () => {
+  axios
+    .get(APIS.guestToken + "guestSystemId=" + new Date().toISOString())
+    .then(function (response) {
+      localStorage.setItem(
+        "resortic_localstorage",
+        JSON.stringify({ token: response.data.data.token })
+      );
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
 
 function Homepage() {
+  const [isDestinationLoading, setDestinationLoading] = useState(true);
+  const [isCategoryLoading, setCategoryLoading] = useState(true);
+  const [isPopularResortLoading, setPopularResortLoading] = useState(true);
+  const [categoryResort, setCategoryResort] = useState([]);
+  const [categoryResortData, setCategoryResortData] = useState([]);
+  const [popularResortData, setPopularResort] = useState([]);
+  setTimeout(() => {
+    setDestinationLoading(false);
+  }, 1000);
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    if (localData == null) getGuestToken();
+    getResortByCategory();
+    getPopularResorts();
+  });
+
+  const getPopularResorts = () => {
+    axios
+      .get(APIS.getPopularResort)
+      .then((resorts) => {
+        console.log("popular resorts", resorts);
+        const popData = resorts.data.value
+          .map((resort) => {
+            return {
+              ...resort,
+              resortimg: HeroBanner1,
+              rating:
+                resort.reviewtables.length !== 0
+                  ? (
+                      resort.reviewtables.reduce(
+                        (sum, val) => sum + val.rating,
+                        0
+                      ) / resort.reviewtables.length
+                    ).toFixed(1)
+                  : 0,
+            };
+          })
+          .sort((a, b) => b.rating - a.rating)
+          .filter((el) => el.rating <= 5 && el.rating >= 4)
+          .slice(0, 10);
+        console.log("popData", popData);
+        setPopularResort(popData);
+        setPopularResortLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getResortByCategory = () => {
+    axios
+      .get(APIS.getCategoryResort)
+      .then(function (response) {
+        console.log("response of caateogry", response);
+        setCategoryResortData(response.data.value);
+        getResortByCategoryHandler(0, response.data.value);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getResortByCategoryHandler = (cat, data) => {
+    const dataForCat =
+      categoryResortData.length > 0 ? categoryResortData : data;
+    const resort = dataForCat.filter(
+      (resort) => resort.category_name === tabsData[cat]
+    );
+    const newData = resort[0].locationcitycategorytables.map((el) => ({
+      ...el,
+      resortimg: HeroBanner1,
+    }));
+    setCategoryResort(newData);
+    setCategoryLoading(false);
+  };
+
   return (
     <div className={classes.Homepage}>
       <div className={classes.heroWrapper} style={{ position: "relative" }}>
@@ -110,131 +120,30 @@ function Homepage() {
       <div className={classes.resortWrapper}>
         <h2 className={classes.popularResortTitle}>Our Most Popular Resorts</h2>
         <div className={classes.popularResort}>
-          <Swiper
-            slidesPerView={1}
-            spaceBetween={10}
-            loop={false}
-            loopFillGroupWithBlank={true}
-            navigation={true}
-            pagination={false}
-            breakpoints={{
-              550: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 10,
-              },
-            }}
-            className="mySwiper"
-          >
-            {resortData.length &&
-              resortData.map((resort, index) => {
-                return (
-                  <SwiperSlide key={index}>
-                    <Link
-                      key={index}
-                      to={{
-                        pathname: "resort",
-                        state: index,
-                      }}
-                    >
-                      <SingleDetailCard
-                        resortimg={resort.resortimg}
-                        location={resort.location}
-                        title={resort.title}
-                        price={resort.price}
-                        ratingValue={resort.ratingValue}
-                      />
-                    </Link>
-                  </SwiperSlide>
-                );
-              })}
-          </Swiper>
+          <PopularResort
+            popularResortData={popularResortData}
+            isLoading={isPopularResortLoading}
+          />
         </div>
       </div>
       <div className={classes.resortWrapper}>
         <div className={classes.tabsWrapper}>
-          <Tabs defaultActiveKey="0" onChange={callback}>
-            {tabsData.length &&
-              tabsData.map((item, index) => {
-                return (
-                  <TabPane
-                    style={{ marginRight: "15px" }}
-                    tab={item}
-                    key={index}
-                  ></TabPane>
-                );
-              })}
-          </Tabs>
+          <CategoryTabs
+            tabsData={tabsData}
+            onChange={getResortByCategoryHandler}
+          />
         </div>
         <div className={classes.popularResort}>
-          <Swiper
-            slidesPerView={1}
-            spaceBetween={10}
-            loop={false}
-            loopFillGroupWithBlank={true}
-            navigation={true}
-            pagination={false}
-            breakpoints={{
-              550: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-              },
-              640: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-              },
-              768: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-              },
-              1024: {
-                slidesPerView: 4,
-                spaceBetween: 10,
-              },
-            }}
-            className="mySwiper"
-          >
-            {resortData.length &&
-              resortData.map((resort, index) => {
-                return (
-                  <SwiperSlide key={index}>
-                    <Link
-                      key={index}
-                      to={{
-                        pathname: "resort",
-                        state: index,
-                      }}
-                    >
-                      <SingleDetailCard
-                        key={index}
-                        resortimg={resort.resortimg}
-                        location={resort.location}
-                        title={resort.title}
-                        price={resort.price}
-                        ratingValue={resort.ratingValue}
-                      />
-                    </Link>
-                  </SwiperSlide>
-                );
-              })}
-          </Swiper>
+          <CategoryCity
+            categoryResort={categoryResort}
+            isLoading={isCategoryLoading}
+          />
         </div>
       </div>
       <div className={classes.popularDestinationWrapper}>
         <h2 className={classes.popularResortTitle}>Most Popular Destination</h2>
         <div className={classes.popularDestination}>
-          <PopularDestination />
+          <PopularDestination isLoading={isDestinationLoading} />
         </div>
       </div>
     </div>

@@ -1,9 +1,9 @@
 import React from "react";
-import LoadingComponent from "../components/atoms/LoadingComponent/LoadingComponent";
+import { Skeleton } from "antd";
 function WithLoading(Component) {
   return function withLoadingComponent({ isLoading, ...props }) {
     if (!isLoading) return <Component {...props} />;
-    return <LoadingComponent />;
+    return <Skeleton active />;
   };
 }
 

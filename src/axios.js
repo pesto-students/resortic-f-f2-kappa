@@ -7,8 +7,9 @@ const instance = axios.create({
 
 const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
 console.log("localData", localData);
-let token = localData != null ? localData.authToken : "";
+let token = localData != null ? localData.token : "";
+console.log("token", token);
 
-instance.defaults.headers.common["Authorization"] = "Bearer" + token;
+instance.defaults.headers.common["Authorization"] = "Bearer " + token;
 
 export default instance;

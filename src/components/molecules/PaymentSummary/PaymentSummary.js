@@ -2,16 +2,28 @@ import React from "react";
 import AccordionComponent from "../../atoms/Accordion/Accordion-Component";
 import { Divider, Row, Col } from "antd";
 
-export default function PaymentSummary() {
+export default function PaymentSummary({
+  roomsNum,
+  nightsNum,
+  pricePerRoom,
+  discount
+}) {
+  const totalCharges = roomsNum * pricePerRoom * nightsNum;
+  const discountAmount = Math.ceil(totalCharges* (discount/100));
+  const priceToPay = totalCharges - discountAmount;
+  const taxes = Math.ceil(priceToPay * 0.18);
+  const totalAmount = priceToPay + taxes;
+  
+
   return (
     <div>
       <AccordionComponent title="Price Summary">
         <Row gutter={32}>
           <Col span={18}>
-            <p>Room Charges(1 room x 1 night)</p>
+            <p>Room Charges({roomsNum || 1} room x {nightsNum || 1} Day)</p>
           </Col>
           <Col span={6}>
-            <p>₹300</p>
+            <p>{"₹"+ totalCharges}</p>
           </Col>
         </Row>
         <Row gutter={32}>
@@ -19,7 +31,7 @@ export default function PaymentSummary() {
             <p>Total Discount</p>
           </Col>
           <Col span={6}>
-            <p>₹100</p>
+            <p>{"₹"+ discountAmount}</p>
           </Col>
         </Row>
         <Divider />
@@ -28,7 +40,7 @@ export default function PaymentSummary() {
             <p>Price after Discount</p>
           </Col>
           <Col span={6}>
-            <p>₹200</p>
+            <p>{"₹"+ priceToPay}</p>
           </Col>
         </Row>
         <Row gutter={32}>
@@ -36,7 +48,7 @@ export default function PaymentSummary() {
             <p>Taxes and fees</p>
           </Col>
           <Col span={6}>
-            <p>₹30</p>
+            <p>{"₹"+ taxes}</p>
           </Col>
         </Row>
         <Divider style={{ margin: "none" }} />
@@ -48,7 +60,7 @@ export default function PaymentSummary() {
           </Col>
           <Col span={6}>
             <p>
-              <strong>₹230</strong>
+              <strong>{"₹"+ totalAmount}</strong>
             </p>
           </Col>
         </Row>

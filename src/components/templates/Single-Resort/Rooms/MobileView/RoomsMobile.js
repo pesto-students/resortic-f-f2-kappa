@@ -1,177 +1,85 @@
 import styles from "./RoomsMobile.module.css";
 
 import { Typography, Card, Row, Col } from "antd";
+import { CustomButton } from "../../../../atoms/CustomButton/CustomButton";
+import { Link } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
-const RoomMobile = () => {
+const RoomMobile = (props) => {
+  console.log("Mobile view", props.rooms);
   return (
     <section className={styles.roomMobile}>
       <div className={styles.roomMobile_header}>
         <Title level={4}>Select Rooms</Title>
       </div>
       <div>
-        <Card
-          style={{ marginBottom: "20px" }}
-          title={
-            <Row>
-              <Col span={24}>Dupliex Room</Col>
-              <Col span={24}>
-                <Text type="secondary" style={{ fontSize: "12px" }}>
-                  Accommodates 2 Adults
-                </Text>
-              </Col>
-            </Row>
-          }
-          cover={<img src="./images/image7.jpg" alt="loading" />}
-          className={styles.roomTypeCard}
-          bodyStyle={{ padding: "5px" }}
-        >
-          <Row style={{ marginBottom: "5px" }}>
-            <Col span={8}>
-              <Text code>256 sq. ft.</Text>
-            </Col>
-            <Col span={16}>
-              <Text code>Double Bed sized bed</Text>
-            </Col>
-          </Row>
-          <Card title="Room Only">
-            <Row>
-              <Col span={24}>
-                <ul>
-                  <li>Free Cancellation Before 14 Dec-2021 23:59</li>
-                  <li>Zero Payment On Credit Cards</li>
-                  <li>Free Breakfast with Lunch And Dinner</li>
-                  <li>High Speed Internet Access</li>
-                </ul>
-              </Col>
-              <Col span={24}>
-                <div style={{ textAlign: "center" }}>
-                  <Text>
-                    <span style={{ fontWeight: "bold" }}>&#8377; 9000/-</span>{" "}
-                    per night{" "}
-                    <span style={{ color: "gray", fontSize: "13px" }}>
-                      +&#8377; 671 taxes & fees
-                    </span>
-                  </Text>
-                </div>
-              </Col>
-              <Col span={24}>
-                <div style={{ textAlign: "right" }}>
-                  <button>select</button>
-                </div>
-              </Col>
-            </Row>
-          </Card>
-          <Card title="Room with Lunch and Dinner">
-            <Row>
-              <Col span={24}>
-                <ul>
-                  <li>Free Cancellation Before 14 Dec-2021 23:59</li>
-                  <li>Zero Payment On Credit Cards</li>
-                  <li>Free Breakfast with Lunch And Dinner</li>
-                  <li>High Speed Internet Access</li>
-                </ul>
-              </Col>
-              <Col span={24}>
-                <div style={{ textAlign: "center" }}>
-                  <Text>
-                    <span style={{ fontWeight: "bold" }}>&#8377; 9000/-</span>{" "}
-                    per night{" "}
-                    <span style={{ color: "gray", fontSize: "13px" }}>
-                      +&#8377; 671 taxes & fees
-                    </span>
-                  </Text>
-                </div>
-              </Col>
-              <Col span={24}>
-                <div style={{ textAlign: "right" }}>
-                  <button>select</button>
-                </div>
-              </Col>
-            </Row>
-          </Card>
-        </Card>
-        <Card
-          title={
-            <Row>
-              <Col span={24}>Dupliex Room</Col>
-              <Col span={24}>
-                <Text type="secondary" style={{ fontSize: "12px" }}>
-                  Accommodates 2 Adults
-                </Text>
-              </Col>
-            </Row>
-          }
-          cover={<img src="./images/image7.jpg" alt="loading" />}
-          className={styles.roomTypeCard}
-          bodyStyle={{ padding: "5px" }}
-        >
-          <Row style={{ marginBottom: "5px" }}>
-            <Col span={8}>
-              <Text code>256 sq. ft.</Text>
-            </Col>
-            <Col span={16}>
-              <Text code>Double Bed sized bed</Text>
-            </Col>
-          </Row>
-          <Card title="Room Only">
-            <Row>
-              <Col span={24}>
-                <ul>
-                  <li>Free Cancellation Before 14 Dec-2021 23:59</li>
-                  <li>Zero Payment On Credit Cards</li>
-                  <li>Free Breakfast with Lunch And Dinner</li>
-                  <li>High Speed Internet Access</li>
-                </ul>
-              </Col>
-              <Col span={24}>
-                <div style={{ textAlign: "center" }}>
-                  <Text>
-                    <span style={{ fontWeight: "bold" }}>&#8377; 9000/-</span>{" "}
-                    per night{" "}
-                    <span style={{ color: "gray", fontSize: "13px" }}>
-                      +&#8377; 671 taxes & fees
-                    </span>
-                  </Text>
-                </div>
-              </Col>
-              <Col span={24}>
-                <div style={{ textAlign: "right" }}>
-                  <button>select</button>
-                </div>
-              </Col>
-            </Row>
-          </Card>
-          <Card title="Room with Lunch and Dinner">
-            <Row>
-              <Col span={24}>
-                <ul>
-                  <li>Free Cancellation Before 14 Dec-2021 23:59</li>
-                  <li>Zero Payment On Credit Cards</li>
-                  <li>Free Breakfast with Lunch And Dinner</li>
-                  <li>High Speed Internet Access</li>
-                </ul>
-              </Col>
-              <Col span={24}>
-                <div style={{ textAlign: "center" }}>
-                  <Text>
-                    <span style={{ fontWeight: "bold" }}>&#8377; 9000/-</span>{" "}
-                    per night{" "}
-                    <span style={{ color: "gray", fontSize: "13px" }}>
-                      +&#8377; 671 taxes & fees
-                    </span>
-                  </Text>
-                </div>
-              </Col>
-              <Col span={24}>
-                <div style={{ textAlign: "right" }}>
-                  <button>select</button>
-                </div>
-              </Col>
-            </Row>
-          </Card>
-        </Card>
+        {props.rooms.map((room, key) => {
+          return (
+            <Card
+              style={{ marginBottom: "20px" }}
+              title={
+                <Row>
+                  <Col span={24}>{room.room_name}</Col>
+                  <Col span={24}>
+                    <Text type="secondary" style={{ fontSize: "12px" }}>
+                      Accommodates {room.max_occupancy} Adults
+                    </Text>
+                  </Col>
+                </Row>
+              }
+              cover={<img src="./images/image7.jpg" alt="loading" />}
+              className={styles.roomTypeCard}
+              bodyStyle={{ padding: "5px" }}
+            >
+              <Row style={{ marginBottom: "5px" }}>
+                <Col span={8}>
+                  <Text code>{room.room_area} sq. ft.</Text>
+                </Col>
+                <Col span={16}>
+                  <Text code>Double Bed sized bed</Text>
+                </Col>
+              </Row>
+              <Card title="Room Only">
+                <Row>
+                  <Col span={24}>
+                    <ul>
+                      {room.extra_content.split(",").map((el, key) => {
+                        return <li>{el}</li>;
+                      })}
+                    </ul>
+                  </Col>
+                  <Col span={24}>
+                    <div style={{ textAlign: "center" }}>
+                      <Text>
+                        <span style={{ fontWeight: "bold" }}>
+                          &#8377; {room.room_price}/-
+                        </span>{" "}
+                        per night{" "}
+                        <span style={{ color: "gray", fontSize: "13px" }}>
+                          +&#8377; {(18 * room.room_price) / 100} taxes & fees
+                        </span>
+                      </Text>
+                    </div>
+                  </Col>
+                  <Col span={24}>
+                    <Link
+                      to={{
+                        pathname: `booking?resortID=${props.resortID}&roomID=${room.id}&searchQuery=${props.searchQuery}`,
+                      }}
+                    >
+                      <div style={{ textAlign: "right" }}>
+                        <CustomButton style={{ width: "100%" }}>
+                          Select
+                        </CustomButton>
+                      </div>
+                    </Link>
+                  </Col>
+                </Row>
+              </Card>
+            </Card>
+          );
+        })}
       </div>
     </section>
   );

@@ -1,16 +1,70 @@
-import React, { useState } from "react";
-import { Menu, Modal } from "antd";
+import React, { useEffect, useState } from "react";
+import { Menu, Modal, Dropdown } from "antd";
 import classes from "./Header.module.css";
 import logo from "../../../assets/resortic-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginModal1 from "../../../modules/Login-Modal/LoginModal-1";
 import LoginModal2 from "../../../modules/Login-Modal/LoginModal-2";
 import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import loginUserIC from "../../../assets/man.png";
+import axios from "../../../axios";
+import * as APIS from "../../../constant/Apis";
+import { getGuestToken } from "../Homepage/Homepage";
 
 function HeaderPage() {
+  let navigate = useNavigate();
   const [isMobileMenuToggle, setMobileMenuToggle] = useState(false);
   const dispatch = useDispatch();
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [setUserId] = useState(0);
+
+  const logoutUser = () => {
+    const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    console.log("data", data);
+    axios
+      .post(APIS.logoutApi, { usertableId: data.userId })
+      .then((response) => {
+        console.log("Logged out", response);
+        setLoggedIn(false);
+        localStorage.clear();
+        setMobileMenuToggle(!isMobileMenuToggle);
+        getGuestToken();
+      })
+      .catch((error) => {
+        console.log("logout error", error);
+      });
+  };
+
+  const manageBookingHandler = () => {
+    const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    setMobileMenuToggle(!isMobileMenuToggle);
+    navigate(`/booking-history?userId=${data.userId}`);
+  };
+
+  const profileMenu = (
+    <Menu>
+      {/* <Link to="booking-history"> */}
+      <Menu.Item key="0" onClick={manageBookingHandler}>
+        <a href="#top">Manage Bookings</a>
+      </Menu.Item>
+      {/* </Link> */}
+      <Menu.Divider />
+      <Menu.Item key="3" onClick={logoutUser}>
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
+
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    if (localData != null) {
+      if (localData.mobile && localData.userId) {
+        setLoggedIn(true);
+      }
+    }
+  }, []);
+
   const setIsModalVisible = useSelector(
     (state) => state.loginModalReducer.toggleModal
   );
@@ -45,11 +99,31 @@ function HeaderPage() {
               About
             </Menu.Item>
           </Link>
-          <Link to="/">
-            <Menu.Item className={classes.menu} onClick={showModal} key="3">
-              Login / Sign Up
+          {!isLoggedIn && (
+            <Link to="/">
+              <Menu.Item className={classes.menu} onClick={showModal} key="3">
+                Login / Sign Up
+              </Menu.Item>
+            </Link>
+          )}
+          {isLoggedIn && (
+            <Menu.Item className={classes.menu} key="3">
+              {/* <img src={loginUserIC} style={{ height: "40px" }} /> */}
+              <Dropdown
+                overlay={profileMenu}
+                placement="bottomRight"
+                trigger={["click"]}
+              >
+                <a
+                  href="#top"
+                  className="ant-dropdown-link"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <img src={loginUserIC} alt="loginpic" style={{ height: "40px" }} />
+                </a>
+              </Dropdown>
             </Menu.Item>
-          </Link>
+          )}
         </Menu>
       </div>
       <div className={classes.mobileView}>
@@ -78,7 +152,13 @@ function HeaderPage() {
                 <li>Home</li>
               </Link>
               <li>About</li>
-              <li>Login / Sign Up</li>
+              {!isLoggedIn && <li onClick={showModal}>Login / Sign Up</li>}
+              {isLoggedIn && (
+                <>
+                  <li onClick={manageBookingHandler}>Manage Booking</li>
+                  <li onClick={logoutUser}>Logout</li>
+                </>
+              )}
             </ul>
           </div>
         )}
@@ -94,7 +174,11 @@ function HeaderPage() {
         {tab.currTab === "tab_1" ? (
           <LoginModal1 />
         ) : (
-          <LoginModal2 mdalVisiblity={handleCancel} />
+          <LoginModal2
+            mdalVisiblity={handleCancel}
+            logInHandler={setLoggedIn}
+            setUserId={setUserId}
+          />
         )}
       </Modal>
     </div>

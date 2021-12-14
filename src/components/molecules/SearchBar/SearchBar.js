@@ -3,28 +3,15 @@ import { CustomInput } from "../../atoms/CustomInput/CustomInput";
 import { CustomButton } from "../../atoms/CustomButton/CustomButton";
 import CustomDatepicker from "../../atoms/CustomDatepicker/CustomDatepicker";
 import { Menu, Dropdown, Button, Space } from "antd";
-import { debounce } from "../../../utils/utils";
 import {
   TeamOutlined,
   EnvironmentOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-
+import { useNavigate } from "react-router-dom";
 import classes from "./SearchBar.module.css";
 import moment from "moment";
 import Counter from "../../atoms/Counter/Counter";
-
-function handleChange(value) {
-  console.log(`selected ${value}`);
-}
-
-function onChange(date, dateString) {
-  console.log(date, dateString, "here");
-}
-
-function locationHandler() {
-  console.log("clicked afer 1 wsec");
-}
 
 const SearchButton = {
   position: "relative",
@@ -60,23 +47,54 @@ const defaultCity = "Pune";
 const minRoom = 1;
 const maxRoom = 5;
 const minAdult = 1;
-const maxAdult = 3;
+const defaultAdult = 3;
 const minChild = 0;
-const maxChild = 5;
+const defaultChild = 5;
 let roomType = "";
 
 function SearchBar() {
+  const [maxAdult, setMaxAdult] = useState(3);
+  const [maxChild, setMaxChild] = useState(5);
   const [room, setRoom] = useState(1);
   const [adult, setAdult] = useState(1);
   const [child, setchild] = useState(0);
   const [visible, setVisible] = useState(false);
   const [visibleMob, setVisibleMob] = useState(false);
   const [roomsStr, setRoomsStr] = useState("");
+  const [city, setCity] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const navigate = useNavigate();
 
+  const cityInputHandle = (e) => {
+    setCity(e.target.value);
+  };
+
+  const searchHandle = () => {
+    navigate(
+      `./resortList?city=${city}&searchQuery=${JSON.stringify({
+        checkIn: checkIn,
+        checkOut: checkOut,
+        room: room,
+        child: child,
+        adult: adult,
+      })}`
+    );
+  };
+
+  function getCheckIn(date, dateString) {
+    setCheckIn(dateString);
+  }
+
+  function getCheckOut(date, dateString) {
+    setCheckOut(dateString);
+  }
   useEffect(() => {
     roomType = room + " Room," + adult + " Adult";
     roomType += child ? "&" + child + " Child" : "";
     setRoomsStr(roomType);
+    setMaxAdult(defaultAdult * room);
+    setMaxChild(defaultChild * room);
     console.log("Room type", roomsStr);
     return () => {};
   }, [room, adult, child, roomsStr]);
@@ -96,6 +114,10 @@ function SearchBar() {
                 setRoom(room + 1);
               }}
               onDecrease={() => {
+                if (adult >= room) {
+                  console.log("max 8 people allowed in one room");
+                  return;
+                }
                 setRoom(room - 1);
               }}
               style={{ flex: ".2" }}
@@ -157,13 +179,11 @@ function SearchBar() {
           placeholder="Location"
           bordered={false}
           icon={<EnvironmentOutlined />}
-          onChange={() => {
-            debounce(locationHandler, 1000);
-          }}
-          defaultValue={defaultCity}
+          onInputChange={cityInputHandle}
+          value={city}
         ></CustomInput>
         <CustomDatepicker
-          onChange={onChange}
+          onChange={getCheckIn}
           placeholder={"Check In"}
           bordered={false}
           defaultValue={moment(
@@ -172,9 +192,8 @@ function SearchBar() {
           )}
           format={dateFormat}
         ></CustomDatepicker>
-
         <CustomDatepicker
-          onChange={onChange}
+          onChange={getCheckOut}
           placeholder={"Check Out"}
           bordered={false}
           defaultValue={moment(
@@ -202,7 +221,7 @@ function SearchBar() {
         </Space>
         <CustomButton
           style={SearchButton}
-          onClick={handleChange}
+          onClick={searchHandle}
           icon={<SearchOutlined />}
         >
           Search
@@ -214,14 +233,12 @@ function SearchBar() {
           bordered={false}
           defaultValue={defaultCity}
           icon={<EnvironmentOutlined />}
-          onChange={() => {
-            debounce(locationHandler, 1000);
-          }}
+          onInputChange={cityInputHandle}
         >
           {/* <Autocomplete /> */}
         </CustomInput>
         <CustomDatepicker
-          onChange={onChange}
+          onChange={getCheckIn}
           placeholder={"Check In"}
           bordered={false}
           defaultValue={moment(
@@ -232,7 +249,7 @@ function SearchBar() {
         ></CustomDatepicker>
 
         <CustomDatepicker
-          onChange={onChange}
+          onChange={getCheckOut}
           placeholder={"Check Out"}
           bordered={false}
           defaultValue={moment(
@@ -265,7 +282,7 @@ function SearchBar() {
         {/* <div> */}
         <CustomButton
           style={mobSearchButton}
-          onClick={handleChange}
+          onClick={searchHandle}
           icon={<SearchOutlined />}
         >
           Search
