@@ -101,7 +101,7 @@ export default function BookedDetails({
         <h3>
           {guestNum || 1} Guests | {roomsNum || 1} Rooms
         </h3>
-        <h5>{nightsNum || 1} Nights</h5>
+        <h5>{nightsNum || 1} Days</h5>
       </Col>
       {type === "upcoming" || type === "past" ? (
         <Col>
@@ -123,8 +123,8 @@ export default function BookedDetails({
         1 x Day Room Use calculated from 9am to 6pm (Check-In and Check-Out on
         same day)
       </p>
-      <p> {guestNum || 1} Adults</p>
       <p> {roomName} </p>
+      <p> {guestNum || 1} Adults</p>
       <p> Rooms only</p>
       <a href="#top">View booking and Cancellation Policy</a>
     </div>

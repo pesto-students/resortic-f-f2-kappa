@@ -45,7 +45,7 @@ function Homepage() {
     if (localData == null) getGuestToken();
     getResortByCategory();
     getPopularResorts();
-  }, []);
+  },[]);
 
   const getPopularResorts = () => {
     axios
