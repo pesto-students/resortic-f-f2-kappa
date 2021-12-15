@@ -25,8 +25,9 @@ export default function BookedDetails({
   type,
   amount,
   roomName,
-  bookingId,
+  bookingId
 }) {
+  
   const dateFormat = "MM/DD/YYYY";
 
   const [checkInDate, setCheckInDate] = useState(checkinDate || new Date());
@@ -36,9 +37,9 @@ export default function BookedDetails({
   const [isModalTimeVisible, setIsModalTimeVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalDates, setmodalDates] = useState([
-    moment(checkInDate.toLocaleString().slice(0, 10), dateFormat),
-    moment(checkOutDate.toLocaleString().slice(0, 10), dateFormat),
-  ]);
+    moment(checkInDate.toLocaleString().slice(0,10), dateFormat),
+    moment(checkOutDate.toLocaleString().slice(0,10), dateFormat),
+  ])
 
   const showModal = () => {
     setIsModalTimeVisible(true);
@@ -48,11 +49,11 @@ export default function BookedDetails({
     setCheckInDate(modalDates[0]._d);
     setCheckOutDate(modalDates[1]._d);
     const updateBook = {
-      check_in: modalDates[0]._d.toISOString().slice(0, 10),
-      check_out: modalDates[1]._d.toISOString().slice(0, 10),
-    };
+      "check_in":modalDates[0]._d.toISOString().slice(0,10),
+      "check_out":modalDates[1]._d.toISOString().slice(0,10)
+  };
     axios
-      .post(APIS.updateBooking + "/" + bookingId, updateBook)
+      .post(APIS.updateBooking + "/" + bookingId, updateBook )
       .then(function (response) {
         console.log("response of updateBooking", response.data.data);
       })
@@ -100,7 +101,7 @@ export default function BookedDetails({
         <h3>
           {guestNum || 1} Guests | {roomsNum || 1} Rooms
         </h3>
-        <h5>{nightsNum || 1} Nights</h5>
+        <h5>{nightsNum || 1} Days</h5>
       </Col>
       {type === "upcoming" || type === "past" ? (
         <Col>
@@ -122,8 +123,8 @@ export default function BookedDetails({
         1 x Day Room Use calculated from 9am to 6pm (Check-In and Check-Out on
         same day)
       </p>
-      <p> {guestNum || 1} Adults</p>
       <p> {roomName} </p>
+      <p> {guestNum || 1} Adults</p>
       <p> Rooms only</p>
       <a href="#top">View booking and Cancellation Policy</a>
     </div>
@@ -176,16 +177,10 @@ export default function BookedDetails({
               <p>Choose the dates you want re-Schedule to:</p>
               <RangePicker
                 defaultValue={[
-                  moment(
-                    modalDates[0]._d.toLocaleString().slice(0, 10),
-                    dateFormat
-                  ),
-                  moment(
-                    modalDates[1]._d.toLocaleString().slice(0, 10),
-                    dateFormat
-                  ),
+                  moment(modalDates[0]._d.toLocaleString().slice(0,10), dateFormat),
+                  moment(modalDates[1]._d.toLocaleString().slice(0,10), dateFormat),
                 ]}
-                onCalendarChange={(val) => setmodalDates(val)}
+                onCalendarChange={val => setmodalDates(val)}
               />
             </Modal>
             <Modal

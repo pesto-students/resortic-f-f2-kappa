@@ -26,7 +26,20 @@ export default function GuestBookForm({ onSubmit, onSubmitFailed }) {
         }}
       >
         <Option value="91">+91</Option>
-        <Option value="90">+90</Option>
+        <Option value="44">+44</Option>
+      </Select>
+    </Form.Item>
+  );
+  const idProofPrefixSelector = (
+    <Form.Item name="idProofPrefix" noStyle>
+      <Select
+        style={{
+          width: 130,
+        }}
+      >
+        <Option value="aadhar">Aadhar No.</Option>
+        <Option value="pan">PAN No.</Option>
+        <Option value="drivers_licence">Drivers Licence</Option>
       </Select>
     </Form.Item>
   );

@@ -9,9 +9,6 @@ import { Tabs, Row, Col, Result } from "antd";
 import { MehTwoTone } from "@ant-design/icons";
 const { TabPane } = Tabs;
 
-function callback(key) {
-  console.log(key);
-}
 
 export default function ManageBooking() {
   const [searchParams] = useSearchParams();
@@ -20,7 +17,6 @@ export default function ManageBooking() {
 
   const [upcomingData, setUpcomingData] = useState("");
   const [pastData, setPastData] = useState("");
-  const [activeKey, setActiveKey] = useState("1");
 
   const getUpcomingBookings = () => {
     const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
@@ -51,20 +47,17 @@ export default function ManageBooking() {
       });
   };
 
-  const onChange = (activeKey) => {
-    setActiveKey({ activeKey });
-  };
 
   useEffect(() => {
     getUpcomingBookings();
     getPastBookings();
-  }, []);
+  });
 
   return (
     <div>
       <Row justify="center">
         <Col span={18}>
-          <Tabs defaultActiveKey="1" onChange={onChange}>
+          <Tabs defaultActiveKey="1">
             <TabPane
               tab="Upcoming"
               key="1"

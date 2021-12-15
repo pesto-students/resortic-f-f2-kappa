@@ -39,8 +39,13 @@ const BodyComponent = (props) => {
             </Title>
           </Col>
           <Col className={styles.rating} xs={24} md={8}>
-            <Rate disabled defaultValue={props.ResortData.rating} />{" "}
-            {props.ResortData.rating}
+            <Rate
+              disable1
+              defaultValue={
+                isNaN(props.ResortData.rating) ? 1 : props.ResortData.rating
+              }
+            />{" "}
+            {isNaN(props.ResortData.rating) ? 1 : props.ResortData.rating}
           </Col>
           <Col xd={24} md={3}>
             <Text>

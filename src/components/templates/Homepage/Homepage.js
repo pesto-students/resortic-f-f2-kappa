@@ -16,6 +16,7 @@ import PopularResort from "../../molecules/PopularResort";
 import { getRandomImage } from "../../../utils/utils";
 const tabsData = ["Beach", "Mountain", "Royal", "Party"];
 
+
 export const getGuestToken = async () => {
   axios
     .get(APIS.guestToken + "guestSystemId=" + new Date().toISOString())
@@ -46,7 +47,7 @@ function Homepage() {
     if (localData == null) getGuestToken();
     getResortByCategory();
     getPopularResorts();
-  }, []);
+  },[]);
 
   const getPopularResorts = () => {
     axios
