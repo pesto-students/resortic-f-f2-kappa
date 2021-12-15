@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Menu, Modal, Dropdown, Collapse } from "antd";
+import { Menu, Modal, Dropdown } from "antd";
 import classes from "./Header.module.css";
 import logo from "../../../assets/resortic-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginModal1 from "../../../modules/Login-Modal/LoginModal-1";
 import LoginModal2 from "../../../modules/Login-Modal/LoginModal-2";
-import {
-  MenuOutlined,
-  CloseCircleOutlined,
-  CaretRightOutlined,
-} from "@ant-design/icons";
+import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import loginUserIC from "../../../assets/man.png";
 import firebase from "../../../config/firebase";
 import axios from "../../../axios";
 import * as APIS from "../../../constant/Apis";
-const { Panel } = Collapse;
+import { getGuestToken } from "../Homepage/Homepage";
 
 function HeaderPage() {
   let navigate = useNavigate();
@@ -34,6 +30,7 @@ function HeaderPage() {
         setLoggedIn(false);
         localStorage.clear();
         setMobileMenuToggle(!isMobileMenuToggle);
+        getGuestToken();
       })
       .catch((error) => {
         console.log("logout error", error);
@@ -46,15 +43,22 @@ function HeaderPage() {
     navigate(`/booking-history?userId=${data.userId}`);
   };
 
+  const manageProfileHandler = () => {
+    const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    setMobileMenuToggle(!isMobileMenuToggle);
+    navigate(`/user-profile/${data.userId}`);
+  };
+
   const profileMenu = (
     <Menu>
-      {/* <Link to="booking-history"> */}
       <Menu.Item key="0" onClick={manageBookingHandler}>
-        <a>Manage Bookings</a>
+        <span>Manage Bookings</span>
       </Menu.Item>
-      {/* </Link> */}
+      <Menu.Item key="1" onClick={manageProfileHandler}>
+        <span>Manage Profile</span>
+      </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" onClick={logoutUser}>
+      <Menu.Item key="2" onClick={logoutUser}>
         Logout
       </Menu.Item>
     </Menu>
@@ -86,6 +90,7 @@ function HeaderPage() {
     dispatch({ type: "TOGGLE_MODAL" });
     dispatch({ type: "CHANGE_TAB", tab: "tab_1" });
   };
+  console.log("isMObileToggle", isMobileMenuToggle);
   return (
     <div className={classes.Header}>
       <div>
@@ -98,11 +103,16 @@ function HeaderPage() {
               Home
             </Menu.Item>
           </Link>
-          <Link to="/">
+          <Link to="about">
             <Menu.Item className={classes.menu} key="2">
               About
             </Menu.Item>
           </Link>
+          {/* <Link to="admin">
+            <Menu.Item className={classes.menu} key="4">
+              Admin
+            </Menu.Item>
+          </Link> */}
           {!isLoggedIn && (
             <Link to="/">
               <Menu.Item className={classes.menu} onClick={showModal} key="3">
@@ -154,7 +164,9 @@ function HeaderPage() {
               >
                 <li>Home</li>
               </Link>
-              <li>About</li>
+              <Link to="about">
+                <li>About</li>
+              </Link>
               {!isLoggedIn && <li onClick={showModal}>Login / Sign Up</li>}
               {isLoggedIn && (
                 <>

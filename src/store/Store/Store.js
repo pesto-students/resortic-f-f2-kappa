@@ -1,9 +1,11 @@
 import { combineReducers, createStore } from "redux";
 
 import LoginModalReducer from "../Reducer/LoginModalReducers";
+import ResortReducer from "../Reducer/ResortReducer";
 
 const reducers = combineReducers({
   loginModalReducer: LoginModalReducer,
+  ResortReducer: ResortReducer,
 });
 
 const store = createStore(

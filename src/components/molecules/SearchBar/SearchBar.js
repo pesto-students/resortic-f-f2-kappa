@@ -3,28 +3,15 @@ import { CustomInput } from "../../atoms/CustomInput/CustomInput";
 import { CustomButton } from "../../atoms/CustomButton/CustomButton";
 import CustomDatepicker from "../../atoms/CustomDatepicker/CustomDatepicker";
 import { Menu, Dropdown, Button, Space } from "antd";
-import { debounce } from "../../../utils/utils";
 import {
   TeamOutlined,
   EnvironmentOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-
+import { useNavigate } from "react-router-dom";
 import classes from "./SearchBar.module.css";
 import moment from "moment";
 import Counter from "../../atoms/Counter/Counter";
-
-function handleChange(value) {
-  console.log(`selected ${value}`);
-}
-
-function onChange(date, dateString) {
-  console.log(date, dateString, "here");
-}
-
-function locationHandler() {
-  console.log("clicked afer 1 wsec");
-}
 
 const SearchButton = {
   position: "relative",
@@ -74,7 +61,36 @@ function SearchBar() {
   const [visible, setVisible] = useState(false);
   const [visibleMob, setVisibleMob] = useState(false);
   const [roomsStr, setRoomsStr] = useState("");
+  const [city, setCity] = useState("Pune");
+  const [checkIn, setCheckIn] = useState(new Date().toISOString().slice(0, 10));
+  const [checkOut, setCheckOut] = useState(
+    new Date().toISOString().slice(0, 10)
+  );
+  const navigate = useNavigate();
 
+  const cityInputHandle = (e) => {
+    setCity(e.target.value);
+  };
+
+  const searchHandle = () => {
+    navigate(
+      `./resortList?city=${city}&searchQuery=${JSON.stringify({
+        checkIn: checkIn,
+        checkOut: checkOut,
+        room: room,
+        child: child,
+        adult: adult,
+      })}`
+    );
+  };
+
+  function getCheckIn(date, dateString) {
+    setCheckIn(dateString);
+  }
+
+  function getCheckOut(date, dateString) {
+    setCheckOut(dateString);
+  }
   useEffect(() => {
     roomType = room + " Room," + adult + " Adult";
     roomType += child ? "&" + child + " Child" : "";
@@ -165,13 +181,11 @@ function SearchBar() {
           placeholder="Location"
           bordered={false}
           icon={<EnvironmentOutlined />}
-          onChange={() => {
-            debounce(locationHandler, 1000);
-          }}
-          defaultValue={defaultCity}
+          onInputChange={cityInputHandle}
+          defaultValue={city}
         ></CustomInput>
         <CustomDatepicker
-          onChange={onChange}
+          onChange={getCheckIn}
           placeholder={"Check In"}
           bordered={false}
           defaultValue={moment(
@@ -180,9 +194,8 @@ function SearchBar() {
           )}
           format={dateFormat}
         ></CustomDatepicker>
-
         <CustomDatepicker
-          onChange={onChange}
+          onChange={getCheckOut}
           placeholder={"Check Out"}
           bordered={false}
           defaultValue={moment(
@@ -210,7 +223,7 @@ function SearchBar() {
         </Space>
         <CustomButton
           style={SearchButton}
-          onClick={handleChange}
+          onClick={searchHandle}
           icon={<SearchOutlined />}
         >
           Search
@@ -222,14 +235,12 @@ function SearchBar() {
           bordered={false}
           defaultValue={defaultCity}
           icon={<EnvironmentOutlined />}
-          onChange={() => {
-            debounce(locationHandler, 1000);
-          }}
+          onInputChange={cityInputHandle}
         >
           {/* <Autocomplete /> */}
         </CustomInput>
         <CustomDatepicker
-          onChange={onChange}
+          onChange={getCheckIn}
           placeholder={"Check In"}
           bordered={false}
           defaultValue={moment(
@@ -240,7 +251,7 @@ function SearchBar() {
         ></CustomDatepicker>
 
         <CustomDatepicker
-          onChange={onChange}
+          onChange={getCheckOut}
           placeholder={"Check Out"}
           bordered={false}
           defaultValue={moment(
@@ -273,7 +284,7 @@ function SearchBar() {
         {/* <div> */}
         <CustomButton
           style={mobSearchButton}
-          onClick={handleChange}
+          onClick={searchHandle}
           icon={<SearchOutlined />}
         >
           Search

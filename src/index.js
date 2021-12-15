@@ -8,6 +8,7 @@ import reportWebVitals from "./reportWebVitals";
 import "antd/dist/antd.css";
 // import "swiper/css/bundle";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 
 import store from "./store/Store/Store";
 
@@ -26,7 +27,9 @@ Sentry.init({
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
