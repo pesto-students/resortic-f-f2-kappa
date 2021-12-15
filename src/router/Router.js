@@ -9,6 +9,10 @@ import BookingSummary from "../components/templates/BookingSummary";
 import ManageBooking from "../components/templates/ManageBooking";
 import NotFoundPage from "../components/templates/Error";
 import { Layout } from "antd";
+import Profile from "../components/templates/Profile/Profile";
+import Admin from "../components/templates/Admin/Admin";
+import About from "../components/templates/About/About";
+import Contact from "../components/templates/Contact/Contact";
 const { Header, Content, Footer } = Layout;
 function Router() {
   return (
@@ -30,6 +34,10 @@ function Router() {
             <Route path="resortList/" element={<ResortList />} />
           <Route path="resort/booking" element={<BookingSummary />} />
           <Route path="booking-history" element={<ManageBooking />} />
+          <Route path="user-profile/:id" element={<Profile />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact-us" element={<Contact />} />
+          <Route path="admin" element={<Admin />} />
           <Route
             path="*"
             element={<NotFoundPage />}

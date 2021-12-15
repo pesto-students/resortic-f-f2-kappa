@@ -43,15 +43,22 @@ function HeaderPage() {
     navigate(`/booking-history?userId=${data.userId}`);
   };
 
+  const manageProfileHandler = () => {
+    const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    setMobileMenuToggle(!isMobileMenuToggle);
+    navigate(`/user-profile/${data.userId}`);
+  };
+
   const profileMenu = (
     <Menu>
-      {/* <Link to="booking-history"> */}
       <Menu.Item key="0" onClick={manageBookingHandler}>
-        <a href="#top">Manage Bookings</a>
+        <span>Manage Bookings</span>
       </Menu.Item>
-      {/* </Link> */}
+      <Menu.Item key="1" onClick={manageProfileHandler}>
+        <span>Manage Profile</span>
+      </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" onClick={logoutUser}>
+      <Menu.Item key="2" onClick={logoutUser}>
         Logout
       </Menu.Item>
     </Menu>
@@ -83,6 +90,7 @@ function HeaderPage() {
     dispatch({ type: "TOGGLE_MODAL" });
     dispatch({ type: "CHANGE_TAB", tab: "tab_1" });
   };
+  console.log("isMObileToggle", isMobileMenuToggle);
   return (
     <div className={classes.Header}>
       <div>
@@ -95,11 +103,16 @@ function HeaderPage() {
               Home
             </Menu.Item>
           </Link>
-          <Link to="/">
+          <Link to="about">
             <Menu.Item className={classes.menu} key="2">
               About
             </Menu.Item>
           </Link>
+          {/* <Link to="admin">
+            <Menu.Item className={classes.menu} key="4">
+              Admin
+            </Menu.Item>
+          </Link> */}
           {!isLoggedIn && (
             <Link to="/">
               <Menu.Item className={classes.menu} onClick={showModal} key="3">
@@ -152,7 +165,9 @@ function HeaderPage() {
               >
                 <li>Home</li>
               </Link>
-              <li>About</li>
+              <Link to="about">
+                <li>About</li>
+              </Link>
               {!isLoggedIn && <li onClick={showModal}>Login / Sign Up</li>}
               {isLoggedIn && (
                 <>

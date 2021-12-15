@@ -1,0 +1,35 @@
+.Admin {
+  width: 60%;
+  margin: auto;
+  background-color: white;
+  margin: 5rem auto;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 2px #80808040;
+}
+
+.Admin input {
+  display: block;
+  padding: 10px;
+  margin: 10px;
+  width: 100%;
+  outline: none;
+  border: 2px solid #80808038;
+  border-radius: 5px;
+}
+
+.Admin input:focus {
+  border: 2px solid darkcyan;
+}
+
+.Admin .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 767px) {
+  .Admin {
+    width: 90%;
+  }
+}
