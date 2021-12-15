@@ -47,11 +47,10 @@ export default function ManageBooking() {
       });
   };
 
-
   useEffect(() => {
     getUpcomingBookings();
     getPastBookings();
-  });
+  },[]);
 
   return (
     <div>

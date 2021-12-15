@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Select, Button, Row, Col } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { CustomButton } from "../../atoms/CustomButton/CustomButton";
+import axios from "../../../axios"
+import * as APIS from "../../../constant/Apis";
 const { Option } = Select;
 
 const formItemLayout = {
@@ -17,6 +19,32 @@ const formItemLayout = {
 
 export default function GuestBookForm({ onSubmit, onSubmitFailed }) {
   const [form] = Form.useForm();
+  const [userData, setUserData] = useState("");
+
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    if (localData.userId) {
+      axios
+        .get(APIS.getUserApi + "?id="+localData.userId)
+        .then(function (response) {
+          if(response.data.data){
+            console.log("userdata:",response.data.data.data[0]);
+            setUserData(response.data.data.data[0]);
+            form.setFieldsValue({
+              title: "Mr.",
+              firstName: response.data.data.data[0].first_name,
+              lastName: response.data.data.data[0].last_name,
+              email:response.data.data.data[0].email,
+              phone:response.data.data.data[0].mobile
+
+            });
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }, []);
 
   const numberPrefixSelector = (
     <Form.Item name="numberPrefix" noStyle>
@@ -27,19 +55,6 @@ export default function GuestBookForm({ onSubmit, onSubmitFailed }) {
       >
         <Option value="91">+91</Option>
         <Option value="44">+44</Option>
-      </Select>
-    </Form.Item>
-  );
-  const idProofPrefixSelector = (
-    <Form.Item name="idProofPrefix" noStyle>
-      <Select
-        style={{
-          width: 130,
-        }}
-      >
-        <Option value="aadhar">Aadhar No.</Option>
-        <Option value="pan">PAN No.</Option>
-        <Option value="drivers_licence">Drivers Licence</Option>
       </Select>
     </Form.Item>
   );
@@ -69,6 +84,7 @@ export default function GuestBookForm({ onSubmit, onSubmitFailed }) {
         initialValues={{
           numberPrefix: "91",
           idProofPrefix: "aadhar",
+          firstName: userData.first_name
         }}
         scrollToFirstError
       >

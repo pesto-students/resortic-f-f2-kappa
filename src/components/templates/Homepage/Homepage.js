@@ -16,8 +16,7 @@ import PopularResort from "../../molecules/PopularResort";
 
 const tabsData = ["Beach", "Mountain", "Royal", "Party"];
 
-
-export const getGuestToken = async () => {
+export const getGuestToken = () => {
   axios
     .get(APIS.guestToken + "guestSystemId=" + new Date().toISOString())
     .then(function (response) {
@@ -43,7 +42,6 @@ function Homepage() {
   }, 1000);
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
-    console.log("homeage localData", localData);
     if (localData == null) getGuestToken();
     getResortByCategory();
     getPopularResorts();
