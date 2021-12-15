@@ -10,7 +10,6 @@ import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import loginUserIC from "../../../assets/man.png";
 import firebase from "../../../config/firebase";
 import axios from "../../../axios";
-import firebase from "../../../config/firebase";
 import * as APIS from "../../../constant/Apis";
 import { getGuestToken } from "../Homepage/Homepage";
 
