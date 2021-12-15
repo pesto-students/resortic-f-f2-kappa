@@ -18,7 +18,7 @@ function HeaderPage() {
   const [isMobileMenuToggle, setMobileMenuToggle] = useState(false);
   const dispatch = useDispatch();
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(0);
+  const [setUserId] = useState(0);
 
   const logoutUser = () => {
     const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
@@ -129,10 +129,11 @@ function HeaderPage() {
                 trigger={["click"]}
               >
                 <a
+                  href="#top"
                   className="ant-dropdown-link"
                   onClick={(e) => e.preventDefault()}
                 >
-                  <img src={loginUserIC} style={{ height: "40px" }} />
+                  <img src={loginUserIC} alt="loginpic" style={{ height: "40px" }} />
                 </a>
               </Dropdown>
             </Menu.Item>

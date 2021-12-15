@@ -1,9 +1,9 @@
-const PRODUCTION = false;
+const PRODUCTION = true;
 const VERSION = "v1";
 
 export let API_SERVER = "";
 if (!PRODUCTION) {
-  API_SERVER = `http://localhost:8000/${VERSION}/`;
+  API_SERVER = `http://localhost:8081/${VERSION}/`;
 } else {
   API_SERVER = `https://resortic-backend.herokuapp.com/${VERSION}/`;
 }
@@ -44,7 +44,7 @@ export const getCategoryResort = API_SERVER + "api/resort/fetchCityByCategory";
 export const getPopularResort = API_SERVER + "api/resort/fetchToTenResort";
 
 // ResortList Apis
-export const getResortList = API_SERVER + "api/resort/fetchByCity";
+export const getResortList = API_SERVER + "api/resort/fetchResortonSearch";
 
 // Single Resort List Apis
 export const getSingleResort = API_SERVER + "api/resort/singleResort/";

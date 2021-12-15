@@ -1,6 +1,6 @@
 import styles from "./ResortList.module.css";
 
-import { Row, Col, Card } from "antd";
+import { Row, Col, Card, Skeleton } from "antd";
 
 import ImageComponents from "./ImageComponent/ImageComponent";
 import BodyComponent from "./BodyComponent/BodyComponent";
@@ -12,6 +12,7 @@ import { getResortList } from "../../../constant/Apis";
 const ResortListPage = () => {
   const [resortData, setResortData] = useState([]);
   const [searchPrama] = useSearchParams();
+  const [isData, setIsData] = useState(false);
   const city = searchPrama.get("city");
   const squery = searchPrama.get("searchQuery");
   console.log("city: ", city, "searchquery: ", JSON.parse(squery));
@@ -24,18 +25,19 @@ const ResortListPage = () => {
 
   useEffect(() => {
     axios
-      .get(`${getResortList}?city=${city}`)
+      .get(`${getResortList}?city=${city}&searchQuery=${squery}`)
       .then((response) => {
+        setIsData(true);
         setResortData(
           response.data.value
             .map((resort) => {
               return {
                 ...resort,
                 rating: (
-                  resort.reviewtables.reduce(
+                  resort?.reviewtables?.reduce(
                     (sum, val) => sum + val.rating,
                     0
-                  ) / resort.reviewtables.length
+                  ) / resort?.reviewtables?.length
                 ).toFixed(1),
               };
             })
@@ -49,26 +51,34 @@ const ResortListPage = () => {
 
   return (
     <section className={styles.resortList}>
-      {resortData.map((resort, val) => {
-        return (
-          <Link
-            to={{
-              pathname: `/resort?resortID=${resort.id}&searchQuery=${squery}`,
-            }}
-          >
-            <Card key={resort.id}>
-              <Row>
-                <Col xs={24} md={7}>
-                  <ImageComponents />
-                </Col>
-                <Col style={{ height: "200px" }} xs={24} md={17}>
-                  <BodyComponent ResortData={resort} />
-                </Col>
-              </Row>
-            </Card>
-          </Link>
-        );
-      })}
+      {isData ? (
+        resortData.length > 0 ? (
+          resortData.map((resort, val) => {
+            return (
+              <Link
+                to={{
+                  pathname: `/resort?resortID=${resort.id}&searchQuery=${squery}`,
+                }}
+              >
+                <Card key={resort.id}>
+                  <Row>
+                    <Col xs={24} md={7}>
+                      <ImageComponents />
+                    </Col>
+                    <Col style={{ height: "200px" }} xs={24} md={17}>
+                      <BodyComponent ResortData={resort} />
+                    </Col>
+                  </Row>
+                </Card>
+              </Link>
+            );
+          })
+        ) : (
+          `No resort found on ${city}`
+        )
+      ) : (
+        <Skeleton active />
+      )}
     </section>
   );
 };
