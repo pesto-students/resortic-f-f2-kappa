@@ -19,7 +19,7 @@ export const logoutApi = API_SERVER + "api/login/logout/";
 
 // User Apis
 export const registerUserApi = API_SERVER + "api/user/register/";
-export const updateUserApi = API_SERVER + "api/user/update/";
+export const updateUserApi = API_SERVER + "api/user/update";
 export const deleteUserApi = API_SERVER + "api/user/delete/";
 export const getUserApi = API_SERVER + "api/user/get";
 

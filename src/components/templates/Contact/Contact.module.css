@@ -1,0 +1,40 @@
+.Contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 4rem 2rem;
+}
+
+.Contact .card {
+  border-radius: 0px 0px 10px 10px;
+  background: white;
+  margin: 0 10px;
+}
+
+.Contact img {
+  height: 300px;
+  width: 300px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.Contact .info {
+  padding: 10px;
+}
+
+.Contact .info h1 {
+  font-weight: 900;
+}
+
+.Contact .label {
+  color: gray;
+}
+
+@media screen and (max-width: 767px) {
+  .Contact {
+    flex-direction: column;
+  }
+
+  .Contact .card {
+    margin: 10px 0;
+  }
+}

@@ -71,6 +71,19 @@ export default function GuestBookForm({ onSubmit, onSubmitFailed }) {
       </Select>
     </Form.Item>
   );
+  const idProofPrefixSelector = (
+    <Form.Item name="idProofPrefix" noStyle>
+      <Select
+        style={{
+          width: 130,
+        }}
+      >
+        <Option value="aadhar">Aadhar No.</Option>
+        <Option value="pan">PAN No.</Option>
+        <Option value="drivers_licence">Drivers Licence</Option>
+      </Select>
+    </Form.Item>
+  );
 
   return (
     <div>

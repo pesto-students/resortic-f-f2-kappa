@@ -17,7 +17,7 @@ export function CustomButton({
   return (
     <Button
       className={styling.CustomButton}
-      htmlType = {htmlType}
+      htmlType={htmlType}
       style={{ ...style, background: background, color: color }}
       onClick={onClick}
       icon={icon}
