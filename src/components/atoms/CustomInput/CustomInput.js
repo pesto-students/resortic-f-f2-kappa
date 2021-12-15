@@ -7,6 +7,7 @@ export function CustomInput({
   onInputChange,
   style,
   defaultValue,
+  value
 }) {
   return (
     <Input
@@ -16,7 +17,7 @@ export function CustomInput({
       suffix={icon}
       onChange={onInputChange}
       style={style}
-      value={defaultValue}
+      value={value}
       defaultValue={defaultValue}
     />
   );

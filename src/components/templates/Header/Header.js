@@ -10,6 +10,7 @@ import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import loginUserIC from "../../../assets/man.png";
 import firebase from "../../../config/firebase";
 import axios from "../../../axios";
+import firebase from "../../../config/firebase";
 import * as APIS from "../../../constant/Apis";
 import { getGuestToken } from "../Homepage/Homepage";
 
@@ -18,7 +19,7 @@ function HeaderPage() {
   const [isMobileMenuToggle, setMobileMenuToggle] = useState(false);
   const dispatch = useDispatch();
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [setUserId] = useState(0);
+  const [userId, setUserId] = useState(0);
 
   const logoutUser = () => {
     const data = JSON.parse(localStorage.getItem("resortic_localstorage"));

@@ -1,4 +1,4 @@
-const PRODUCTION = true;
+const PRODUCTION = (process.env.REACT_APP_PRODUCTION === "true");
 const VERSION = "v1";
 
 export let API_SERVER = "";
