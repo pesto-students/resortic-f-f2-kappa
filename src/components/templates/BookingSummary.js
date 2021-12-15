@@ -81,8 +81,6 @@ export default function BookingSummary() {
     console.log("Failed:", errorInfo);
   };
 
-
-
   useEffect(() => {
     resortFullData();
     console.log(resortData);

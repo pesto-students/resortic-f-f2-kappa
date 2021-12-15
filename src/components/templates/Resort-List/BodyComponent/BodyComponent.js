@@ -39,8 +39,13 @@ const BodyComponent = (props) => {
             </Title>
           </Col>
           <Col className={styles.rating} xs={24} md={8}>
-            <Rate disabled defaultValue={props.ResortData.rating} />{" "}
-            {props.ResortData.rating}
+            <Rate
+              disable1
+              defaultValue={
+                isNaN(props.ResortData.rating) ? 1 : props.ResortData.rating
+              }
+            />{" "}
+            {isNaN(props.ResortData.rating) ? 1 : props.ResortData.rating}
           </Col>
           <Col xd={24} md={3}>
             <Text>
@@ -81,7 +86,7 @@ const BodyComponent = (props) => {
         <Title level={4}>Starting at:</Title>
         <div>
           <Text style={{ fontSize: "20px" }} strong>
-            {Number(props.ResortData?.starting_price) + 1}
+            {"₹" + Number(props.ResortData?.starting_price)}
           </Text>
         </div>
       </Col>
