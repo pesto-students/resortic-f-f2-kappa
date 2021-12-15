@@ -62,8 +62,12 @@ function SearchBar() {
   const [visibleMob, setVisibleMob] = useState(false);
   const [roomsStr, setRoomsStr] = useState("");
   const [city, setCity] = useState("");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
+  const [checkIn, setCheckIn] = useState(
+    new Date(Date.now()).toISOString().slice(0, 10)
+  );
+  const [checkOut, setCheckOut] = useState(
+    new Date(Date.now() + 3600 * 1000 * 24).toISOString().slice(0, 10)
+  );
   const navigate = useNavigate();
 
   const cityInputHandle = (e) => {
@@ -186,20 +190,14 @@ function SearchBar() {
           onChange={getCheckIn}
           placeholder={"Check In"}
           bordered={false}
-          defaultValue={moment(
-            new Date().toISOString().slice(0, 10),
-            dateFormat
-          )}
+          defaultValue={moment(checkIn)}
           format={dateFormat}
         ></CustomDatepicker>
         <CustomDatepicker
           onChange={getCheckOut}
           placeholder={"Check Out"}
           bordered={false}
-          defaultValue={moment(
-            new Date().toISOString().slice(0, 10),
-            dateFormat
-          )}
+          defaultValue={moment(checkOut)}
           format={dateFormat}
         ></CustomDatepicker>
         <Space wrap>
@@ -241,10 +239,7 @@ function SearchBar() {
           onChange={getCheckIn}
           placeholder={"Check In"}
           bordered={false}
-          defaultValue={moment(
-            new Date().toISOString().slice(0, 10),
-            dateFormat
-          )}
+          defaultValue={moment(checkIn)}
           format={dateFormat}
         ></CustomDatepicker>
 
@@ -252,10 +247,7 @@ function SearchBar() {
           onChange={getCheckOut}
           placeholder={"Check Out"}
           bordered={false}
-          defaultValue={moment(
-            new Date().toISOString().slice(0, 10),
-            dateFormat
-          )}
+          defaultValue={moment(checkOut)}
           format={dateFormat}
         ></CustomDatepicker>
         {/* <div> */}
