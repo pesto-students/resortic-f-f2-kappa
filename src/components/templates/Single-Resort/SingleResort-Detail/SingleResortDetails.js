@@ -30,13 +30,13 @@ const SingleResortDetail = (props) => {
             <Row>
               <Col xs={24} md={12}>
                 <Card
-                  className={styles.serviceCard}
+                  className={styles.serviceCard} bodyStyle={{background:"white"}} style={{borderRadius:"20px"}}
                   title="Amenities & Services"
                 >
-                  <List size="small">
+                  <List size="small" style={{background:"white"}}>
                     {majorAmenities.map((item, key) => {
                       return (
-                        <List.Item key={item.toLowerCase().replaceAll(" ", "")}>
+                        <List.Item style={{background:"white"}} key={item.toLowerCase().replaceAll(" ", "")}>
                           {item}
                         </List.Item>
                       );
@@ -45,11 +45,11 @@ const SingleResortDetail = (props) => {
                 </Card>
               </Col>
               <Col xs={24} md={12}>
-                <Card className={styles.priceCard}>
+                <Card className={styles.priceCard} bodyStyle={{background:"white"}} style={{borderRadius:"20px"}}>
                   <p>Price starts at:</p>
                   <Title level={4}>&#8377;{`${lowestPrice}/per room`}</Title>
                   <p>
-                    <small>+ &#8377;681 taxes & fees</small>
+                    <small>+ &#8377;{lowestPrice * 0.18} taxes & fees</small>
                   </p>
                 </Card>
               </Col>

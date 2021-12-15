@@ -86,7 +86,7 @@ const BodyComponent = (props) => {
         <Title level={4}>Starting at:</Title>
         <div>
           <Text style={{ fontSize: "20px" }} strong>
-            {Number(props.ResortData?.starting_price) + 1}
+            {"₹" + Number(props.ResortData?.starting_price)}
           </Text>
         </div>
       </Col>

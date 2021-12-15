@@ -18,7 +18,7 @@ function HeaderPage() {
   const [isMobileMenuToggle, setMobileMenuToggle] = useState(false);
   const dispatch = useDispatch();
   const [isLoggedIn, setLoggedIn] = useState(false);
-  const [setUserId] = useState(0);
+  const [userId, setUserId] = useState(0);
 
   const logoutUser = () => {
     const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
