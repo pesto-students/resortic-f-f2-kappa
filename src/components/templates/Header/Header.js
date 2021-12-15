@@ -8,6 +8,7 @@ import LoginModal1 from "../../../modules/Login-Modal/LoginModal-1";
 import LoginModal2 from "../../../modules/Login-Modal/LoginModal-2";
 import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import loginUserIC from "../../../assets/man.png";
+import firebase from "../../../config/firebase";
 import axios from "../../../axios";
 import * as APIS from "../../../constant/Apis";
 import { getGuestToken } from "../Homepage/Homepage";
