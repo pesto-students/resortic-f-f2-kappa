@@ -1,7 +1,13 @@
 import React from "react";
 import classes from "./CustomDatepicker.module.css";
 import { DatePicker } from "antd";
-export function CustomDatepicker({ placeholder, onChange, style }) {
+export function CustomDatepicker({
+  placeholder,
+  onChange,
+  style,
+  defaultValue,
+  format,
+}) {
   return (
     <DatePicker
       className={classes.CustomDatepicker}
@@ -9,6 +15,8 @@ export function CustomDatepicker({ placeholder, onChange, style }) {
       placeholder={placeholder}
       bordered={false}
       style={style}
+      defaultValue={defaultValue}
+      format={format}
     />
   );
 }

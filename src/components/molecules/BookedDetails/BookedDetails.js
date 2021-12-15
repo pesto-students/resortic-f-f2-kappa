@@ -3,6 +3,8 @@ import Rating from "../../atoms/Rating/Rating";
 import resortimg1 from "../../../assets/resort1.jpg";
 import styles from "./BookedDetails.module.css";
 import { Row, Col, Tag, Button, Modal, DatePicker } from "antd";
+import axios from "../../../axios";
+import * as APIS from "../../../constant/Apis";
 // import { FaMapMarkedAlt } from "react-icons/fa";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import moment from "moment";
@@ -22,19 +24,43 @@ export default function BookedDetails({
   nightsNum,
   type,
   amount,
+  roomName,
+  bookingId
 }) {
-  const [checkInDate] = useState(checkinDate);
+  
+  const dateFormat = "MM/DD/YYYY";
+
+  const [checkInDate, setCheckInDate] = useState(checkinDate || new Date());
   const [checkInTime] = useState(checkinTime);
-  const [checkOutDate] = useState(checkoutDate);
+  const [checkOutDate, setCheckOutDate] = useState(checkoutDate || new Date());
   const [checkOutTime] = useState(checkoutTime);
   const [isModalTimeVisible, setIsModalTimeVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalDates, setmodalDates] = useState([
+    moment(checkInDate.toLocaleString().slice(0,10), dateFormat),
+    moment(checkOutDate.toLocaleString().slice(0,10), dateFormat),
+  ])
 
   const showModal = () => {
     setIsModalTimeVisible(true);
   };
 
   const handleOk = () => {
+    setCheckInDate(modalDates[0]._d);
+    setCheckOutDate(modalDates[1]._d);
+    const updateBook = {
+      "check_in":modalDates[0]._d.toISOString().slice(0,10),
+      "check_out":modalDates[1]._d.toISOString().slice(0,10)
+  };
+    axios
+      .post(APIS.updateBooking + "/" + bookingId, updateBook )
+      .then(function (response) {
+        console.log("response of updateBooking", response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     setIsModalTimeVisible(false);
   };
 
@@ -52,8 +78,6 @@ export default function BookedDetails({
   const handleCancelCancel = () => {
     setIsModalVisible(false);
   };
-
-  const dateFormat = "DD/MM/YYYY HH:mm";
   const bookedtiming = (
     <Row gutter={8} justify="space-around" align="middle">
       <Col>
@@ -68,22 +92,22 @@ export default function BookedDetails({
           <strong>Check Out</strong>
         </h6>
         <h3>{formatDate(checkOutDate) || formatDate(new Date())}</h3>
-        <h5>{checkOutTime || "10:00 PM"}</h5>
+        <h5>{checkOutTime || "06:00 PM"}</h5>
       </Col>
       <Col>
         <h6>
           <strong>Guests</strong>
         </h6>
         <h3>
-          {guestNum || 0} Guests | {roomsNum || 0} Rooms
+          {guestNum || 1} Guests | {roomsNum || 1} Rooms
         </h3>
-        <h5>{nightsNum || 1} Nights</h5>
+        <h5>{nightsNum || 1} Days</h5>
       </Col>
       {type === "upcoming" || type === "past" ? (
         <Col>
           <Row gutter={8}>
-            <h3>Paid Amount:</h3>
-            <h3>₹{amount || "error"}</h3>
+            <h3>Paid Amount</h3>
+            <h3>: ₹{amount || "error"}</h3>
           </Row>
         </Col>
       ) : (
@@ -96,12 +120,13 @@ export default function BookedDetails({
     <div className={styles.roomDetails}>
       <p>
         {" "}
-        1 x Day Use Room calculated from 9am to 6pm (Check-In and Check-Out on
+        1 x Day Room Use calculated from 9am to 6pm (Check-In and Check-Out on
         same day)
       </p>
-      <p> 2 Adults</p>
+      <p> {roomName} </p>
+      <p> {guestNum || 1} Adults</p>
       <p> Rooms only</p>
-      <a href="#top" >View booking and Cancellation Policy</a>
+      <a href="#top">View booking and Cancellation Policy</a>
     </div>
   );
 
@@ -120,28 +145,28 @@ export default function BookedDetails({
             lg={6}
             xl={6}
           >
-                <Button
-                  type="primary"
-                  style={{
-                    "background-color": "#0FCD22",
-                    "border-style": "none",
-                    "width": "100%",
-                  }}
-                  onClick={showModal}
-                >
-                  Re-Schedule
-                </Button>
-                <Button
-                  type="primary"
-                  style={{
-                    "background-color": "red",
-                    "border-style": "none",
-                    "width": "100%",
-                  }}
-                  onClick={showCancelModal}
-                >
-                  Cancel
-                </Button>
+            <Button
+              type="primary"
+              style={{
+                "background-color": "#0FCD22",
+                "border-style": "none",
+                width: "100%",
+              }}
+              onClick={showModal}
+            >
+              Re-Schedule
+            </Button>
+            <Button
+              type="primary"
+              style={{
+                "background-color": "red",
+                "border-style": "none",
+                width: "100%",
+              }}
+              onClick={showCancelModal}
+            >
+              Cancel
+            </Button>
 
             <Modal
               title="Re-Schedule"
@@ -151,11 +176,11 @@ export default function BookedDetails({
             >
               <p>Choose the dates you want re-Schedule to:</p>
               <RangePicker
-                showTime
                 defaultValue={[
-                  moment("26/11/2021 06:00", dateFormat),
-                  moment("27/11/2021 21:00", dateFormat),
+                  moment(modalDates[0]._d.toLocaleString().slice(0,10), dateFormat),
+                  moment(modalDates[1]._d.toLocaleString().slice(0,10), dateFormat),
                 ]}
+                onCalendarChange={val => setmodalDates(val)}
               />
             </Modal>
             <Modal

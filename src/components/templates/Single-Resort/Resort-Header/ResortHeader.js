@@ -20,9 +20,9 @@ const ResortHeader = (props) => {
             className={styles.rate}
             disabled
             allowHalf
-            defaultValue={props.rating}
+            defaultValue={isNaN(props.rating) ? 1 : props.rating}
           />
-          {props.rating}
+          {isNaN(props.rating) ? 1 : props.rating}
         </Col>
       </Row>
     </section>

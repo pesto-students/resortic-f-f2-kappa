@@ -27,7 +27,7 @@ function Router() {
         <Routes>
           <Route exact path="/" element={<Homepage />} />
           <Route path="resort" element={<SingleResort />} />
-          <Route path="resortList" element={<ResortList />} />
+            <Route path="resortList" element={<ResortList />} />
           <Route path="resort/booking" element={<BookingSummary />} />
           <Route path="booking-history" element={<ManageBooking />} />
           <Route

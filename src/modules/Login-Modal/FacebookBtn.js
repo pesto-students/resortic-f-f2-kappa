@@ -1,7 +1,5 @@
 import { FacebookAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
-import Facebook from "../../assets/facebook.png";
 import { useDispatch } from "react-redux";
-import { FacebookFilled } from "@ant-design/icons";
 
 const FacebookBtn = () => {
   const dispatch = useDispatch();

@@ -2,8 +2,10 @@ import { Form, Input, Button, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth, signInWithPhoneNumber } from "firebase/auth";
+import axios from "../../axios";
+import * as APIS from "../../constant/Apis";
 
-const LoginModal2 = () => {
+const LoginModal2 = ({ logInHandler, setUserId }) => {
   const [otp, setOtp] = useState("");
   const [counter, setCounter] = useState(30);
   const { Text } = Typography;
@@ -39,6 +41,53 @@ const LoginModal2 = () => {
       });
   };
 
+  const registerUser = (mobile) => {
+    axios
+      .post(APIS.registerUserApi, { mobile: mobile })
+      .then((response) => {
+        console.log("resgister response", response);
+        loginUserHandler(mobile);
+        // localStorage.setItem(
+        //   "resortic_localstorage",
+        //   JSON.stringify({
+        //     token: response.data.data.data.token,
+        //     mobile: mobile,
+        //     userId: response.data.data.data.userId,
+        //   })
+        // );
+        // logInHandler(true);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  const loginUserHandler = (userMobileNumber) => {
+    axios
+      .post(APIS.loginApi, { mobile: userMobileNumber })
+      .then((response) => {
+        console.log("login response", response, response.data.data.code);
+        if (response.data.data.code === 404) {
+          registerUser(userMobileNumber);
+        } else {
+          console.log("user logged in", response);
+          localStorage.setItem(
+            "resortic_localstorage",
+            JSON.stringify({
+              token: response.data.data.data.token,
+              mobile: userMobileNumber,
+              userId: response.data.data.data.usertableId,
+            })
+          );
+          setUserId(userMobileNumber);
+          logInHandler(true);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   const onSubmitOTP = (event) => {
     let code = otp;
     window.confirmationResult
@@ -47,6 +96,8 @@ const LoginModal2 = () => {
         // User signed in successfully.
         const user = result.user;
         console.log("User is signed in.", user);
+        const userMobileNumber = mobile.slice(3, 13);
+        loginUserHandler(userMobileNumber);
         dispatch({ type: "CHANGE_TAB", tab: "tab_1" });
         setOtp("");
         dispatch({ type: "TOGGLE_MODAL" });

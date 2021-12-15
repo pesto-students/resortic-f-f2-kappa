@@ -12,8 +12,6 @@ export default function singleDetailCard({
   return (
     <div className={`${styles.SingleDetailCard} cursor`}>
       <Card
-        // hoverable
-        style={{ width: 280, margin: "0 18px 0 18px" }}
         cover={
           <img
             alt="sample"
@@ -26,20 +24,26 @@ export default function singleDetailCard({
         <Space direction="vertical" size="1">
           <h4 className={styles.location}>{location}</h4>
           <h4>{title}</h4>
-          <Space
-            split={<Divider type="vertical" />}
-            size="0"
-            direction="horizontal"
-          >
-            <div className={styles.price_container}>
-              <span style={{ marginRight: "15px" }}>
-                ${price}&nbsp;per Night
-              </span>
-              <span>
-                <Rating value={ratingValue} />
-              </span>
-            </div>
-          </Space>
+          {price && (
+            <Space
+              split={<Divider type="vertical" />}
+              size="0"
+              direction="horizontal"
+            >
+              <div className={styles.price_container}>
+                {price && (
+                  <span style={{ marginRight: "15px" }}>
+                    &#8377;{price}&nbsp;per Night
+                  </span>
+                )}
+                {ratingValue && (
+                  <span>
+                    <Rating value={ratingValue} />
+                  </span>
+                )}
+              </div>
+            </Space>
+          )}
         </Space>
       </Card>
     </div>

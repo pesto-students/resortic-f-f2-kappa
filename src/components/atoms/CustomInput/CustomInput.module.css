@@ -16,5 +16,5 @@
 }
 
 .CustomInput:not(:last-child) {
-  border-right: 1px solid #ada6a6c7;
+  /* border-right: 1px solid #ada6a6c7; */
 }

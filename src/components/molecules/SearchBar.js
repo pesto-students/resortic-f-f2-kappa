@@ -75,9 +75,6 @@ function SearchBar() {
         placeholder="Location"
         bordered={false}
         icon={<EnvironmentOutlined />}
-        // onChange={() => {
-        //   debounce(locationHandler, 1000);
-        // }}
         onInputChange={cityInputHandle}
         defaultValue={city}
       >
