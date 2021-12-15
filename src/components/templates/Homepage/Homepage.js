@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import HeroBanner1 from "../../../assets/hero-banner1.jpg";
 import HeroBanner2 from "../../../assets/hero-banner2.jpg";
+
 import classes from "./Homepage.module.css";
 
 import SearchBar from "../../molecules/SearchBar/SearchBar";
@@ -13,7 +13,7 @@ import CategoryTabs from "../../molecules/CategoryTabs";
 import CategoryCity from "../../molecules/CategoryCity";
 
 import PopularResort from "../../molecules/PopularResort";
-
+import { getRandomImage } from "../../../utils/utils";
 const tabsData = ["Beach", "Mountain", "Royal", "Party"];
 
 
@@ -58,7 +58,7 @@ function Homepage() {
           .map((resort) => {
             return {
               ...resort,
-              resortimg: HeroBanner1,
+              resortimg: getRandomImage(),
               rating:
                 resort.reviewtables.length !== 0
                   ? (
@@ -103,7 +103,7 @@ function Homepage() {
     );
     const newData = resort[0].locationcitycategorytables.map((el) => ({
       ...el,
-      resortimg: HeroBanner1,
+      resortimg: getRandomImage(),
     }));
     setCategoryResort(newData);
     setCategoryLoading(false);
