@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Rating from "../../atoms/Rating/Rating";
-import resortimg1 from "../../../assets/resort1.jpg";
+import resortimg1 from "../../../assets/resort-images/resort1.jpg";
 import styles from "./BookedDetails.module.css";
 import { Row, Col, Tag, Button, Modal, DatePicker } from "antd";
 import axios from "../../../axios";
@@ -25,9 +25,8 @@ export default function BookedDetails({
   type,
   amount,
   roomName,
-  bookingId
+  bookingId,
 }) {
-  
   const dateFormat = "MM/DD/YYYY";
 
   const [checkInDate, setCheckInDate] = useState(checkinDate || new Date());
@@ -37,9 +36,9 @@ export default function BookedDetails({
   const [isModalTimeVisible, setIsModalTimeVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalDates, setmodalDates] = useState([
-    moment(checkInDate.toLocaleString().slice(0,10), dateFormat),
-    moment(checkOutDate.toLocaleString().slice(0,10), dateFormat),
-  ])
+    moment(checkInDate.toLocaleString().slice(0, 10), dateFormat),
+    moment(checkOutDate.toLocaleString().slice(0, 10), dateFormat),
+  ]);
 
   const showModal = () => {
     setIsModalTimeVisible(true);
@@ -49,11 +48,11 @@ export default function BookedDetails({
     setCheckInDate(modalDates[0]._d);
     setCheckOutDate(modalDates[1]._d);
     const updateBook = {
-      "check_in":modalDates[0]._d.toISOString().slice(0,10),
-      "check_out":modalDates[1]._d.toISOString().slice(0,10)
-  };
+      check_in: modalDates[0]._d.toISOString().slice(0, 10),
+      check_out: modalDates[1]._d.toISOString().slice(0, 10),
+    };
     axios
-      .post(APIS.updateBooking + "/" + bookingId, updateBook )
+      .post(APIS.updateBooking + "/" + bookingId, updateBook)
       .then(function (response) {
         console.log("response of updateBooking", response.data.data);
       })
@@ -177,10 +176,16 @@ export default function BookedDetails({
               <p>Choose the dates you want re-Schedule to:</p>
               <RangePicker
                 defaultValue={[
-                  moment(modalDates[0]._d.toLocaleString().slice(0,10), dateFormat),
-                  moment(modalDates[1]._d.toLocaleString().slice(0,10), dateFormat),
+                  moment(
+                    modalDates[0]._d.toLocaleString().slice(0, 10),
+                    dateFormat
+                  ),
+                  moment(
+                    modalDates[1]._d.toLocaleString().slice(0, 10),
+                    dateFormat
+                  ),
                 ]}
-                onCalendarChange={val => setmodalDates(val)}
+                onCalendarChange={(val) => setmodalDates(val)}
               />
             </Modal>
             <Modal

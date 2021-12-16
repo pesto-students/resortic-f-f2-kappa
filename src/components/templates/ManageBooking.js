@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import BookedDetails from "../molecules/BookedDetails/BookedDetails";
 import AccordionComponent from "../atoms/Accordion/Accordion-Component";
-import resortimg2 from "../../assets/resort2.jpg";
+import resortimg2 from "../../assets/resort-images/resort2.jpg";
 import axios from "../../axios";
 import * as APIS from "../../constant/Apis";
 import { Tabs, Row, Col, Result } from "antd";
 import { MehTwoTone } from "@ant-design/icons";
 const { TabPane } = Tabs;
-
 
 export default function ManageBooking() {
   const [searchParams] = useSearchParams();
@@ -20,7 +19,10 @@ export default function ManageBooking() {
 
   const getUpcomingBookings = () => {
     const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
-    const userId = userIdURL || localData.userId || "USR-73c2aa6c6ed3278039b8497306896ab18241c33c";
+    const userId =
+      userIdURL ||
+      localData.userId ||
+      "USR-73c2aa6c6ed3278039b8497306896ab18241c33c";
     axios
       .get(APIS.getBooking + "/" + userId + "/upcoming")
       .then(function (response) {
@@ -46,7 +48,6 @@ export default function ManageBooking() {
         console.log(error);
       });
   };
-
 
   useEffect(() => {
     getUpcomingBookings();
@@ -85,13 +86,12 @@ export default function ManageBooking() {
                 })
               ) : (
                 <Result
-                icon={<MehTwoTone twoToneColor="#52c41a"/>}
-                title="No Upcomings Bookings!!"
-                subTitle="Let's plan for a new one"
-                extra={<Link to="/">Return Home</Link>}
-              />
+                  icon={<MehTwoTone twoToneColor="#52c41a" />}
+                  title="No Upcomings Bookings!!"
+                  subTitle="Let's plan for a new one"
+                  extra={<Link to="/">Return Home</Link>}
+                />
               )}
-              
             </TabPane>
             <TabPane
               tab="Past"
@@ -119,12 +119,11 @@ export default function ManageBooking() {
                 })
               ) : (
                 <Result
-                icon={<MehTwoTone twoToneColor="#52c41a"/>}
-                title="No Past Bookings were found!!"
-                extra={<Link to="/">Return Home</Link>}
-              />
+                  icon={<MehTwoTone twoToneColor="#52c41a" />}
+                  title="No Past Bookings were found!!"
+                  extra={<Link to="/">Return Home</Link>}
+                />
               )}
-              
             </TabPane>
           </Tabs>
         </Col>
