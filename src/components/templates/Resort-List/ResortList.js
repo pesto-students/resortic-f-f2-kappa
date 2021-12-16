@@ -1,6 +1,7 @@
 import styles from "./ResortList.module.css";
 
-import { Row, Col, Card, Skeleton } from "antd";
+import { Row, Col, Card, Skeleton, Result } from "antd";
+import { MehTwoTone } from "@ant-design/icons";
 
 import ImageComponents from "./ImageComponent/ImageComponent";
 import BodyComponent from "./BodyComponent/BodyComponent";
@@ -8,6 +9,7 @@ import { useEffect, useState } from "react";
 import axios from "../../../axios";
 import { Link, useSearchParams } from "react-router-dom";
 import { getResortList } from "../../../constant/Apis";
+import SearchBar from "../../molecules/SearchBar/SearchBar";
 
 const ResortListPage = () => {
   const [resortData, setResortData] = useState([]);
@@ -50,7 +52,12 @@ const ResortListPage = () => {
   }, [city]);
 
   return (
+    <>
+    
     <section className={styles.resortList}>
+    <div style={{position:"relative"}}>
+    <SearchBar cityName={city} style={{position: 'relative',marginTop: '3rem'}}/>
+    </div>
       {isData ? (
         resortData.length > 0 ? (
           resortData.map((resort, val) => {
@@ -60,7 +67,7 @@ const ResortListPage = () => {
                   pathname: `/resort?resortID=${resort.id}&searchQuery=${squery}`,
                 }}
               >
-                <Card key={resort.id}>
+                <Card key={resort.id} bodyStyle={{background:"white", borderRadius:"50px"}} >
                   <Row>
                     <Col xs={24} md={7}>
                       <ImageComponents />
@@ -73,13 +80,16 @@ const ResortListPage = () => {
               </Link>
             );
           })
-        ) : (
-          `No resort found on ${city}`
-        )
+        ) : (<Result
+          icon={<MehTwoTone twoToneColor="#52c41a"/>}
+          title="No Resorts found!!"
+          subTitle="Let's plan for a new one"
+        />)
       ) : (
         <Skeleton active />
       )}
     </section>
+    </>
   );
 };
 
