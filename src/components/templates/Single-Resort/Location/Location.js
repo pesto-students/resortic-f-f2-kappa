@@ -2,8 +2,8 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const Location = (props) => {
   const center = {
-    lat: props.lat,
-    lng: props.lon,
+    lat: Number(props.lat),
+    lng: Number(props.lon),
   };
   const containerStyle = {
     width: "100%",
