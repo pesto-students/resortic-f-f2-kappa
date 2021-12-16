@@ -94,7 +94,7 @@ function HeaderPage() {
   return (
     <div className={classes.Header}>
       <div>
-        <img className={classes.logo} src={logo} alt="logo" />
+        <Link to="/"><img className={classes.logo} src={logo} alt="logo" /></Link>
       </div>
       <div className={classes.desktopView}>
         <Menu theme="dark" mode="horizontal" selectable={false}>
