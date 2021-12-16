@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, {useEffect} from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import HeaderPage from "../components/templates/Header/Header";
 import Homepage from "../components/templates/Homepage/Homepage";
 import SingleResort from "../components/templates/Single-Resort/singleResortPage";
@@ -13,8 +13,16 @@ import Profile from "../components/templates/Profile/Profile";
 import Admin from "../components/templates/Admin/Admin";
 import About from "../components/templates/About/About";
 import Contact from "../components/templates/Contact/Contact";
+import ReactGA from "react-ga";
 const { Header, Content, Footer } = Layout;
 function Router() {
+
+  let location = useLocation();
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  },[location]);
+
   return (
     <>
       <Header
