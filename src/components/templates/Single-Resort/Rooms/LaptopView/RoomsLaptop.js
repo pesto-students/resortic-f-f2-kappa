@@ -1,7 +1,7 @@
 import styles from "./RoomsLaptop.module.css";
 
-import { Typography, List, Row, Col, Image } from "antd";
-import Image7 from "../../../../../assets/image7.jpg";
+import { Typography, List, Row, Col, Image, Tag, Space } from "antd";
+import { getRoomImage } from "../../../../../utils/utils";
 
 import { Link } from "react-router-dom";
 import { CustomButton } from "../../../../atoms/CustomButton/CustomButton";
@@ -52,7 +52,12 @@ const RoomsLaptop = (props) => {
                     {value.room_name}
                   </div>
                   <div>
-                    <Image src={Image7} className={styles.roomtype_image} />
+                    <Image
+                      src={getRoomImage()}
+                      className={styles.roomtype_image}
+                      height="200px"
+                      width="15rem"
+                    />
                   </div>
                   <div className={styles.roomtype_features}>
                     <div>
@@ -80,18 +85,18 @@ const RoomsLaptop = (props) => {
                       }}
                     >
                       <Col span={12} className={styles.room__type_option}>
-                        <List
-                          size="small"
-                          header={
-                            <div>
-                              <strong>Room Only</strong>
-                            </div>
-                          }
-                        >
+                        <List size="large">
                           {value.extra_content.split(",").map((value, key) => {
                             return <List.Item key={key + 1}>{value}</List.Item>;
                           })}
                         </List>
+                        <Space>
+                          <Tag color="magenta">Senitize Rooms</Tag>
+                          <Tag color="blue">Free Wifi</Tag>
+                        </Space>
+                        <Tag style={{ marginTop: "10px" }} color="red">
+                          10% discount on F&B Services is available.
+                        </Tag>
                       </Col>
                       <Col span={12}>
                         <div className={styles.room__type_price}>
@@ -106,7 +111,10 @@ const RoomsLaptop = (props) => {
                                   &#8377;{value.room_price}/-
                                 </Title>
                                 <Text style={{ fontSize: "10px" }}>
-                                  +&#8377;+650/- taxes and fees
+                                  <Tag color="green">
+                                    +&#8377;{value.room_price * 0.18}/- taxes
+                                    and fees
+                                  </Tag>
                                 </Text>
                               </div>
                             </Col>

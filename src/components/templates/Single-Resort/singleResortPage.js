@@ -36,7 +36,6 @@ const SingleResort = () => {
   const [searchParams] = useSearchParams();
   const resortId = searchParams.get("resortID");
   const squery = searchParams.get("searchQuery");
-  console.log(resortId, squery);
 
   useEffect(() => {
     console.log("inside mobile view");

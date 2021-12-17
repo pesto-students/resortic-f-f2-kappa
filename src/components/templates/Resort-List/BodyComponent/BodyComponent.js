@@ -1,7 +1,8 @@
 import styles from "./BodyComponent.module.css";
 
-import { Col, Rate, Row, Typography } from "antd";
+import { Col, Rate, Row, Tag, Typography } from "antd";
 import Icon from "@ant-design/icons";
+import { SafetyCertificateOutlined } from "@ant-design/icons";
 
 const { Text, Title } = Typography;
 
@@ -40,7 +41,7 @@ const BodyComponent = (props) => {
           </Col>
           <Col className={styles.rating} xs={24} md={8}>
             <Rate
-              disable1
+              disabled
               defaultValue={
                 isNaN(props.ResortData.rating) ? 1 : props.ResortData.rating
               }
@@ -55,25 +56,25 @@ const BodyComponent = (props) => {
         </Row>
       </Col>
       <Col className={styles.aminities} xs={12} md={16}>
-        <Row className={styles.aminities_item}>
-          {aminitiesData}
-          {/* {props.ResortData.major_aminities.split(",").map((el, key) => {
-            return (
-              <Col key={key} xs={24} md={8}>
-                <div className={styles.aminities_box}>{el}</div>
-              </Col>
-            );
-          })} */}
-          {/* {props.ResortData.resort_name.major_aminities
-            .split(",")
-            .map((aminitity) => {
-              return (
-                <Col xs={24} md={8}>
-                  <div className={styles.aminities_box}>Aminities 1</div>
-                </Col>
-              );
-            })} */}
+        <Row>
+          <Tag style={{ padding: "5px", margin: "5px" }} color="green">
+            100% Vaccinated Staff
+          </Tag>
+          <Tag
+            icon={<SafetyCertificateOutlined />}
+            style={{ padding: "5px", margin: "5px" }}
+            color="#6998AB"
+          >
+            Hygienic and saft stay
+          </Tag>
         </Row>
+        <Row>
+          <Tag style={{ padding: "5px", margin: "5px" }} color="magenta">
+            Couple Friendly
+          </Tag>
+        </Row>
+
+        <Row className={styles.aminities_item}>{aminitiesData}</Row>
       </Col>
       <Col
         style={{
@@ -88,6 +89,11 @@ const BodyComponent = (props) => {
           <Text style={{ fontSize: "20px" }} strong>
             {"₹" + Number(props.ResortData?.starting_price)}
           </Text>
+        </div>
+        <div>
+          <Tag style={{ fontSize: "10px" }}>
+            + ₹{props.ResortData?.starting_price * 0.18} taxes & fees
+          </Tag>
         </div>
       </Col>
     </Row>
