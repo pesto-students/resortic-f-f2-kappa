@@ -11,8 +11,8 @@ const Location = (props) => {
     height: "400px",
   };
   return (
-    <div>
-      <LoadScript googleMapsApiKey="AIzaSyAqMRNsVtp3Nq05lLynv4T9C9JCwVqyq6Q">
+    <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
         <GoogleMap center={center} mapContainerStyle={containerStyle} zoom={10}>
           {/* Child components, such as markers, info windows, etc. */}
           <Marker position={center} />

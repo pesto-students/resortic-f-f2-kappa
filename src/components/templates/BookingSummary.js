@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import resortimg2 from "../../assets/resort2.jpg";
+import resortimg2 from "../../assets/resort-images/resort2.jpg";
 import AccordionComponent from "../atoms/Accordion/Accordion-Component";
 import BookedDetails from "../molecules/BookedDetails/BookedDetails";
 import GuestBookForm from "../molecules/GuestBookForm/GuestBookForm";
@@ -42,23 +42,28 @@ export default function BookingSummary() {
   const squery = JSON.parse(searchParams.get("searchQuery"));
   const totalDays =
     Math.ceil(
-      Math.abs(new Date(squery.checkOut || new Date()) - new Date(squery.checkIn || new Date())) /
+      Math.abs(
+        new Date(squery.checkOut || new Date()) -
+          new Date(squery.checkIn || new Date())
+      ) /
         (1000 * 60 * 60 * 24)
     ) + 1;
   const today = new Date();
-  const tomorrow = today.setDate(today.getDate()+1);
+  const tomorrow = today.setDate(today.getDate() + 1);
 
   console.log(squery);
   // console.log(resortId);
   // console.log(roomId);
 
   const resortFullData = async () => {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     await axios
       .get(APIS.getFullResortDetails + "/" + resortId)
       .then(function (response) {
         console.log("response of resort", response.data.value);
-        response.data.value.rating = response.data.value.reviewtables[0].rating ? response.data.value.reviewtables[0].rating : "1";
+        response.data.value.rating = response.data.value.reviewtables[0].rating
+          ? response.data.value.reviewtables[0].rating
+          : "1";
         setResortData(response.data.value);
         setRoomData(
           response.data.value.roomtables.filter(
@@ -80,8 +85,6 @@ export default function BookingSummary() {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
-
 
   useEffect(() => {
     resortFullData();

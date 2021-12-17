@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import HeroBanner1 from "../../../assets/hero-banner1.jpg";
 import HeroBanner2 from "../../../assets/hero-banner2.jpg";
+
 import classes from "./Homepage.module.css";
 
 import SearchBar from "../../molecules/SearchBar/SearchBar";
@@ -13,10 +13,10 @@ import CategoryTabs from "../../molecules/CategoryTabs";
 import CategoryCity from "../../molecules/CategoryCity";
 
 import PopularResort from "../../molecules/PopularResort";
-
+import { getRandomImage } from "../../../utils/utils";
 const tabsData = ["Beach", "Mountain", "Royal", "Party"];
 
-export const getGuestToken = () => {
+export const getGuestToken = async () => {
   axios
     .get(APIS.guestToken + "guestSystemId=" + new Date().toISOString())
     .then(function (response) {
@@ -42,10 +42,11 @@ function Homepage() {
   }, 1000);
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    console.log("homeage localData", localData);
     if (localData == null) getGuestToken();
     getResortByCategory();
     getPopularResorts();
-  },[]);
+  }, []);
 
   const getPopularResorts = () => {
     axios
@@ -56,7 +57,7 @@ function Homepage() {
           .map((resort) => {
             return {
               ...resort,
-              resortimg: HeroBanner1,
+              resortimg: getRandomImage(),
               rating:
                 resort.reviewtables.length !== 0
                   ? (
@@ -101,7 +102,7 @@ function Homepage() {
     );
     const newData = resort[0].locationcitycategorytables.map((el) => ({
       ...el,
-      resortimg: HeroBanner1,
+      resortimg: getRandomImage(),
     }));
     setCategoryResort(newData);
     setCategoryLoading(false);

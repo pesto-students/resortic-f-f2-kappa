@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import SingleDetailCard from "../templates/SingleDetailCard/SingleDetailCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
@@ -41,7 +42,18 @@ function CategoryCity({ categoryResort, isLoading }) {
         categoryResort.map((resort, index) => {
           return (
             <SwiperSlide key={index}>
-              <Link key={index} to={`resortList?city=${resort.city}`}>
+              <Link
+                key={index}
+                to={`/resortList?city=${
+                  resort.city
+                }&searchQuery=${JSON.stringify({
+                  checkIn: moment().format("YYYY-MM-DD"),
+                  checkOut: moment().add(1, "days").format("YYYY-MM-DD"),
+                  room: 1,
+                  child: 0,
+                  adult: 1,
+                })}`}
+              >
                 <SingleDetailCard
                   key={index}
                   resortimg={resort.resortimg}

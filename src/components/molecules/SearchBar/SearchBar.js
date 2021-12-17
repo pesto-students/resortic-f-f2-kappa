@@ -52,7 +52,7 @@ const minChild = 0;
 const defaultChild = 5;
 let roomType = "";
 
-function SearchBar() {
+function SearchBar( {style, cityName=""} ) {
   const [maxAdult, setMaxAdult] = useState(3);
   const [maxChild, setMaxChild] = useState(5);
   const [room, setRoom] = useState(1);
@@ -61,22 +61,25 @@ function SearchBar() {
   const [visible, setVisible] = useState(false);
   const [visibleMob, setVisibleMob] = useState(false);
   const [roomsStr, setRoomsStr] = useState("");
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState(cityName);
   const [checkIn, setCheckIn] = useState(
-    new Date(Date.now()).toISOString().slice(0, 10)
+    moment().format("YYYY-MM-DD")
+    // new Date(Date.now()).toISOString().slice(0, 10)
   );
   const [checkOut, setCheckOut] = useState(
-    new Date(Date.now() + 3600 * 1000 * 24).toISOString().slice(0, 10)
+    moment().add(1, 'days').format("YYYY-MM-DD")
+    // new Date(Date.now() + 3600 * 1000 * 24).toISOString().slice(0, 10)
   );
   const navigate = useNavigate();
 
   const cityInputHandle = (e) => {
+    console.log(e.target.value);
     setCity(e.target.value);
   };
 
   const searchHandle = () => {
     navigate(
-      `./resortList?city=${city}&searchQuery=${JSON.stringify({
+      `/resortList?city=${city}&searchQuery=${JSON.stringify({
         checkIn: checkIn,
         checkOut: checkOut,
         room: room,
@@ -178,7 +181,7 @@ function SearchBar() {
 
   return (
     <>
-      <div className={`${classes.searchBar} ${classes.DesktopSearch}`}>
+      <div className={`${classes.searchBar} ${classes.DesktopSearch}`} style={style}>
         <CustomInput
           placeholder="Location"
           bordered={false}
