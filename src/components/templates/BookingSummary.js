@@ -278,7 +278,7 @@ export default function BookingSummary() {
               resortImage={resortimg2}
               resortName={resortData.resort_name}
               resortLoc={resortData.address}
-              resortRating={resortData.rating?.toString()}
+              resortRating={resortData.rating ? resortData.rating.toString() : 1}
               checkinDate={new Date(squery.checkIn || tomorrow)}
               checkoutDate={new Date(squery.checkOut || tomorrow)}
               nightsNum={totalDays}
