@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import HeaderPage from "../components/templates/Header/Header";
 import Homepage from "../components/templates/Homepage/Homepage";
@@ -14,9 +14,9 @@ import Admin from "../components/templates/Admin/Admin";
 import About from "../components/templates/About/About";
 import Contact from "../components/templates/Contact/Contact";
 import ComingSoon from "../components/templates/ComingSoon";
+import ReactGA from "react-ga";
 const { Header, Content, Footer } = Layout;
 function Router() {
-  // let [is, setHeaderStyle] = useState({});
   let headerStyle = {};
   const [isLandingPage, setLandingPage] = useState(false);
 
@@ -33,8 +33,6 @@ function Router() {
         background: "transparent",
       };
       if (!isLandingPage && !Object.keys(headerStyle).length) {
-        console.log("in 1 if");
-
         setLandingPage(true);
       }
     } else {
@@ -46,14 +44,14 @@ function Router() {
         boxShadow: "0px 2px 10px #958e8ea6",
       };
       if (isLandingPage) {
-        console.log("in 2 if");
-
         setLandingPage(false);
       }
     }
   }
 
-  console.log("headerStyle", headerStyle);
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, [location]);
 
   return (
     <>

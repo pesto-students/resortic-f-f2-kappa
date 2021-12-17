@@ -1,13 +1,13 @@
 import styles from "./RoomsMobile.module.css";
 
-import { Typography, Card, Row, Col } from "antd";
+import { Typography, Card, Row, Col, Tag } from "antd";
 import { CustomButton } from "../../../../atoms/CustomButton/CustomButton";
 import { Link } from "react-router-dom";
+import { getRoomImage } from "../../../../../utils/utils";
 
 const { Title, Text } = Typography;
 
 const RoomMobile = (props) => {
-  console.log("Mobile view", props.rooms);
   return (
     <section className={styles.roomMobile}>
       <div className={styles.roomMobile_header}>
@@ -28,7 +28,7 @@ const RoomMobile = (props) => {
                   </Col>
                 </Row>
               }
-              cover={<img src="./images/image7.jpg" alt="loading" />}
+              cover={<img src={getRoomImage()} height="200px" alt="loading" />}
               className={styles.roomTypeCard}
               bodyStyle={{ padding: "5px" }}
             >
@@ -50,14 +50,16 @@ const RoomMobile = (props) => {
                     </ul>
                   </Col>
                   <Col span={24}>
-                    <div style={{ textAlign: "center" }}>
+                    <div style={{ textAlign: "center", margin: "1rem" }}>
                       <Text>
                         <span style={{ fontWeight: "bold" }}>
                           &#8377; {room.room_price}/-
                         </span>{" "}
                         per night{" "}
                         <span style={{ color: "gray", fontSize: "13px" }}>
-                          +&#8377; {(18 * room.room_price) / 100} taxes & fees
+                          <Tag color="green">
+                            +&#8377; {(18 * room.room_price) / 100} taxes & fees
+                          </Tag>
                         </span>
                       </Text>
                     </div>

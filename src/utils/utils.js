@@ -14,6 +14,10 @@ import resort21 from "../assets/resort-images/resort21.jpg";
 import resort22 from "../assets/resort-images/resort22.jpg";
 import resort24 from "../assets/resort-images/resort24.jpg";
 import resort25 from "../assets/resort-images/resort25.jpg";
+import room1 from "../assets/rooms/room-1.jpg";
+import room2 from "../assets/rooms/room-2.jpg";
+import room3 from "../assets/rooms/room-3.jpg";
+import room4 from "../assets/rooms/room-4.jpg";
 
 let debounceTimer;
 export const debounce = (cb, delay) => {
@@ -56,4 +60,10 @@ export const imagArr = [
 
 export const getRandomImage = () => {
   return imagArr[randomNumber(0, 16)];
+};
+
+export const roomArr = [room1, room2, room3, room4];
+
+export const getRoomImage = () => {
+  return roomArr[randomNumber(0, 4)];
 };
