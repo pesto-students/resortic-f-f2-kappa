@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import HeaderPage from "../components/templates/Header/Header";
 import Homepage from "../components/templates/Homepage/Homepage";
@@ -21,7 +21,8 @@ function Router() {
   const [isLandingPage, setLandingPage] = useState(false);
 
   const location = useLocation();
-  console.log("location", location);
+  console.log("location: ", location);
+  
   if (window.window.innerWidth >= 767) {
     if (location.pathname === "/") {
       console.log("on homepage");
