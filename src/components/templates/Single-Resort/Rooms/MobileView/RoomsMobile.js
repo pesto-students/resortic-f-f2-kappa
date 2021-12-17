@@ -8,7 +8,6 @@ import { getRoomImage } from "../../../../../utils/utils";
 const { Title, Text } = Typography;
 
 const RoomMobile = (props) => {
-  console.log("Mobile view", props.rooms);
   return (
     <section className={styles.roomMobile}>
       <div className={styles.roomMobile_header}>

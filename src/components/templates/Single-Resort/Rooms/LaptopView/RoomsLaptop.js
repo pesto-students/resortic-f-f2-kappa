@@ -9,12 +9,6 @@ import { CustomButton } from "../../../../atoms/CustomButton/CustomButton";
 const { Title, Text } = Typography;
 
 const RoomsLaptop = (props) => {
-  console.log(props);
-
-  // const selectRoomBtn = (id) => {
-  //   console.log("Room ID: ", id);
-  // };
-
   return (
     <section
       className={styles.section_rooms}

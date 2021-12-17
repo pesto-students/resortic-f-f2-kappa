@@ -1,7 +1,6 @@
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const Location = (props) => {
-  console.log(props);
   const center = {
     lat: Number(props.lat),
     lng: Number(props.lon),

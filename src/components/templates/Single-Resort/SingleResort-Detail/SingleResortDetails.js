@@ -18,7 +18,7 @@ const SingleResortDetail = (props) => {
       />
     );
   }
-  console.log(props);
+
   const { majorAmenities, lowestPrice } = props;
   return (
     <section className={styles.section_3}>

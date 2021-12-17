@@ -42,7 +42,6 @@ function Homepage() {
   }, 1000);
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
-    console.log("homeage localData", localData);
     if (localData == null) getGuestToken();
     getResortByCategory();
     getPopularResorts();
@@ -52,7 +51,6 @@ function Homepage() {
     axios
       .get(APIS.getPopularResort)
       .then((resorts) => {
-        console.log("popular resorts", resorts);
         const popData = resorts.data.value
           .map((resort) => {
             return {

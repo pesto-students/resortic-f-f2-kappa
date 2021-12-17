@@ -4,7 +4,6 @@ import { Col, Typography, Row, Rate } from "antd";
 
 const { Title } = Typography;
 const ResortHeader = (props) => {
-  console.log(props);
   return (
     <section className={styles.section_2}>
       <Row>

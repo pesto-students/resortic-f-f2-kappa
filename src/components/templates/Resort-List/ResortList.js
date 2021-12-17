@@ -18,7 +18,6 @@ const ResortListPage = () => {
   const [isHover, setIsHover] = useState(false);
   const city = searchPrama.get("city");
   const squery = searchPrama.get("searchQuery");
-  console.log("city: ", city, "searchquery: ", JSON.parse(squery));
 
   /**
    *
