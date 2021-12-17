@@ -92,7 +92,7 @@ const LoginModal1 = () => {
           </Button>
         </Form.Item>
       </Form>
-      <Divider>OR</Divider>
+//       <Divider>OR</Divider>
       {/* <Form layout="horizontal">
         <Form.Item>
           <Row>
