@@ -73,10 +73,10 @@ export default function BookingSummary() {
       .then(function (response) {
         console.log("response of resort", response.data.value);
         if (response.data.value) {
-          response.data.value.rating = response.data.value.reviewtables[0]
-            .rating
-            ? response.data.value.reviewtables[0].rating
-            : "1";
+          response.data.value.rating =
+            response.data.value.reviewtables.length > 0
+              ? response.data.value.reviewtables[0].rating
+              : "1";
           setResortData(response.data.value);
           setRoomData(
             response.data.value.roomtables.filter(
@@ -278,7 +278,7 @@ export default function BookingSummary() {
               resortImage={resortimg2}
               resortName={resortData.resort_name}
               resortLoc={resortData.address}
-              resortRating={resortData.rating ? resortData.rating.toString() : 1}
+              resortRating={resortData.rating}
               checkinDate={new Date(squery.checkIn || tomorrow)}
               checkoutDate={new Date(squery.checkOut || tomorrow)}
               nightsNum={totalDays}
