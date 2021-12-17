@@ -1,12 +1,12 @@
 import { Menu } from "antd";
-import {  useState } from "react";
-import {
-  Link,
-} from "react-scroll";
+import { useState } from "react";
+import { Link } from "react-scroll";
 
 const MenuComponent = (props) => {
   const menuItem = {
     margin: "auto",
+    fontSize: "20px",
+    fontWeight: "bold",
   };
   const [activeItem, setActiveItem] = useState(props.children[0]);
   const handleActiveTab = (e) => {

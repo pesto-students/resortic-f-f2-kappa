@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import Rating from "../../atoms/Rating/Rating";
 import resortimg1 from "../../../assets/resort-images/resort1.jpg";
+import { getRandomImage } from "../../../utils/utils";
 import styles from "./BookedDetails.module.css";
 import { Row, Col, Tag, Button, Modal, DatePicker } from "antd";
 import axios from "../../../axios";
 import * as APIS from "../../../constant/Apis";
 // import { FaMapMarkedAlt } from "react-icons/fa";
 import { EnvironmentOutlined } from "@ant-design/icons";
+import WithLoading from "../../../HOC/WithLoading";
 import moment from "moment";
 const { RangePicker } = DatePicker;
 
-export default function BookedDetails({
+export default WithLoading(function BookedDetails({
   resortImage,
   resortName,
   resortLoc,
@@ -26,33 +28,32 @@ export default function BookedDetails({
   amount,
   roomName,
   bookingId,
+  onSuccessCancel,
+  status,
+  isLoading
 }) {
-  const dateFormat = "MM/DD/YYYY";
-
-  const [checkInDate, setCheckInDate] = useState(checkinDate || new Date());
+  const [checkInDate, setCheckInDate] = useState(moment(checkinDate));
   const [checkInTime] = useState(checkinTime);
-  const [checkOutDate, setCheckOutDate] = useState(checkoutDate || new Date());
+  const [checkOutDate, setCheckOutDate] = useState(moment(checkoutDate));
   const [checkOutTime] = useState(checkoutTime);
   const [isModalTimeVisible, setIsModalTimeVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [modalDates, setmodalDates] = useState([
-    moment(checkInDate.toLocaleString().slice(0, 10), dateFormat),
-    moment(checkOutDate.toLocaleString().slice(0, 10), dateFormat),
-  ]);
+  const [modalDates, setmodalDates] = useState([checkInDate, checkOutDate]);
 
-  const showModal = () => {
+  const showReScheduleModal = () => {
     setIsModalTimeVisible(true);
   };
 
-  const handleOk = () => {
-    setCheckInDate(modalDates[0]._d);
-    setCheckOutDate(modalDates[1]._d);
+  const handleOk = async () => {
+    setCheckInDate(modalDates[0]);
+    setCheckOutDate(modalDates[1]);
     const updateBook = {
-      check_in: modalDates[0]._d.toISOString().slice(0, 10),
-      check_out: modalDates[1]._d.toISOString().slice(0, 10),
+      check_in: modalDates[0].format("YYYY-MM-DD"),
+      check_out: modalDates[1].format("YYYY-MM-DD"),
     };
-    axios
-      .post(APIS.updateBooking + "/" + bookingId, updateBook)
+    console.log(updateBook);
+    await axios
+      .put(APIS.updateBooking + "/" + bookingId, updateBook)
       .then(function (response) {
         console.log("response of updateBooking", response.data.data);
       })
@@ -70,7 +71,17 @@ export default function BookedDetails({
     setIsModalVisible(true);
   };
 
-  const handlCanceleOk = () => {
+  const handlCanceleOk = async () => {
+    await axios
+      .delete(APIS.updateBooking + "/" + bookingId)
+      .then(function (response) {
+        console.log("response of deleteBooking", response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    onSuccessCancel();
     setIsModalVisible(false);
   };
 
@@ -83,14 +94,14 @@ export default function BookedDetails({
         <h6>
           <strong>Check In</strong>
         </h6>
-        <h3>{formatDate(checkInDate) || formatDate(new Date())}</h3>
+        <h3>{checkInDate.format("ddd, DD MMM YYYY")}</h3>
         <h5>{checkInTime || "09:00 AM"}</h5>
       </Col>
       <Col>
         <h6>
           <strong>Check Out</strong>
         </h6>
-        <h3>{formatDate(checkOutDate) || formatDate(new Date())}</h3>
+        <h3>{checkOutDate.format("ddd, DD MMM YYYY")}</h3>
         <h5>{checkOutTime || "06:00 PM"}</h5>
       </Col>
       <Col>
@@ -151,7 +162,7 @@ export default function BookedDetails({
                 "border-style": "none",
                 width: "100%",
               }}
-              onClick={showModal}
+              onClick={showReScheduleModal}
             >
               Re-Schedule
             </Button>
@@ -175,24 +186,14 @@ export default function BookedDetails({
             >
               <p>Choose the dates you want re-Schedule to:</p>
               <RangePicker
-                defaultValue={[
-                  moment(
-                    modalDates[0]._d.toLocaleString().slice(0, 10),
-                    dateFormat
-                  ),
-                  moment(
-                    modalDates[1]._d.toLocaleString().slice(0, 10),
-                    dateFormat
-                  ),
-                ]}
+                autoFocus
+                defaultValue={[checkInDate, checkOutDate]}
                 onCalendarChange={(val) => setmodalDates(val)}
               />
             </Modal>
             <Modal
               title="Confirmation"
               visible={isModalVisible}
-              onOk={handlCanceleOk}
-              onCancel={handleCancelCancel}
               footer={[
                 <Button key="No" onClick={handleCancelCancel} type="primary">
                   No
@@ -215,21 +216,24 @@ export default function BookedDetails({
   return (
     <div>
       <Row gutter={16} justify="center">
-        {/* <Col span={8}> */}
         <Col xs={24} sm={8} md={8} lg={8} xl={8}>
           <img
-            src={resortImage || resortimg1}
+            src={getRandomImage() || resortimg1}
             alt="Booked resort"
             className={styles.img}
           />
         </Col>
-        {/* <Col span={16}> */}
         <Col xs={24} sm={16} md={16} lg={16} xl={16}>
           <h2>{resortName}</h2>
           <p>
             <EnvironmentOutlined /> {resortLoc}
           </p>
           <Rating value={resortRating} />
+          {type === "past" ? (
+            <p><Tag color={status==="Cancelled"?"red":"green"}>{status}</Tag></p>
+          ) : (
+            ""
+          )}
         </Col>
       </Row>
       <div className={styles.bookedTimeContainer}>{bookedtiming}</div>
@@ -241,10 +245,4 @@ export default function BookedDetails({
       {roomdetail_Buttons}
     </div>
   );
-}
-
-function formatDate(dateVar) {
-  if (dateVar) {
-    return dateVar.toUTCString().slice(0, 16);
-  }
-}
+})

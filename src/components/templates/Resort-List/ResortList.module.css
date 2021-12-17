@@ -5,6 +5,9 @@
   margin-right: 4rem;
 }
 
+.resortListCard {
+  border-radius: 10px;
+}
 
 @media screen and (max-width: 900px) {
   .resortList {

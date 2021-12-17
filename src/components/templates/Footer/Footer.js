@@ -13,11 +13,10 @@ function Footer() {
       <div className={classes.info}>
         <div className={classes.title}>reSorTic</div>
         <div>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis
-          fermentum quam. Nam dictum lacinia odio et pretium. Integer volutpat
-          erat in viverra rutrum. Praesent auctor orci at quam vehicula, sit
-          amet cursus metus consequat. Donec in scelerisque ex. Phasellus
-          lacinia justo eget vestibulum euismod.
+          It is a Resort Booking website. This project aim to create a resort
+          booking system which is used by users/Customers to search and book
+          best resorts. Focus mainly on Resorts. User can see different services
+          offered by different resorts. Display result according to user search.
         </div>
         <div>
           <InstagramOutlined className={classes.social} />
@@ -36,13 +35,23 @@ function Footer() {
           <Link to="contact-us">
             <li>Contact Us</li>
           </Link>
-          <li>Our Partner</li>
+          <Link to="our-partner">
+            <li>Our Partner</li>
+          </Link>
         </ul>
         <ul>
-          <li>Help</li>
-          <li>Help Center</li>
-          <li>Priacy Policy</li>
-          <li>FAQ</li>
+          <Link to="help">
+            <li>Help</li>
+          </Link>
+          <Link to="help-center">
+            <li>Help Center</li>
+          </Link>
+          <Link to="privacy-policy">
+            <li>Priacy Policy</li>
+          </Link>
+          <Link to="help">
+            <li>FAQ</li>
+          </Link>
         </ul>
       </div>
     </div>

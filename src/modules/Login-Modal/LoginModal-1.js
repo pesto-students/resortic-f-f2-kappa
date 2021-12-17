@@ -9,8 +9,8 @@ import {
 
 import { useDispatch } from "react-redux";
 
-import GmailBtn from "./GmailBtn";
-import FacebookBtn from "./FacebookBtn";
+// import GmailBtn from "./GmailBtn";
+// import FacebookBtn from "./FacebookBtn";
 
 const LoginModal1 = () => {
   const dispatch = useDispatch();
@@ -92,8 +92,8 @@ const LoginModal1 = () => {
           </Button>
         </Form.Item>
       </Form>
-      <Divider>OR</Divider>
-      <Form layout="horizontal">
+//       <Divider>OR</Divider>
+      {/* <Form layout="horizontal">
         <Form.Item>
           <Row>
             <Col>
@@ -104,7 +104,7 @@ const LoginModal1 = () => {
             </Col>
           </Row>
         </Form.Item>
-      </Form>
+      </Form> */}
     </>
   );
 };

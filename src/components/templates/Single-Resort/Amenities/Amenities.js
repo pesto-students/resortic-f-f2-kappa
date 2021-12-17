@@ -13,15 +13,12 @@ const Amenities = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleModal = () => {
-    console.log("Clicked event trigger.");
     setIsModalVisible(true);
-    console.log(isModalVisible);
   };
 
   const handleModalCancel = () => {
     setIsModalVisible(false);
   };
-  console.log(props);
   return (
     <section className={styles.amenities}>
       <Row>

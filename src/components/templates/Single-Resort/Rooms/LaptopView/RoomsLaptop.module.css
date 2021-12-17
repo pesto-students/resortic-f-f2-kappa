@@ -43,7 +43,7 @@
   background: white;
 }
 
-.styles.rooms__body_item {
+.rooms__body_item {
   border: solid 1px gray;
 }
 
@@ -64,8 +64,8 @@
 }
 
 .roomtype_image {
-  height: 200px;
-  width: 100%;
+  height: 100px;
+  width: 100px;
   border-radius: 4px;
 }
 

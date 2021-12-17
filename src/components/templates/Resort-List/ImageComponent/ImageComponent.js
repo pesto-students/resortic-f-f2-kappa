@@ -1,19 +1,25 @@
 import styles from "./ImageComponent.module.css";
 
 import { Carousel, Image } from "antd";
-import Image1 from "../../../../assets/image1.jpg";
-import Image2 from "../../../../assets/image2.jpg";
-import Image3 from "../../../../assets/image3.jpg";
-import Image4 from "../../../../assets/image4.jpg";
-import Image5 from "../../../../assets/image5.jpg";
+
+import { getRandomImage } from "../../../../utils/utils";
 
 const ImageComponents = (props) => {
-  const data = {
-    images: [Image1, Image2, Image3, Image4, Image5],
-  };
+  const imageTags = [];
+  for (let i = 0; i < 5; i++) {
+    imageTags.push(
+      <Image
+        key={i}
+        width="100%"
+        height={300}
+        src={getRandomImage()}
+        alt={"Image is loading"}
+      />
+    );
+  }
   return (
     <Carousel autoplay>
-      {data.images.map((image, key) => {
+      {imageTags.map((image, key) => {
         return (
           <Image
             key={key}

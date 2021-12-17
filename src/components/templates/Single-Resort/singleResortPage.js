@@ -36,10 +36,8 @@ const SingleResort = () => {
   const [searchParams] = useSearchParams();
   const resortId = searchParams.get("resortID");
   const squery = searchParams.get("searchQuery");
-  console.log(resortId, squery);
 
   useEffect(() => {
-    console.log("inside mobile view");
     const updateScreenSize = () => {
       setIsMobileView(window.innerWidth <= 700);
     };
@@ -50,11 +48,9 @@ const SingleResort = () => {
   });
 
   useEffect(() => {
-    console.log("inside single resort");
     axios
       .get(`${getSingleResort}${resortId}`)
       .then((response) => {
-        console.log("responsoe", response);
         setResort(response.data.value);
       })
       .catch((err) => {

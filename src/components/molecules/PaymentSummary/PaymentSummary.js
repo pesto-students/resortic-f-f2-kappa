@@ -1,12 +1,14 @@
 import React from "react";
 import AccordionComponent from "../../atoms/Accordion/Accordion-Component";
-import { Divider, Row, Col } from "antd";
+import WithLoading from "../../../HOC/WithLoading";
+import { Divider, Row, Col, Tag } from "antd";
 
-export default function PaymentSummary({
+export default WithLoading(function PaymentSummary({
   roomsNum,
   nightsNum,
   pricePerRoom,
-  discount
+  discount,
+  isLoading
 }) {
   const totalCharges = roomsNum * pricePerRoom * nightsNum;
   const discountAmount = Math.ceil(totalCharges* (discount/100));
@@ -28,7 +30,7 @@ export default function PaymentSummary({
         </Row>
         <Row gutter={32}>
           <Col span={18}>
-            <p>Total Discount</p>
+            <p>Total Discount <Tag color="green">10% off</Tag></p>
           </Col>
           <Col span={6}>
             <p>{"₹"+ discountAmount}</p>
@@ -67,4 +69,4 @@ export default function PaymentSummary({
       </AccordionComponent>
     </div>
   );
-}
+})
