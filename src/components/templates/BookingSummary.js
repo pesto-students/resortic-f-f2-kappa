@@ -5,7 +5,7 @@ import BookedDetails from "../molecules/BookedDetails/BookedDetails";
 import GuestBookForm from "../molecules/GuestBookForm/GuestBookForm";
 import PaymentSummary from "../molecules/PaymentSummary/PaymentSummary";
 import moment from "moment";
-import { Row, Col, message, Spin, Modal, Button} from "antd";
+import { Row, Col, message, Spin, Modal, Button } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -40,6 +40,7 @@ export default function BookingSummary() {
   const [roomData, setRoomData] = useState("");
   const [loading, setLoading] = useState(false);
   const [bokModalVisible, setBokModalVisible] = useState(false);
+  const [isLoadingdata, setIsLoadingData] = useState(true);
 
   let navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -47,13 +48,12 @@ export default function BookingSummary() {
   const roomId = searchParams.get("roomID");
   const squery = JSON.parse(searchParams.get("searchQuery"));
 
-  
   const today = new Date();
   const tomorrow = today.setDate(today.getDate() + 1);
   const tomorrow_m = moment().add(1, "days");
   const checkIn_m = moment(squery.checkIn || tomorrow_m);
   const checkOut_m = moment(squery.checkOut || tomorrow_m);
-  const totalDays = checkOut_m.diff(checkIn_m,"days") + 1;
+  const totalDays = checkOut_m.diff(checkIn_m, "days") + 1;
 
   console.log(squery);
 
@@ -71,18 +71,23 @@ export default function BookingSummary() {
       .get(APIS.getFullResortDetails + "/" + resortId)
       .then(function (response) {
         console.log("response of resort", response.data.value);
-        response.data.value.rating = response.data.value.reviewtables[0].rating
-          ? response.data.value.reviewtables[0].rating
-          : "1";
-        setResortData(response.data.value);
-        setRoomData(
-          response.data.value.roomtables.filter(
-            (rooms) => rooms.id === roomId
-          )[0]
-        );
+        if (response.data.value) {
+          response.data.value.rating = response.data.value.reviewtables[0]
+            .rating
+            ? response.data.value.reviewtables[0].rating
+            : "1";
+          setResortData(response.data.value);
+          setRoomData(
+            response.data.value.roomtables.filter(
+              (rooms) => rooms.id === roomId
+            )[0]
+          );
+          setIsLoadingData(false);
+        }
       })
       .catch(function (error) {
         console.log(error);
+        message.error("Loading Data Failed!!");
       });
   };
 
@@ -279,6 +284,7 @@ export default function BookingSummary() {
               guestNum={squery.adult}
               roomsNum={squery.room}
               roomName={roomData.room_name}
+              isLoading={isLoadingdata}
               type="booking"
             />
           </AccordionComponent>
@@ -289,6 +295,7 @@ export default function BookingSummary() {
             nightsNum={totalDays}
             pricePerRoom={roomData.room_price}
             discount="10"
+            isLoading={isLoadingdata}
           />
         </Col>
       </Row>
@@ -310,20 +317,73 @@ export default function BookingSummary() {
         </Col>
       </Row>
       <Row></Row>
-      <Modal title="Booking Details" visible={bokModalVisible} onOk={handleBokModalOk} style={{ top: 20 }}
-      footer={[
-        <Button key="submit" type="primary" onClick={handleOk}>
-          OK
-        </Button>
-      ]}>
-        <p><strong> Your booking was confirmed. 😎</strong></p>
-          <p>Details of Booking</p>
-          <div style={{paddingLeft:"1em"}}>
-            <p><strong>Booking ID :</strong><span style={{paddingLeft:"3em"}}></span>{resortData.bookId}<br/><strong>Resort :</strong><span style={{paddingLeft:"5em"}}></span>{resortData.resort_name}<br/><strong>Address :</strong><span style={{paddingLeft:"4.3em"}}></span>{resortData.address}<br/><strong>Check In :</strong><span style={{paddingLeft:"4em"}}></span>{checkIn_m.format("ddd, DD MMM YYYY")}<br/><strong>Check Out :</strong><span style={{paddingLeft:"3em"}}></span>{checkOut_m.format("ddd, DD MMM YYYY")}<br/><strong>Adults :</strong><span style={{paddingLeft:"5em"}}></span>{squery.adult || 1}<br/><strong>Children :</strong><span style={{paddingLeft:"4em"}}></span>{squery.child || 0}<br/><strong>Room :</strong><span style={{paddingLeft:"5em"}}></span>{squery.room || 1} {roomData.room_name}<br/><strong>Package :</strong><span style={{paddingLeft:"4em"}}></span>Rooms Only<br/><strong>Amount Paid :</strong><span style={{paddingLeft:"2em"}}></span>₹{resortData.bookAmount}</p>
+      <Modal
+        title="Booking Details"
+        visible={bokModalVisible}
+        onOk={handleBokModalOk}
+        style={{ top: 20 }}
+        footer={[
+          <Button key="submit" type="primary" onClick={handleOk}>
+            OK
+          </Button>,
+        ]}
+      >
+        <p>
+          <strong> Your booking was confirmed. 😎</strong>
+        </p>
+        <p>Details of Booking</p>
+        <div style={{ paddingLeft: "1em" }}>
+          <p>
+            <strong>Booking ID :</strong>
+            <span style={{ paddingLeft: "3em" }}></span>
+            {resortData.bookId}
+            <br />
+            <strong>Resort :</strong>
+            <span style={{ paddingLeft: "5em" }}></span>
+            {resortData.resort_name}
+            <br />
+            <strong>Address :</strong>
+            <span style={{ paddingLeft: "4.3em" }}></span>
+            {resortData.address}
+            <br />
+            <strong>Check In :</strong>
+            <span style={{ paddingLeft: "4em" }}></span>
+            {checkIn_m.format("ddd, DD MMM YYYY")}
+            <br />
+            <strong>Check Out :</strong>
+            <span style={{ paddingLeft: "3em" }}></span>
+            {checkOut_m.format("ddd, DD MMM YYYY")}
+            <br />
+            <strong>Adults :</strong>
+            <span style={{ paddingLeft: "5em" }}></span>
+            {squery.adult || 1}
+            <br />
+            <strong>Children :</strong>
+            <span style={{ paddingLeft: "4em" }}></span>
+            {squery.child || 0}
+            <br />
+            <strong>Room :</strong>
+            <span style={{ paddingLeft: "5em" }}></span>
+            {squery.room || 1} {roomData.room_name}
+            <br />
+            <strong>Package :</strong>
+            <span style={{ paddingLeft: "4em" }}></span>Rooms Only
+            <br />
+            <strong>Amount Paid :</strong>
+            <span style={{ paddingLeft: "2em" }}></span>₹{resortData.bookAmount}
+          </p>
         </div>
-        <p>Contact resort at <br/><strong>Mobile: </strong>+91-{resortData.contact_number} <br/><strong>Mail: </strong>{resortData.resort_email}</p>
-        To reschedule/cancel your bookings, please login and navigate to Manage Bookings<br/>
-        Details Regarding your Booking will be sent to th provided Mail-Id shortly!!
+        <p>
+          Contact resort at <br />
+          <strong>Mobile: </strong>+91-{resortData.contact_number} <br />
+          <strong>Mail: </strong>
+          {resortData.resort_email}
+        </p>
+        To reschedule/cancel your bookings, please login and navigate to Manage
+        Bookings
+        <br />
+        Details Regarding your Booking will be sent to th provided Mail-Id
+        shortly!!
       </Modal>
     </div>
   );

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import Rating from "../../atoms/Rating/Rating";
 import resortimg1 from "../../../assets/resort-images/resort1.jpg";
+import { getRandomImage } from "../../../utils/utils";
 import styles from "./BookedDetails.module.css";
 import { Row, Col, Tag, Button, Modal, DatePicker } from "antd";
 import axios from "../../../axios";
 import * as APIS from "../../../constant/Apis";
 // import { FaMapMarkedAlt } from "react-icons/fa";
 import { EnvironmentOutlined } from "@ant-design/icons";
+import WithLoading from "../../../HOC/WithLoading";
 import moment from "moment";
 const { RangePicker } = DatePicker;
 
-export default function BookedDetails({
+export default WithLoading(function BookedDetails({
   resortImage,
   resortName,
   resortLoc,
@@ -27,7 +29,8 @@ export default function BookedDetails({
   roomName,
   bookingId,
   onSuccessCancel,
-  status
+  status,
+  isLoading
 }) {
   const [checkInDate, setCheckInDate] = useState(moment(checkinDate));
   const [checkInTime] = useState(checkinTime);
@@ -215,7 +218,7 @@ export default function BookedDetails({
       <Row gutter={16} justify="center">
         <Col xs={24} sm={8} md={8} lg={8} xl={8}>
           <img
-            src={resortImage || resortimg1}
+            src={getRandomImage() || resortimg1}
             alt="Booked resort"
             className={styles.img}
           />
@@ -242,4 +245,4 @@ export default function BookedDetails({
       {roomdetail_Buttons}
     </div>
   );
-}
+})
