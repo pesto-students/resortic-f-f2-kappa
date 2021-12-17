@@ -22,7 +22,6 @@ function Router() {
 
   const location = useLocation();
   console.log("location: ", location);
-
   if (window.window.innerWidth >= 767) {
     if (location.pathname === "/") {
       console.log("on homepage");
