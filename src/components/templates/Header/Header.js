@@ -23,6 +23,10 @@ function HeaderPage() {
   const logoutUser = () => {
     const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
     console.log("data", data);
+    setLoggedIn(false);
+    localStorage.clear();
+    setMobileMenuToggle(!isMobileMenuToggle);
+    getGuestToken();
     // axios
     //   .post(APIS.logoutApi, { usertableId: data.userId })
     //   .then((response) => {
