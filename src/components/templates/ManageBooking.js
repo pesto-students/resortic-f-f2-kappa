@@ -17,13 +17,13 @@ export default function ManageBooking() {
   const [upcomingData, setUpcomingData] = useState("");
   const [pastData, setPastData] = useState("");
 
-  const getUpcomingBookings = () => {
+  const getUpcomingBookings = async () => {
     const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
     const userId =
       userIdURL ||
       localData.userId ||
       "USR-73c2aa6c6ed3278039b8497306896ab18241c33c";
-    axios
+    await axios
       .get(APIS.getBooking + "/" + userId + "/upcoming")
       .then(function (response) {
         console.log("response of upcoming", response.data.data);
@@ -34,11 +34,17 @@ export default function ManageBooking() {
       });
   };
 
-  const getPastBookings = () => {
+  const onRefreshUpcomingBookings = () => {
+    getUpcomingBookings();
+  };
+
+  const getPastBookings = async () => {
     const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
     const userId =
-      localData.userId || "USR-73c2aa6c6ed3278039b8497306896ab18241c33c";
-    axios
+      userIdURL ||
+      localData.userId ||
+      "USR-73c2aa6c6ed3278039b8497306896ab18241c33c";
+    await axios
       .get(APIS.getBooking + "/" + userId + "/past")
       .then(function (response) {
         console.log("response of past", response.data.data);
@@ -80,6 +86,7 @@ export default function ManageBooking() {
                         type="upcoming"
                         amount={booking.paid_amount}
                         bookingId={booking.id}
+                        onSuccessCancel = {onRefreshUpcomingBookings}
                       />
                     </AccordionComponent>
                   );
@@ -113,6 +120,7 @@ export default function ManageBooking() {
                         roomsNum={booking.rooms_count}
                         type="past"
                         amount={booking.paid_amount}
+                        status = {booking.status}
                       />
                     </AccordionComponent>
                   );

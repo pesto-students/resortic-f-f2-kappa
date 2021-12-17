@@ -24,6 +24,7 @@ export const getGuestToken = async () => {
         "resortic_localstorage",
         JSON.stringify({ token: response.data.data.token })
       );
+      return response.data.data.token;
     })
     .catch(function (error) {
       console.log(error);

@@ -94,7 +94,9 @@ function HeaderPage() {
   return (
     <div className={classes.Header}>
       <div>
-        <img className={classes.logo} src={logo} alt="logo" />
+        <Link to="/">
+          <img className={classes.logo} src={logo} alt="logo" />
+        </Link>
       </div>
       <div className={classes.desktopView}>
         <Menu theme="dark" mode="horizontal" selectable={false}>
@@ -133,7 +135,11 @@ function HeaderPage() {
                   className="ant-dropdown-link"
                   onClick={(e) => e.preventDefault()}
                 >
-                  <img src={loginUserIC} alt="loginpic" style={{ height: "40px" }} />
+                  <img
+                    src={loginUserIC}
+                    alt="loginpic"
+                    style={{ height: "40px" }}
+                  />
                 </a>
               </Dropdown>
             </Menu.Item>

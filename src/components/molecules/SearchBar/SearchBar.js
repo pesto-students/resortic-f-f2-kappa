@@ -52,7 +52,7 @@ const minChild = 0;
 const defaultChild = 5;
 let roomType = "";
 
-function SearchBar( {style, cityName=""} ) {
+function SearchBar({ style, cityName = "" }) {
   const [maxAdult, setMaxAdult] = useState(3);
   const [maxChild, setMaxChild] = useState(5);
   const [room, setRoom] = useState(1);
@@ -67,7 +67,7 @@ function SearchBar( {style, cityName=""} ) {
     // new Date(Date.now()).toISOString().slice(0, 10)
   );
   const [checkOut, setCheckOut] = useState(
-    moment().add(1, 'days').format("YYYY-MM-DD")
+    moment().add(1, "days").format("YYYY-MM-DD")
     // new Date(Date.now() + 3600 * 1000 * 24).toISOString().slice(0, 10)
   );
   const navigate = useNavigate();
@@ -181,7 +181,10 @@ function SearchBar( {style, cityName=""} ) {
 
   return (
     <>
-      <div className={`${classes.searchBar} ${classes.DesktopSearch}`} style={style}>
+      <div
+        className={`${classes.searchBar} ${classes.DesktopSearch}`}
+        style={style}
+      >
         <CustomInput
           placeholder="Location"
           bordered={false}
