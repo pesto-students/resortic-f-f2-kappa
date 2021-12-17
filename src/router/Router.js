@@ -22,7 +22,6 @@ function Router() {
 
   const location = useLocation();
   console.log("location: ", location);
-  
   if (window.window.innerWidth >= 767) {
     if (location.pathname === "/") {
       console.log("on homepage");
@@ -59,7 +58,7 @@ function Router() {
       <Header style={headerStyle}>
         <HeaderPage />
       </Header>
-      <Content>
+      <Content style={{ minHeight: "100vh" }}>
         <Routes>
           <Route exact path="/" element={<Homepage />} />
           <Route path="resort" element={<SingleResort />} />

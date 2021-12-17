@@ -4,6 +4,7 @@ import AccordionComponent from "../atoms/Accordion/Accordion-Component";
 import BookedDetails from "../molecules/BookedDetails/BookedDetails";
 import GuestBookForm from "../molecules/GuestBookForm/GuestBookForm";
 import PaymentSummary from "../molecules/PaymentSummary/PaymentSummary";
+import { CustomButton } from "../atoms/CustomButton/CustomButton";
 import moment from "moment";
 import { Row, Col, message, Spin, Modal, Button } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -323,9 +324,9 @@ export default function BookingSummary() {
         onOk={handleBokModalOk}
         style={{ top: 20 }}
         footer={[
-          <Button key="submit" type="primary" onClick={handleOk}>
+          <CustomButton onClick={handleOk} style={{ width: "20%" }}>
             OK
-          </Button>,
+          </CustomButton>,
         ]}
       >
         <p>

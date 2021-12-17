@@ -74,14 +74,15 @@ const ResortListPage = () => {
                 >
                   <Card
                     key={resort.id}
-                    bodyStyle={
-                      isHover
-                        ? { background: "white", border: "1px solid #0fcd22" }
-                        : { background: "white" }
-                    }
+                    bodyStyle={{ background: "white" }}
+                    // bodyStyle={
+                    //   isHover
+                    //     ? { background: "white", border: "1px solid #0fcd22" }
+                    //     : { background: "white" }
+                    // }
                     className={styles.resortListCard}
-                    onMouseEnter={() => setIsHover(true)}
-                    onMouseLeave={() => setIsHover(false)}
+                    // onMouseEnter={() => setIsHover(true)}
+                    // onMouseLeave={() => setIsHover(false)}
                   >
                     <Row>
                       <Col xs={24} md={7}>
