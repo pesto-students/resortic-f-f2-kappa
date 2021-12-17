@@ -23,18 +23,18 @@ function HeaderPage() {
   const logoutUser = () => {
     const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
     console.log("data", data);
-    axios
-      .post(APIS.logoutApi, { usertableId: data.userId })
-      .then((response) => {
-        console.log("Logged out", response);
-        setLoggedIn(false);
-        localStorage.clear();
-        setMobileMenuToggle(!isMobileMenuToggle);
-        getGuestToken();
-      })
-      .catch((error) => {
-        console.log("logout error", error);
-      });
+    // axios
+    //   .post(APIS.logoutApi, { usertableId: data.userId })
+    //   .then((response) => {
+    //     console.log("Logged out", response);
+    //     setLoggedIn(false);
+    //     localStorage.clear();
+    //     setMobileMenuToggle(!isMobileMenuToggle);
+    //     getGuestToken();
+    //   })
+    //   .catch((error) => {
+    //     console.log("logout error", error);
+    //   });
   };
 
   const manageBookingHandler = () => {
@@ -95,7 +95,17 @@ function HeaderPage() {
     <div className={classes.Header}>
       <div>
         <Link to="/">
-          <img className={classes.logo} src={logo} alt="logo" />
+          {/* <img className={classes.logo} src={logo} alt="logo" /> */}
+          <h1
+            style={{
+              color: "white",
+              fontWeight: "900",
+              fontSize: "2rem",
+              margin: "0 ",
+            }}
+          >
+            RESORTIC
+          </h1>
         </Link>
       </div>
       <div className={classes.desktopView}>

@@ -9,8 +9,8 @@ import {
 
 import { useDispatch } from "react-redux";
 
-import GmailBtn from "./GmailBtn";
-import FacebookBtn from "./FacebookBtn";
+// import GmailBtn from "./GmailBtn";
+// import FacebookBtn from "./FacebookBtn";
 
 const LoginModal1 = () => {
   const dispatch = useDispatch();
@@ -90,19 +90,6 @@ const LoginModal1 = () => {
           >
             Verify
           </Button>
-        </Form.Item>
-      </Form>
-      <Divider>OR</Divider>
-      <Form layout="horizontal">
-        <Form.Item>
-          <Row>
-            <Col>
-              <GmailBtn />
-            </Col>
-            <Col style={{ textAlign: "center" }}>
-              <FacebookBtn />
-            </Col>
-          </Row>
         </Form.Item>
       </Form>
     </>

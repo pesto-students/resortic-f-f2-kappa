@@ -231,7 +231,10 @@ function SearchBar({ style, cityName = "" }) {
           Search
         </CustomButton>
       </div>
-      <div className={`${classes.searchBar} ${classes.MobileSearch}`}>
+      <div
+        className={`${classes.searchBar} ${classes.MobileSearch}`}
+        style={{ ...style, marginTop: "7rem" }}
+      >
         <CustomInput
           placeholder="Location"
           bordered={false}

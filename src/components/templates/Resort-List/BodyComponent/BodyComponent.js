@@ -30,7 +30,7 @@ const BodyComponent = (props) => {
   }
 
   return (
-    <Row style={{ paddingLeft: "24px" }}>
+    <Row>
       <Col xs={24}>
         <Row>
           <Col xs={24} md={16}>
