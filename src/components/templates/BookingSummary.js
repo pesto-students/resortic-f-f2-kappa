@@ -4,7 +4,9 @@ import AccordionComponent from "../atoms/Accordion/Accordion-Component";
 import BookedDetails from "../molecules/BookedDetails/BookedDetails";
 import GuestBookForm from "../molecules/GuestBookForm/GuestBookForm";
 import PaymentSummary from "../molecules/PaymentSummary/PaymentSummary";
-import { Row, Col, message } from "antd";
+import moment from "moment";
+import { Row, Col, message, Spin, Modal, Button} from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import axios from "../../axios";
@@ -30,30 +32,38 @@ function formatDate(dateVar) {
   }
 }
 
+const loadingIcon = <LoadingOutlined style={{ fontSize: 50 }} spin />;
+
 export default function BookingSummary() {
   const [formDetails, setformDetails] = useState("");
   const [resortData, setResortData] = useState("");
   const [roomData, setRoomData] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [bokModalVisible, setBokModalVisible] = useState(false);
 
   let navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const resortId = searchParams.get("resortID");
   const roomId = searchParams.get("roomID");
   const squery = JSON.parse(searchParams.get("searchQuery"));
-  const totalDays =
-    Math.ceil(
-      Math.abs(
-        new Date(squery.checkOut || new Date()) -
-          new Date(squery.checkIn || new Date())
-      ) /
-        (1000 * 60 * 60 * 24)
-    ) + 1;
+
+  
   const today = new Date();
   const tomorrow = today.setDate(today.getDate() + 1);
+  const tomorrow_m = moment().add(1, "days");
+  const checkIn_m = moment(squery.checkIn || tomorrow_m);
+  const checkOut_m = moment(squery.checkOut || tomorrow_m);
+  const totalDays = checkOut_m.diff(checkIn_m,"days") + 1;
 
   console.log(squery);
-  // console.log(resortId);
-  // console.log(roomId);
+
+  const handleBokModalOk = () => {
+    setBokModalVisible(false);
+  };
+
+  const handleOk = () => {
+    navigate("/");
+  };
 
   const resortFullData = async () => {
     window.scrollTo(0, 0);
@@ -75,10 +85,9 @@ export default function BookingSummary() {
         console.log(error);
       });
   };
-  // resortFullData();
+
   const onFinish = (values) => {
     setformDetails(values);
-    // displayRazorpay();
     console.log("Success:", values);
   };
 
@@ -88,11 +97,12 @@ export default function BookingSummary() {
 
   useEffect(() => {
     resortFullData();
-    console.log(resortData);
-    console.log(roomData);
+  }, []);
+
+  useEffect(() => {
     const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
     const userId =
-      localData.userId || "USR-73c2aa6c6ed3278039b8497306896ab18241c33c";
+      localData.userId || "GUS-73c2aa6c6ed3278039b8497306896ab18241c33c";
 
     if (roomData === "") {
       return false;
@@ -104,13 +114,15 @@ export default function BookingSummary() {
       const totalAmount = priceToPay + taxes;
 
       async function displayRazorpay() {
+        setLoading(true);
         const res = await loadScript(
           "https://checkout.razorpay.com/v1/checkout.js"
         );
         console.log("uservalue: ", formDetails);
 
         if (!res) {
-          alert("Razorpay SDK failed to load. Are you online?");
+          setLoading(false);
+          message.error("Razorpay SDK failed to load. Are you online?");
           return;
         }
 
@@ -127,6 +139,11 @@ export default function BookingSummary() {
           .catch(function (error) {
             console.log(error);
           });
+        if (!orderIdData) {
+          setLoading(false);
+          message.error("Booking failed!!");
+          return;
+        }
         console.log("stuff: ", orderIdData);
 
         const options = {
@@ -164,6 +181,25 @@ export default function BookingSummary() {
             guests = [...guests, ...guestAdd];
             bookPayload.guests = guests.toString();
 
+            const mailPayload = {
+              to: formDetails.email,
+              name: guests[0],
+              resortname: resortData.resort_name,
+              address: resortData.address,
+              checkin: checkIn_m.format("ddd, DD MMM YYYY"),
+              checkout: checkOut_m.format("ddd, DD MMM YYYY"),
+              Adults: squery.adult || 1,
+              Children: squery.child || 0,
+              roomcount: squery.room || 1,
+              roomtype: roomData.room_name,
+              Package: "rooms only",
+              Amount: totalAmount,
+              contact: resortData.contact_number,
+              mail: resortData.resort_email,
+            };
+
+            bookPayload.mail = mailPayload;
+
             const bookingData = await axios
               .post(APIS.addBooking, bookPayload)
               .then(function (response) {
@@ -173,6 +209,12 @@ export default function BookingSummary() {
               .catch(function (error) {
                 console.log(error);
               });
+
+            if (!bookingData) {
+              setLoading(false);
+              message.error("Booking failed!!");
+              return;
+            }
 
             const paymentPayload = {
               order_id: orderIdData.id,
@@ -185,6 +227,9 @@ export default function BookingSummary() {
               bookingtableId: bookingData.id,
               usertableId: userId,
             };
+            resortData.bookId = bookingData.id;
+            resortData.bookAmount = totalAmount;
+
             const paymentDataMsg = await axios
               .post(APIS.addPaymentApi, paymentPayload)
               .then(function (response) {
@@ -195,9 +240,12 @@ export default function BookingSummary() {
                 console.log(error);
               });
             if (paymentDataMsg === "Transaction successfull.") {
+              setLoading(false);
+              setBokModalVisible(true);
               message.success("Booked Successfully");
-              navigate("/");
+              // navigate("/");
             } else {
+              setLoading(false);
               message.error("Booking failed!!");
             }
           },
@@ -247,10 +295,12 @@ export default function BookingSummary() {
       <Row justify="start">
         <Col xs={23} sm={23} md={14} lg={{ span: 14, offset: 2 }} xl={14}>
           <AccordionComponent title="Guest Details">
-            <GuestBookForm
-              onSubmit={onFinish}
-              onSubmitFailed={onFinishFailed}
-            />
+            <Spin indicator={loadingIcon} spinning={loading}>
+              <GuestBookForm
+                onSubmit={onFinish}
+                onSubmitFailed={onFinishFailed}
+              />
+            </Spin>
           </AccordionComponent>
           {/* <Form name="register">
           <Form.Item>
@@ -260,6 +310,21 @@ export default function BookingSummary() {
         </Col>
       </Row>
       <Row></Row>
+      <Modal title="Booking Details" visible={bokModalVisible} onOk={handleBokModalOk} style={{ top: 20 }}
+      footer={[
+        <Button key="submit" type="primary" onClick={handleOk}>
+          OK
+        </Button>
+      ]}>
+        <p><strong> Your booking was confirmed. 😎</strong></p>
+          <p>Details of Booking</p>
+          <div style={{paddingLeft:"1em"}}>
+            <p><strong>Booking ID :</strong><span style={{paddingLeft:"3em"}}></span>{resortData.bookId}<br/><strong>Resort :</strong><span style={{paddingLeft:"5em"}}></span>{resortData.resort_name}<br/><strong>Address :</strong><span style={{paddingLeft:"4.3em"}}></span>{resortData.address}<br/><strong>Check In :</strong><span style={{paddingLeft:"4em"}}></span>{checkIn_m.format("ddd, DD MMM YYYY")}<br/><strong>Check Out :</strong><span style={{paddingLeft:"3em"}}></span>{checkOut_m.format("ddd, DD MMM YYYY")}<br/><strong>Adults :</strong><span style={{paddingLeft:"5em"}}></span>{squery.adult || 1}<br/><strong>Children :</strong><span style={{paddingLeft:"4em"}}></span>{squery.child || 0}<br/><strong>Room :</strong><span style={{paddingLeft:"5em"}}></span>{squery.room || 1} {roomData.room_name}<br/><strong>Package :</strong><span style={{paddingLeft:"4em"}}></span>Rooms Only<br/><strong>Amount Paid :</strong><span style={{paddingLeft:"2em"}}></span>₹{resortData.bookAmount}</p>
+        </div>
+        <p>Contact resort at <br/><strong>Mobile: </strong>+91-{resortData.contact_number} <br/><strong>Mail: </strong>{resortData.resort_email}</p>
+        To reschedule/cancel your bookings, please login and navigate to Manage Bookings<br/>
+        Details Regarding your Booking will be sent to th provided Mail-Id shortly!!
+      </Modal>
     </div>
   );
 }
