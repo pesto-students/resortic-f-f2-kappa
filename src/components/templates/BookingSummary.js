@@ -49,6 +49,9 @@ export default function BookingSummary() {
   const roomId = searchParams.get("roomID");
   const squery = JSON.parse(searchParams.get("searchQuery"));
 
+  const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+  const userId = localData.userId;
+
   const today = new Date();
   const tomorrow = today.setDate(today.getDate() + 1);
   const tomorrow_m = moment().add(1, "days");
@@ -63,7 +66,11 @@ export default function BookingSummary() {
   };
 
   const handleOk = () => {
-    navigate("/");
+    if (!userId) {
+      navigate("/");
+    } else {
+      navigate(`/booking-history?userId=${userId}`);
+    }
   };
 
   const resortFullData = async () => {
@@ -106,10 +113,6 @@ export default function BookingSummary() {
   }, []);
 
   useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
-    const userId =
-      localData.userId || "GUS-73c2aa6c6ed3278039b8497306896ab18241c33c";
-
     if (roomData === "") {
       return false;
     } else {
@@ -310,11 +313,6 @@ export default function BookingSummary() {
               />
             </Spin>
           </AccordionComponent>
-          {/* <Form name="register">
-          <Form.Item>
-          <CustomButton htmlType="submit" style={{ width: "100%" }} >Proceed Payment</CustomButton>
-          </Form.Item>
-          </Form> */}
         </Col>
       </Row>
       <Row></Row>

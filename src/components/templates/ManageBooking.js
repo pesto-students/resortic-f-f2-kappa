@@ -36,6 +36,7 @@ export default function ManageBooking() {
 
   const onRefreshUpcomingBookings = () => {
     getUpcomingBookings();
+    getPastBookings();
   };
 
   const getPastBookings = async () => {
