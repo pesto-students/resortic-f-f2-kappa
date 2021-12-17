@@ -60,13 +60,19 @@
     margin: 0.5rem 0 0 0;
   }
 
+  .searchBar input {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    margin: 0.5rem 0 0 0;
+  }
+
   .searchBar .mobDropdown {
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-between;
-    font-size: 1.2rem;
-    font-weight: 900;
+    font-size: 0.9rem;
+    font-weight: 600;
     padding: 4px 12px;
   }
 }
