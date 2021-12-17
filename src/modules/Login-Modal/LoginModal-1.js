@@ -92,19 +92,6 @@ const LoginModal1 = () => {
           </Button>
         </Form.Item>
       </Form>
-//       <Divider>OR</Divider>
-      {/* <Form layout="horizontal">
-        <Form.Item>
-          <Row>
-            <Col>
-              <GmailBtn />
-            </Col>
-            <Col style={{ textAlign: "center" }}>
-              <FacebookBtn />
-            </Col>
-          </Row>
-        </Form.Item>
-      </Form> */}
     </>
   );
 };

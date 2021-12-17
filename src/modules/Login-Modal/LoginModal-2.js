@@ -71,6 +71,7 @@ const LoginModal2 = ({ logInHandler, setUserId }) => {
           registerUser(userMobileNumber);
         } else {
           console.log("user logged in", response);
+          localStorage.clear();
           localStorage.setItem(
             "resortic_localstorage",
             JSON.stringify({

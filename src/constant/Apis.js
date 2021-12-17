@@ -1,11 +1,11 @@
-const PRODUCTION = process.env.REACT_APP_PRODUCTION === "true";
-// const PRODUCTION = true;
+// const PRODUCTION = process.env.REACT_APP_PRODUCTION === "true";
+const PRODUCTION = true;
 
 const VERSION = "v1";
 
 export let API_SERVER = "";
 if (!PRODUCTION) {
-  API_SERVER = `http://localhost:8081/${VERSION}/`;
+  API_SERVER = `http://localhost:8000/${VERSION}/`;
 } else {
   API_SERVER = `https://resortic-backend.herokuapp.com/${VERSION}/`;
 }

@@ -17,6 +17,7 @@ import { getRandomImage } from "../../../utils/utils";
 const tabsData = ["Beach", "Mountain", "Royal", "Party"];
 
 export const getGuestToken = async () => {
+  localStorage.clear();
   axios
     .get(APIS.guestToken + "guestSystemId=" + new Date().toISOString())
     .then(function (response) {
