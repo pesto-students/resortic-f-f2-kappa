@@ -3,7 +3,6 @@ import { Layout } from "antd";
 import "./Layout.css";
 import Router from "../../router/Router";
 
-
 function MainLayout() {
   return (
     <>

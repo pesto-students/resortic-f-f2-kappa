@@ -9,12 +9,16 @@
   cursor: pointer;
 }
 
-.Recommendation .name {
+.Recommendation .content {
   position: absolute;
-  bottom: 20%;
+  bottom: 16%;
   left: 10%;
   color: white;
-  font-size: 16px;
+}
+
+.Recommendation .name {
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .Recommendation .wrapper {

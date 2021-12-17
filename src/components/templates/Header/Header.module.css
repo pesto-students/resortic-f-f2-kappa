@@ -39,6 +39,14 @@
   transition: width 0.3s linear;
 }
 
+.Header .desktopView ul {
+  background: transparent;
+}
+
+/* .Header .desktopView ul a li {
+  color: black;
+} */
+
 .Header .menuContainer ul {
   list-style: none;
   padding: 0;
