@@ -7,7 +7,7 @@ import Router from "../../router/Router";
 function MainLayout() {
 
   useEffect(() => {
-    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_CODE, { debug: true });
+    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_CODE);
   });
 
   return (
