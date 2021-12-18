@@ -63,7 +63,7 @@ const SingleResortDetail = (props) => {
                   <p>Price starts at:</p>
                   <Title level={4}>&#8377;{`${lowestPrice}/per room`}</Title>
                   <p>
-                    <small>+ &#8377;{lowestPrice * 0.18} taxes & fees</small>
+                    <small>+ &#8377;{Math.ceil(lowestPrice * 0.18)} taxes & fees</small>
                   </p>
                 </Card>
               </Col>

@@ -91,7 +91,7 @@ const BodyComponent = (props) => {
         </div>
         <div>
           <Tag style={{ fontSize: "10px" }}>
-            + ₹{props.ResortData?.starting_price * 0.18} taxes & fees
+            + ₹{Math.ceil(props.ResortData?.starting_price * 0.18)} taxes & fees
           </Tag>
         </div>
       </Col>

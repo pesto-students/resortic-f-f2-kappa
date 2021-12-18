@@ -106,7 +106,7 @@ const RoomsLaptop = (props) => {
                                 </Title>
                                 <Text style={{ fontSize: "10px" }}>
                                   <Tag color="green">
-                                    +&#8377;{value.room_price * 0.18}/- taxes
+                                    +&#8377;{Math.ceil(value.room_price * 0.18)}/- taxes
                                     and fees
                                   </Tag>
                                 </Text>
