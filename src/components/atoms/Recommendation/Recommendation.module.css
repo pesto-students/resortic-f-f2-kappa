@@ -1,0 +1,33 @@
+.Recommendation {
+  width: auto;
+  height: auto;
+  position: relative;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  object-fit: cover;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.Recommendation .content {
+  position: absolute;
+  bottom: 16%;
+  left: 10%;
+  color: white;
+}
+
+.Recommendation .name {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.Recommendation .wrapper {
+  position: relative;
+}
+
+.Recommendation .wrapper img {
+  width: 100%;
+  /* height: auto; */
+  object-fit: cover;
+  border-radius: 15px;
+}

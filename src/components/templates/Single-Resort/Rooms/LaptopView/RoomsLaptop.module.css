@@ -1,0 +1,167 @@
+.rooms__head_item {
+  border-right: solid 1px gray;
+  width: 100%;
+  padding: 5px;
+  background-color: white;
+}
+
+.rooms__body {
+  border: 1px solid gray;
+  /* z-index: 0; */
+}
+
+.rooms__body_item {
+  /* border-right: solid 1px gray; */
+  background: white;
+}
+
+.rooms__head {
+  border: solid 1px gray;
+  position: sticky;
+  top: 112px;
+  background-color: white;
+  z-index: 1;
+}
+
+#rooms_img {
+  height: 100px;
+  width: 100px;
+  z-index: -1;
+}
+
+.room__type_option {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  border-right: 1px solid gray;
+  background: white;
+  height: 100%;
+}
+
+.rooms_type_border {
+  border-top: 1px solid gray;
+  background: white;
+}
+
+.rooms__body_item {
+  border: solid 1px gray;
+}
+
+.rooms__type {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  padding: 10px;
+  position: sticky;
+  top: 150px;
+  border-bottom: solid 1px gray;
+}
+
+.roomtype_heading {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.roomtype_image {
+  height: 100px;
+  width: 100px;
+  border-radius: 4px;
+}
+
+.room__type_price {
+  margin: 10px;
+  padding: 10px;
+}
+
+.room__type_price_details {
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.room__type_price_button {
+  text-align: center;
+  padding-top: 40px;
+}
+.rooms__head_item {
+  border-right: solid 1px gray;
+  width: 100%;
+  padding: 5px;
+  background-color: white;
+}
+
+.rooms__body {
+  border: 1px solid gray;
+  /* z-index: 0; */
+}
+
+.rooms__body_item {
+  border-right: solid 1px gray;
+}
+
+.rooms__head {
+  border: solid 1px gray;
+  position: sticky;
+  top: 112px;
+  background-color: white;
+  z-index: 1;
+}
+
+#rooms_img {
+  height: 100px;
+  width: 100px;
+  z-index: -1;
+}
+
+.room__type_option {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  border-right: 1px solid gray;
+}
+
+.rooms_type_border {
+  border-top: 1px solid gray;
+}
+
+.styles.rooms__body_item {
+  border: solid 1px gray;
+}
+
+.rooms__type {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  padding: 10px;
+  position: sticky;
+  top: 150px;
+}
+
+.roomtype_heading {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.roomtype_image {
+  height: 200px;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.room__type_price {
+  margin: 10px;
+  padding: 10px;
+}
+
+.room__type_price_details {
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.room__type_price_button {
+  text-align: center;
+  padding-top: 40px;
+}

@@ -1,0 +1,14 @@
+.CustomButton {
+  background-color: #0fcd22;
+  color: white;
+  padding: 0.3rem;
+  width: 155px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+button {
+  outline: none !important;
+  border: none !important;
+}

@@ -1,0 +1,78 @@
+.menu .type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu h3 {
+  font-weight: 900 !important;
+  margin-bottom: 0;
+}
+
+.note {
+  color: gray;
+  font-size: 13px;
+}
+
+.DesktopSearch {
+  display: flex;
+  border-radius: 40px;
+}
+
+.MobileSearch {
+  display: none !important;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 20%;
+  padding: 0px 20px;
+  background: white;
+  border-radius: 40px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+}
+
+@media screen and (max-width: 767px) {
+  .DesktopSearch {
+    display: none !important;
+  }
+
+  .MobileSearch {
+    display: block !important;
+  }
+
+  .searchBar {
+    border-radius: 0px;
+    bottom: -6%;
+    width: 95%;
+  }
+
+  .searchBar input,
+  .searchBar svg {
+    font-size: 1.2rem !important;
+    font-weight: 900 !important;
+    margin: 0.5rem 0 0 0;
+  }
+
+  .searchBar input {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    margin: 0.5rem 0 0 0;
+  }
+
+  .searchBar .mobDropdown {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 4px 12px;
+  }
+}

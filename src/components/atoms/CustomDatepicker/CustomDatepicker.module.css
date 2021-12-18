@@ -1,0 +1,22 @@
+.CustomDatepicker {
+  background-color: white;
+  color: #000000;
+  padding: 0.3rem;
+  width: 155px;
+  cursor: pointer;
+  border: none !important;
+  border-right: 1px solid #ada6a6c7 !important;
+  width: 100%;
+}
+
+.CustomDatepicker svg {
+  color: #0fcd22;
+}
+
+.CustomDatepicker .text {
+  color: #000000;
+}
+/* 
+.CustomDatepicker {
+  border-right: 1px solid #ada6a6c7;
+} */

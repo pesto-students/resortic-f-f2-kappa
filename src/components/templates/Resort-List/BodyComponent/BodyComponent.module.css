@@ -1,0 +1,24 @@
+.aminities_box {
+  border-radius: 25px;
+  background: #0fcd22;
+  padding: 5px;
+  color: white;
+  text-align: center;
+  margin: 5px;
+}
+.rating {
+  text-align: right;
+}
+
+.aminities {
+  border-right: 1px solid grey;
+}
+
+@media screen and (max-width: 900px) {
+  .rating {
+    text-align: left;
+  }
+  .aminities_item {
+    margin-top: 0;
+  }
+}

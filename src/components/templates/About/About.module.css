@@ -1,0 +1,28 @@
+.About {
+  background: white;
+  padding: 2rem;
+  margin: auto;
+  text-align: center;
+}
+
+.About div {
+  width: 80%;
+  margin: auto;
+}
+
+.About .title {
+  font-size: 3rem;
+  color: #006e80;
+  font-weight: 900;
+}
+
+.About .subtitle {
+  font-size: 2rem;
+  color: #006e80;
+  font-weight: 900;
+}
+
+.About .text {
+  line-height: 1.5rem;
+  margin-bottom: 1rem;
+}
