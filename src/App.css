@@ -42,7 +42,6 @@ a:hover {
 
 .ant-dropdown.ant-dropdown-placement-bottomCenter {
   width: 35%;
-  top: 437px !important;
 }
 
 .mySwiper {
@@ -62,8 +61,3 @@ a:hover {
   width: 100%;
 }
 
-@media screen and (max-width: 767px) {
-  .ant-dropdown.ant-dropdown-placement-bottomCenter {
-    top: 463px !important;
-  }
-}
