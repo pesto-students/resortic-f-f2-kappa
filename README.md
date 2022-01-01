@@ -10,3 +10,7 @@ It is a Resort Booking website. This project aim to create a resort booking syst
 - Resort Booking page
 - Manage Booking
 - User Profile
+
+# Dummy logins
+- Mobile : 9999999999 ,Otp :  123456
+- Mobile : 8888888888 ,Otp :  123456
