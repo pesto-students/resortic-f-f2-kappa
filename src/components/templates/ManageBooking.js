@@ -12,7 +12,6 @@ const { TabPane } = Tabs;
 export default function ManageBooking() {
   const [searchParams] = useSearchParams();
   const userIdURL = searchParams.get("userId");
-  console.log(userIdURL);
 
   const [upcomingData, setUpcomingData] = useState("");
   const [pastData, setPastData] = useState("");
@@ -26,7 +25,6 @@ export default function ManageBooking() {
     await axios
       .get(APIS.getBooking + "/" + userId + "/upcoming")
       .then(function (response) {
-        console.log("response of upcoming", response.data.data);
         setUpcomingData(response.data.data);
       })
       .catch(function (error) {
@@ -48,7 +46,6 @@ export default function ManageBooking() {
     await axios
       .get(APIS.getBooking + "/" + userId + "/past")
       .then(function (response) {
-        console.log("response of past", response.data.data);
         setPastData(response.data.data);
       })
       .catch(function (error) {
@@ -59,7 +56,7 @@ export default function ManageBooking() {
   useEffect(() => {
     getUpcomingBookings();
     getPastBookings();
-  },[]);
+  }, []);
 
   return (
     <div>
@@ -87,7 +84,7 @@ export default function ManageBooking() {
                         type="upcoming"
                         amount={booking.paid_amount}
                         bookingId={booking.id}
-                        onSuccessCancel = {onRefreshUpcomingBookings}
+                        onSuccessCancel={onRefreshUpcomingBookings}
                       />
                     </AccordionComponent>
                   );
@@ -121,7 +118,7 @@ export default function ManageBooking() {
                         roomsNum={booking.rooms_count}
                         type="past"
                         amount={booking.paid_amount}
-                        status = {booking.status}
+                        status={booking.status}
                       />
                     </AccordionComponent>
                   );

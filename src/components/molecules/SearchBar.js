@@ -13,13 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 const { Option } = Select;
-function handleChange(value) {
-  console.log(`selected ${value}`);
-}
-
-// function locationHandler(e) {
-//   console.log("clicked afer 1 wsec");
-// }
+function handleChange(value) {}
 
 const roomTypeArr = ["Adult", "Child"];
 

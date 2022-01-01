@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Menu, Modal, Dropdown } from "antd";
 import classes from "./Header.module.css";
-import logo from "../../../assets/resortic-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginModal1 from "../../../modules/Login-Modal/LoginModal-1";
@@ -9,8 +8,6 @@ import LoginModal2 from "../../../modules/Login-Modal/LoginModal-2";
 import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import loginUserIC from "../../../assets/man.png";
 import firebase from "../../../config/firebase";
-import axios from "../../../axios";
-import * as APIS from "../../../constant/Apis";
 import { getGuestToken } from "../Homepage/Homepage";
 
 function HeaderPage() {
@@ -22,23 +19,10 @@ function HeaderPage() {
 
   const logoutUser = () => {
     const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
-    console.log("data", data);
     setLoggedIn(false);
     localStorage.clear();
     setMobileMenuToggle(!isMobileMenuToggle);
     getGuestToken();
-    // axios
-    //   .post(APIS.logoutApi, { usertableId: data.userId })
-    //   .then((response) => {
-    //     console.log("Logged out", response);
-    //     setLoggedIn(false);
-    //     localStorage.clear();
-    //     setMobileMenuToggle(!isMobileMenuToggle);
-    //     getGuestToken();
-    //   })
-    //   .catch((error) => {
-    //     console.log("logout error", error);
-    //   });
   };
 
   const manageBookingHandler = () => {
@@ -94,7 +78,6 @@ function HeaderPage() {
     dispatch({ type: "TOGGLE_MODAL" });
     dispatch({ type: "CHANGE_TAB", tab: "tab_1" });
   };
-  console.log("isMObileToggle", isMobileMenuToggle);
   return (
     <div className={classes.Header}>
       <div>

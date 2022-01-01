@@ -21,10 +21,8 @@ function Router() {
   const [isLandingPage, setLandingPage] = useState(false);
 
   const location = useLocation();
-  console.log("location: ", location);
   if (window.window.innerWidth >= 767) {
     if (location.pathname === "/") {
-      console.log("on homepage");
       headerStyle = {
         position: "absolute",
         top: "0",
@@ -36,7 +34,6 @@ function Router() {
         setLandingPage(true);
       }
     } else {
-      console.log("not on homepgae");
       headerStyle = {
         position: "sticky",
         top: "0",

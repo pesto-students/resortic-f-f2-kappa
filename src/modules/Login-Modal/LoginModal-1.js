@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 
 import { useDispatch } from "react-redux";
+import { dummyLogin } from "../../utils/utils";
 
 // import GmailBtn from "./GmailBtn";
 // import FacebookBtn from "./FacebookBtn";
@@ -33,7 +34,6 @@ const LoginModal1 = () => {
           size: "invisible",
           callback: (response) => {
             onSubmitNumber();
-            console.log("Recaptcha created");
           },
         },
         auth
@@ -43,6 +43,11 @@ const LoginModal1 = () => {
 
   const onSubmitNumber = (event) => {
     dispatch({ type: "CHANGE_TAB", tab: "tab_2" });
+
+    if (dummyLogin.includes(mobile)) {
+      dispatch({ type: "UPDATE_MOBILE", mobile: `+91${mobile}` });
+      return;
+    }
     event.preventDefault();
     const reg = /^[6-9]\d{9}$/;
     if (reg.test(mobile)) {
@@ -52,7 +57,6 @@ const LoginModal1 = () => {
       const auth = getAuth();
       signInWithPhoneNumber(auth, phoneNumber, appVerifier)
         .then((confirmationResult) => {
-          console.log(confirmationResult);
           // SMS sent. Prompt user to type the code from the message, then sign the
           // user in with confirmationResult.confirm(code)
           dispatch({ type: "UPDATE_MOBILE", mobile: `+91${mobile}` });
