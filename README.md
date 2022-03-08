@@ -36,7 +36,7 @@ Test Credentials:
 
 - For User
  	 - Phone Number: 9999999999
- 	 - OTP: 111111
+ 	 - OTP: 123456
 <br/>
 
 # Installation
