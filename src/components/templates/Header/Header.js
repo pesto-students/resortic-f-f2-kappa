@@ -18,21 +18,27 @@ function HeaderPage() {
   const [userId, setUserId] = useState(0);
 
   const logoutUser = () => {
-    const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const data = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     setLoggedIn(false);
-    localStorage.clear();
+    // localStorage.clear();
+    sessionStorage.clear();
     setMobileMenuToggle(!isMobileMenuToggle);
     getGuestToken();
+    navigate(`/`);
+    window.location.reload();
   };
 
   const manageBookingHandler = () => {
-    const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const data = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     setMobileMenuToggle(!isMobileMenuToggle);
     navigate(`/booking-history?userId=${data.userId}`);
   };
 
   const manageProfileHandler = () => {
-    const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const data = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     setMobileMenuToggle(!isMobileMenuToggle);
     navigate(`/user-profile/${data.userId}`);
   };
@@ -53,7 +59,8 @@ function HeaderPage() {
   );
 
   useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     if (localData != null) {
       if (localData.mobile && localData.userId) {
         setLoggedIn(true);

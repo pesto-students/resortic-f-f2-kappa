@@ -22,7 +22,8 @@ export default function GuestBookForm({ onSubmit, onSubmitFailed }) {
   const [userData, setUserData] = useState("");
 
   useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     if (localData.userId) {
       axios
         .get(APIS.getUserApi + "?id=" + localData.userId)

@@ -17,7 +17,8 @@ export default function ManageBooking() {
   const [pastData, setPastData] = useState("");
 
   const getUpcomingBookings = async () => {
-    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     const userId =
       userIdURL ||
       localData.userId ||
@@ -38,7 +39,8 @@ export default function ManageBooking() {
   };
 
   const getPastBookings = async () => {
-    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     const userId =
       userIdURL ||
       localData.userId ||
