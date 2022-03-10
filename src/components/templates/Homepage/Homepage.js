@@ -17,19 +17,35 @@ import { getRandomImage } from "../../../utils/utils";
 const tabsData = ["Beach", "Mountain", "Royal", "Party"];
 
 export const getGuestToken = async () => {
-  localStorage.clear();
-  axios
-    .get(APIS.guestToken + "guestSystemId=" + new Date().toISOString())
-    .then(function (response) {
-      localStorage.setItem(
-        "resortic_localstorage",
-        JSON.stringify({ token: response.data.data.token })
-      );
-      return response.data.data.token;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  // localStorage.clear();
+  sessionStorage.clear();
+  // axios
+  //   .get(APIS.guestToken + "guestSystemId=" + new Date().toISOString())
+  //   .then(function (response) {
+  //     // localStorage.setItem(
+  //     //   "resortic_localstorage",
+  //     //   JSON.stringify({ token: response.data.data.token })
+  //     // );
+  //     sessionStorage.setItem(
+  //       "resortic_localstorage",
+  //       JSON.stringify({ token: response.data.data.token })
+  //     );
+  //     return response.data.data.token;
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+  try{
+    const tempToken = await axios.get(APIS.guestToken + "guestSystemId=" + new Date().toISOString());
+    sessionStorage.setItem(
+      "resortic_localstorage",
+      JSON.stringify({ token: tempToken.data.data.token })
+    );
+    return tempToken.data.data.token;
+  } catch (error){
+    console.log(error);
+  }
+
 };
 
 function Homepage() {
@@ -44,18 +60,42 @@ function Homepage() {
     setDestinationLoading(false);
   }, 1000);
   useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
-    if (localData == null) {
-      setToken(getGuestToken());
-      setTimeout(() => {
+    // const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
+    // if (localData == null) {
+    //   setToken(getGuestToken());
+    //   setTimeout(() => {
+    //     getResortByCategory();
+    //     getPopularResorts();
+    //   }, 1000);
+    // } else {
+    //   getResortByCategory();
+    //   getPopularResorts();
+    // }
+
+    const temp = async ()=>{
+      const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
+      if (localData == null) {
+        const tok = await getGuestToken();
+        setToken(tok);
+        setTimeout(() => {
+          getResortByCategory();
+          getPopularResorts();
+        }, 1000);
+      } else {
         getResortByCategory();
         getPopularResorts();
-      }, 1000);
-    } else {
+      }
+    };
+    temp();
+  }, []);
+
+  useEffect(() => {
+    if(token){
       getResortByCategory();
       getPopularResorts();
     }
-  }, []);
+  }, [token]);
 
   const getPopularResorts = () => {
     axios

@@ -7,7 +7,7 @@ import * as APIS from "../../constant/Apis";
 import { dummyLogin } from "../../utils/utils";
 
 const LoginModal2 = ({ logInHandler, setUserId }) => {
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState("123456");
   const [counter, setCounter] = useState(30);
   const { Text } = Typography;
   const dispatch = useDispatch();
@@ -47,6 +47,7 @@ const LoginModal2 = ({ logInHandler, setUserId }) => {
       .post(APIS.registerUserApi, { mobile: mobile })
       .then((response) => {
         loginUserHandler(mobile);
+        window.location.reload();
       })
       .catch((error) => {
         console.log("error", error);
@@ -60,8 +61,17 @@ const LoginModal2 = ({ logInHandler, setUserId }) => {
         if (response.data.data.code === 404) {
           registerUser(userMobileNumber);
         } else {
-          localStorage.clear();
-          localStorage.setItem(
+          // localStorage.clear();
+          sessionStorage.clear();
+          // localStorage.setItem(
+          //   "resortic_localstorage",
+          //   JSON.stringify({
+          //     token: response.data.data.data.token,
+          //     mobile: userMobileNumber,
+          //     userId: response.data.data.data.usertableId,
+          //   })
+          // );
+          sessionStorage.setItem(
             "resortic_localstorage",
             JSON.stringify({
               token: response.data.data.data.token,
@@ -71,6 +81,7 @@ const LoginModal2 = ({ logInHandler, setUserId }) => {
           );
           setUserId(userMobileNumber);
           logInHandler(true);
+          window.location.reload();
         }
       })
       .catch((error) => {

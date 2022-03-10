@@ -15,7 +15,7 @@ import { dummyLogin } from "../../utils/utils";
 
 const LoginModal1 = () => {
   const dispatch = useDispatch();
-  const [mobile, setMobile] = useState("");
+  const [mobile, setMobile] = useState("9999999999");
   const handleMobileNumber = (e) => {
     const { value } = e.target;
     const reg = /^-?\d*(\.\d*)?$/;

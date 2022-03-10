@@ -49,7 +49,8 @@ export default function BookingSummary() {
   const roomId = searchParams.get("roomID");
   const squery = JSON.parse(searchParams.get("searchQuery"));
 
-  const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+  // const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+  const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
   const userId = localData.userId;
 
   const today = new Date();
