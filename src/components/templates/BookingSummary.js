@@ -49,7 +49,8 @@ export default function BookingSummary() {
   const roomId = searchParams.get("roomID");
   const squery = JSON.parse(searchParams.get("searchQuery"));
 
-  const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+  // const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+  const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
   const userId = localData.userId;
 
   const today = new Date();
@@ -58,8 +59,6 @@ export default function BookingSummary() {
   const checkIn_m = moment(squery.checkIn || tomorrow_m);
   const checkOut_m = moment(squery.checkOut || tomorrow_m);
   const totalDays = checkOut_m.diff(checkIn_m, "days") + 1;
-
-  console.log(squery);
 
   const handleBokModalOk = () => {
     setBokModalVisible(false);
@@ -78,7 +77,6 @@ export default function BookingSummary() {
     await axios
       .get(APIS.getFullResortDetails + "/" + resortId)
       .then(function (response) {
-        console.log("response of resort", response.data.value);
         if (response.data.value) {
           response.data.value.rating =
             response.data.value.reviewtables.length > 0
@@ -94,14 +92,12 @@ export default function BookingSummary() {
         }
       })
       .catch(function (error) {
-        console.log(error);
         message.error("Loading Data Failed!!");
       });
   };
 
   const onFinish = (values) => {
     setformDetails(values);
-    console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -127,7 +123,6 @@ export default function BookingSummary() {
         const res = await loadScript(
           "https://checkout.razorpay.com/v1/checkout.js"
         );
-        console.log("uservalue: ", formDetails);
 
         if (!res) {
           setLoading(false);
@@ -142,7 +137,6 @@ export default function BookingSummary() {
         const orderIdData = await axios
           .post(APIS.getRazorOrderId, orderPayload)
           .then(function (response) {
-            console.log(response.data.data);
             return response.data.data;
           })
           .catch(function (error) {
@@ -153,7 +147,6 @@ export default function BookingSummary() {
           message.error("Booking failed!!");
           return;
         }
-        console.log("stuff: ", orderIdData);
 
         const options = {
           key: process.env.REACT_APP_RAZORPAY_ID,
@@ -212,7 +205,6 @@ export default function BookingSummary() {
             const bookingData = await axios
               .post(APIS.addBooking, bookPayload)
               .then(function (response) {
-                console.log("booking", response);
                 return response.data.data.data;
               })
               .catch(function (error) {
@@ -242,7 +234,6 @@ export default function BookingSummary() {
             const paymentDataMsg = await axios
               .post(APIS.addPaymentApi, paymentPayload)
               .then(function (response) {
-                console.log("payment:", response);
                 return response.data.data.msg;
               })
               .catch(function (error) {

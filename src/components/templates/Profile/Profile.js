@@ -8,7 +8,6 @@ import { validateEmail } from "../../../utils/utils";
 
 function Profile() {
   const params = useParams();
-  console.log("params", params.id);
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
@@ -17,21 +16,17 @@ function Profile() {
   const [isError, setError] = useState(false);
 
   const setUserDataToForm = (data) => {
-    console.log("data set", data);
     setFname(data.first_name);
     setLname(data.last_name);
     setEmail(data.email);
     setAddress(data.address);
     setMobile(data.mobile);
-
-    console.log("fname", mobile);
   };
 
   const getUserData = () => {
     axios
       .get(`${APIS.getUserApi}?id=${params.id}`)
       .then((response) => {
-        console.log("response", response);
         setUserDataToForm(response.data.data.data[0]);
       })
       .catch((err) => {
@@ -65,7 +60,6 @@ function Profile() {
         mobile: mobile,
       })
       .then((res) => {
-        console.log("res", res);
         getUserData();
         setError(false);
       })

@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAuth, signInWithPhoneNumber } from "firebase/auth";
 import axios from "../../axios";
 import * as APIS from "../../constant/Apis";
+import { dummyLogin } from "../../utils/utils";
 
 const LoginModal2 = ({ logInHandler, setUserId }) => {
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState("123456");
   const [counter, setCounter] = useState(30);
   const { Text } = Typography;
   const dispatch = useDispatch();
@@ -45,17 +46,8 @@ const LoginModal2 = ({ logInHandler, setUserId }) => {
     axios
       .post(APIS.registerUserApi, { mobile: mobile })
       .then((response) => {
-        console.log("resgister response", response);
         loginUserHandler(mobile);
-        // localStorage.setItem(
-        //   "resortic_localstorage",
-        //   JSON.stringify({
-        //     token: response.data.data.data.token,
-        //     mobile: mobile,
-        //     userId: response.data.data.data.userId,
-        //   })
-        // );
-        // logInHandler(true);
+        window.location.reload();
       })
       .catch((error) => {
         console.log("error", error);
@@ -66,13 +58,20 @@ const LoginModal2 = ({ logInHandler, setUserId }) => {
     axios
       .post(APIS.loginApi, { mobile: userMobileNumber })
       .then((response) => {
-        console.log("login response", response, response.data.data.code);
         if (response.data.data.code === 404) {
           registerUser(userMobileNumber);
         } else {
-          console.log("user logged in", response);
-          localStorage.clear();
-          localStorage.setItem(
+          // localStorage.clear();
+          sessionStorage.clear();
+          // localStorage.setItem(
+          //   "resortic_localstorage",
+          //   JSON.stringify({
+          //     token: response.data.data.data.token,
+          //     mobile: userMobileNumber,
+          //     userId: response.data.data.data.usertableId,
+          //   })
+          // );
+          sessionStorage.setItem(
             "resortic_localstorage",
             JSON.stringify({
               token: response.data.data.data.token,
@@ -82,6 +81,7 @@ const LoginModal2 = ({ logInHandler, setUserId }) => {
           );
           setUserId(userMobileNumber);
           logInHandler(true);
+          window.location.reload();
         }
       })
       .catch((error) => {
@@ -91,12 +91,19 @@ const LoginModal2 = ({ logInHandler, setUserId }) => {
 
   const onSubmitOTP = (event) => {
     let code = otp;
+    if (dummyLogin.includes(mobile.slice(3, 13))) {
+      const userMobileNumber = mobile.slice(3, 13);
+      loginUserHandler(userMobileNumber);
+      dispatch({ type: "CHANGE_TAB", tab: "tab_1" });
+      setOtp("");
+      dispatch({ type: "TOGGLE_MODAL" });
+      return;
+    }
     window.confirmationResult
       .confirm(code)
       .then((result) => {
         // User signed in successfully.
         const user = result.user;
-        console.log("User is signed in.", user);
         const userMobileNumber = mobile.slice(3, 13);
         loginUserHandler(userMobileNumber);
         dispatch({ type: "CHANGE_TAB", tab: "tab_1" });

@@ -73,7 +73,6 @@ function SearchBar({ style, cityName = "" }) {
   const navigate = useNavigate();
 
   const cityInputHandle = (e) => {
-    console.log(e.target.value);
     setCity(e.target.value);
   };
 
@@ -102,7 +101,6 @@ function SearchBar({ style, cityName = "" }) {
     setRoomsStr(roomType);
     setMaxAdult(defaultAdult * room);
     setMaxChild(defaultChild * room);
-    console.log("Room type", roomsStr);
     return () => {};
   }, [room, adult, child, roomsStr]);
 
@@ -122,7 +120,6 @@ function SearchBar({ style, cityName = "" }) {
               }}
               onDecrease={() => {
                 if (adult >= room) {
-                  console.log("max 8 people allowed in one room");
                   return;
                 }
                 setRoom(room - 1);

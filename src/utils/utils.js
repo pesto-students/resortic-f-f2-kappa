@@ -67,3 +67,5 @@ export const roomArr = [room1, room2, room3, room4];
 export const getRoomImage = () => {
   return roomArr[randomNumber(0, 4)];
 };
+
+export const dummyLogin = ["9999999999", "8888888888"];

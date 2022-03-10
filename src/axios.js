@@ -5,11 +5,17 @@ const instance = axios.create({
   baseURL: API_SERVER,
 });
 
-const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
-console.log("localData", localData);
-let token = localData != null ? localData.token : "";
-console.log("token", token);
-
-instance.defaults.headers.common["Authorization"] = "Bearer " + token;
+instance.interceptors.request.use(
+  (config) => {
+    // const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
+    let token = localData != null ? localData.token : "";
+    config.headers.authorization = "Bearer " + token;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default instance;

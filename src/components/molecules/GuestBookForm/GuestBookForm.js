@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, Select, Button, Row, Col } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { CustomButton } from "../../atoms/CustomButton/CustomButton";
-import axios from "../../../axios"
+import axios from "../../../axios";
 import * as APIS from "../../../constant/Apis";
 const { Option } = Select;
 
@@ -22,21 +22,20 @@ export default function GuestBookForm({ onSubmit, onSubmitFailed }) {
   const [userData, setUserData] = useState("");
 
   useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     if (localData.userId) {
       axios
-        .get(APIS.getUserApi + "?id="+localData.userId)
+        .get(APIS.getUserApi + "?id=" + localData.userId)
         .then(function (response) {
-          if(response.data.data){
-            console.log("userdata:",response.data.data.data[0]);
+          if (response.data.data) {
             setUserData(response.data.data.data[0]);
             form.setFieldsValue({
               title: "Mr.",
               firstName: response.data.data.data[0].first_name,
               lastName: response.data.data.data[0].last_name,
-              email:response.data.data.data[0].email,
-              phone:response.data.data.data[0].mobile
-
+              email: response.data.data.data[0].email,
+              phone: response.data.data.data[0].mobile,
             });
           }
         })
@@ -84,7 +83,7 @@ export default function GuestBookForm({ onSubmit, onSubmitFailed }) {
         initialValues={{
           numberPrefix: "91",
           idProofPrefix: "aadhar",
-          firstName: userData.first_name
+          firstName: userData.first_name,
         }}
         scrollToFirstError
       >

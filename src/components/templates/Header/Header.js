@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Menu, Modal, Dropdown } from "antd";
 import classes from "./Header.module.css";
-import logo from "../../../assets/resortic-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoginModal1 from "../../../modules/Login-Modal/LoginModal-1";
@@ -9,8 +8,6 @@ import LoginModal2 from "../../../modules/Login-Modal/LoginModal-2";
 import { MenuOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import loginUserIC from "../../../assets/man.png";
 import firebase from "../../../config/firebase";
-import axios from "../../../axios";
-import * as APIS from "../../../constant/Apis";
 import { getGuestToken } from "../Homepage/Homepage";
 
 function HeaderPage() {
@@ -21,34 +18,27 @@ function HeaderPage() {
   const [userId, setUserId] = useState(0);
 
   const logoutUser = () => {
-    const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
-    console.log("data", data);
+    // const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const data = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     setLoggedIn(false);
-    localStorage.clear();
+    // localStorage.clear();
+    sessionStorage.clear();
     setMobileMenuToggle(!isMobileMenuToggle);
     getGuestToken();
-    // axios
-    //   .post(APIS.logoutApi, { usertableId: data.userId })
-    //   .then((response) => {
-    //     console.log("Logged out", response);
-    //     setLoggedIn(false);
-    //     localStorage.clear();
-    //     setMobileMenuToggle(!isMobileMenuToggle);
-    //     getGuestToken();
-    //   })
-    //   .catch((error) => {
-    //     console.log("logout error", error);
-    //   });
+    navigate(`/`);
+    window.location.reload();
   };
 
   const manageBookingHandler = () => {
-    const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const data = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     setMobileMenuToggle(!isMobileMenuToggle);
     navigate(`/booking-history?userId=${data.userId}`);
   };
 
   const manageProfileHandler = () => {
-    const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const data = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const data = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     setMobileMenuToggle(!isMobileMenuToggle);
     navigate(`/user-profile/${data.userId}`);
   };
@@ -69,7 +59,8 @@ function HeaderPage() {
   );
 
   useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    // const localData = JSON.parse(localStorage.getItem("resortic_localstorage"));
+    const localData = JSON.parse(sessionStorage.getItem("resortic_localstorage"));
     if (localData != null) {
       if (localData.mobile && localData.userId) {
         setLoggedIn(true);
@@ -94,7 +85,6 @@ function HeaderPage() {
     dispatch({ type: "TOGGLE_MODAL" });
     dispatch({ type: "CHANGE_TAB", tab: "tab_1" });
   };
-  console.log("isMObileToggle", isMobileMenuToggle);
   return (
     <div className={classes.Header}>
       <div>

@@ -64,7 +64,7 @@ const BodyComponent = (props) => {
             style={{ padding: "5px", margin: "5px" }}
             color="#6998AB"
           >
-            Hygienic and saft stay
+            Hygienic and safe stay
           </Tag>
         </Row>
         <Row>

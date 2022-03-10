@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 SwiperCore.use([Pagination, Navigation]);
 
 function PopularResort({ popularResortData, isLoading }) {
-  console.log("popularResortData Comp", popularResortData);
   return (
     <Swiper
       slidesPerView={1}

@@ -30,7 +30,7 @@ export default WithLoading(function BookedDetails({
   bookingId,
   onSuccessCancel,
   status,
-  isLoading
+  isLoading,
 }) {
   const [checkInDate, setCheckInDate] = useState(moment(checkinDate));
   const [checkInTime] = useState(checkinTime);
@@ -51,12 +51,9 @@ export default WithLoading(function BookedDetails({
       check_in: modalDates[0].format("YYYY-MM-DD"),
       check_out: modalDates[1].format("YYYY-MM-DD"),
     };
-    console.log(updateBook);
     await axios
       .put(APIS.updateBooking + "/" + bookingId, updateBook)
-      .then(function (response) {
-        console.log("response of updateBooking", response.data.data);
-      })
+      .then(function (response) {})
       .catch(function (error) {
         console.log(error);
       });
@@ -74,9 +71,7 @@ export default WithLoading(function BookedDetails({
   const handlCanceleOk = async () => {
     await axios
       .delete(APIS.updateBooking + "/" + bookingId)
-      .then(function (response) {
-        console.log("response of deleteBooking", response.data.data);
-      })
+      .then(function (response) {})
       .catch(function (error) {
         console.log(error);
       });
@@ -230,7 +225,11 @@ export default WithLoading(function BookedDetails({
           </p>
           <Rating value={resortRating} />
           {type === "past" ? (
-            <p><Tag color={status==="Cancelled"?"red":"green"}>{status}</Tag></p>
+            <p>
+              <Tag color={status === "Cancelled" ? "red" : "green"}>
+                {status}
+              </Tag>
+            </p>
           ) : (
             ""
           )}
@@ -245,4 +244,4 @@ export default WithLoading(function BookedDetails({
       {roomdetail_Buttons}
     </div>
   );
-})
+});
