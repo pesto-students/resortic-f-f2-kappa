@@ -1,0 +1,20 @@
+.CustomInput {
+  background-color: white;
+  color: #000000;
+  padding: 0.3rem;
+  width: 155px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.CustomInput svg {
+  color: #0fcd22;
+}
+
+.CustomInput .text {
+  color: #000000;
+}
+
+.CustomInput:not(:last-child) {
+  /* border-right: 1px solid #ada6a6c7; */
+}

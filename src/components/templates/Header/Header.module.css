@@ -1,0 +1,74 @@
+.Header {
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  justify-content: space-between;
+  z-index: 2;
+  /* overflow: hidden; */
+}
+
+.Header .logo {
+  /* width: 50%; */
+  width: 90px;
+  height: 50px;
+}
+
+.Header .menu:hover {
+  /* background-color: #1890ff !important; */
+  background-color: #8bc34a !important;
+}
+
+.Header .desktopView {
+  display: block;
+}
+
+.Header .mobileView {
+  display: none;
+}
+
+.Header .menuContainer {
+  /* width: 100%; */
+  height: 100vh;
+  position: fixed;
+  color: white;
+  /* background: #001529; */
+  background-color: #001529f0;
+  /* left: 0; */
+  right: 0;
+  transition: width 0.3s linear;
+}
+
+.Header .desktopView ul {
+  background: transparent;
+}
+
+/* .Header .desktopView ul a li {
+  color: black;
+} */
+
+.Header .menuContainer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.Header .menuContainer ul li {
+  padding: 10px 20px;
+  color: white;
+}
+
+.Header .menuContainer ul li:hover {
+  /* background-color: #1890ff; */
+  background-color: #8bc34a;
+}
+
+@media screen and (max-width: 767px) {
+  .Header .desktopView {
+    display: none;
+    /* visibility: hidden; */
+  }
+
+  .Header .mobileView {
+    display: block;
+  }
+}

@@ -1,0 +1,27 @@
+.resortList {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
+
+.resortListCard {
+  border-radius: 15px !important;
+  margin-bottom: 10px !important;
+}
+
+.resortListCard:hover {
+  transform: scale(1.02);
+  transition: all 0.2s linear;
+}
+
+@media screen and (max-width: 900px) {
+  .resortList {
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+
+  .resortList_Card {
+    padding: 0;
+  }
+}
