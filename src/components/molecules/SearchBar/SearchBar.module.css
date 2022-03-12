@@ -23,6 +23,23 @@
   display: none !important;
 }
 
+.cities {
+  background-color: white;
+  color: #000000;
+  padding: 0.3rem;
+  width: 155px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.cities svg {
+  color: #0fcd22;
+}
+
+.cities .text {
+  color: #000000;
+}
+
 .searchBar {
   display: flex;
   align-items: center;
