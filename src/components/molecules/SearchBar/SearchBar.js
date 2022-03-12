@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CustomInput } from "../../atoms/CustomInput/CustomInput";
 import { CustomButton } from "../../atoms/CustomButton/CustomButton";
 import CustomDatepicker from "../../atoms/CustomDatepicker/CustomDatepicker";
-import { Menu, Dropdown, Button, Space } from "antd";
+import { Menu, Dropdown, Button, Space, Select } from "antd";
 import {
   TeamOutlined,
   EnvironmentOutlined,
@@ -24,6 +24,13 @@ const SearchButton = {
   padding: "0 30px",
   width: "60%",
 };
+
+const { Option } = Select;
+const locations = ['Goa', 'Puri', 'Maldives', 'Pondichery'];
+const children = [];
+for (let i = 0; i < locations.length; i++) {
+  children.push(<Option key={locations[i]} value={locations[i]}>{locations[i]}</Option>);
+}
 
 const mobSearchButton = {
   position: "absolute",
@@ -74,6 +81,10 @@ function SearchBar({ style, cityName = "" }) {
 
   const cityInputHandle = (e) => {
     setCity(e.target.value);
+  };
+
+  const citySelectInputHandle = (value) => {
+    setCity(value);
   };
 
   const searchHandle = () => {
@@ -182,13 +193,28 @@ function SearchBar({ style, cityName = "" }) {
         className={`${classes.searchBar} ${classes.DesktopSearch}`}
         style={style}
       >
-        <CustomInput
+        {/* <CustomInput
           placeholder="Location"
           bordered={false}
           icon={<EnvironmentOutlined />}
           onInputChange={cityInputHandle}
           value={city}
-        ></CustomInput>
+        ></CustomInput> */}
+        <Select
+          className={`${classes.cities}`}
+          showArrow={false}
+          defaultValue={city || locations[0]}
+          bordered={false}
+          optionFilterProp="children"
+          onChange={citySelectInputHandle}
+          onSearch={citySelectInputHandle}
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+        >
+          {children}
+        </Select>
+        <EnvironmentOutlined style={{ color: "#0fcd22" }} />
         <CustomDatepicker
           onChange={getCheckIn}
           placeholder={"Check In"}
